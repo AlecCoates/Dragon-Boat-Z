@@ -277,7 +277,7 @@ public class GameScreen implements Screen {
                 Math.round(staminaBarFull.getWidth() * player.getTiredness() / MAX_TIREDNESS),
                 staminaBarFull.getHeight());
         batch.draw(healthBarFull, player.lane.getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,
-                Math.round(healthBarFull.getWidth() * player.getDurability() / MAX_DURABILITY),
+                Math.round(healthBarFull.getWidth() * player.getDurability() / (float) MAX_DURABILITY),
                 healthBarFull.getHeight());
         batch.end();
 
@@ -313,7 +313,7 @@ public class GameScreen implements Screen {
             batch.draw(progressBar.getOpponentIcon(),
                     WIDTH - progressBar.getTexture().getWidth() - 50
                             + progress[i] * (progressBar.getTexture().getWidth() - 214),
-                    HEIGHT - progressBar.getTexture().getHeight() / 2 - 10);
+                    HEIGHT - progressBar.getTexture().getHeight() / 2.0f - 10);
             batch.end();
         }
 
@@ -321,7 +321,7 @@ public class GameScreen implements Screen {
         batch.draw(progressBar.getPlayerIcon(),
                 WIDTH - progressBar.getTexture().getWidth() - 50
                         + progress[0] * (progressBar.getTexture().getWidth() - 214),
-                HEIGHT - progressBar.getTexture().getHeight() / 2 - 10);
+                HEIGHT - progressBar.getTexture().getHeight() / 2.0f - 10);
         batch.end();
 
         /*
@@ -397,13 +397,13 @@ public class GameScreen implements Screen {
             // Display leaderboard, if on the third leg, display top 3 boats.
             if (game.difficulty < 3) {
                 batch.begin();
-                batch.draw(leaderboard.getTexture(), WIDTH / 2 - leaderboard.getTexture().getWidth() / 2,
-                        HEIGHT / 2 - leaderboard.getTexture().getHeight() / 2);
+                batch.draw(leaderboard.getTexture(), WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 2.0f,
+                        HEIGHT / 2.0f - leaderboard.getTexture().getHeight() / 2.0f);
                 batch.end();
                 this.times = leaderboard.getTimes(opponents.length + 1);
                 for (int i = 0; i < opponents.length + 1; i++) {
                     batch.begin();
-                    font44.draw(batch, this.times[i], WIDTH / 2 - leaderboard.getTexture().getWidth() / 3,
+                    font44.draw(batch, this.times[i], WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 3.0f,
                             620 - (75 * i));
                     batch.end();
                 }
@@ -423,8 +423,8 @@ public class GameScreen implements Screen {
                 });
             } else if (game.difficulty == 3) {
                 batch.begin();
-                batch.draw(leaderboard.getTexture(), WIDTH / 2 - leaderboard.getTexture().getWidth() / 2,
-                        HEIGHT / 2 - leaderboard.getTexture().getHeight() / 2);
+                batch.draw(leaderboard.getTexture(), WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 2.0f,
+                        HEIGHT / 2.0f - leaderboard.getTexture().getHeight() / 2.0f);
                 batch.end();
                 this.times = leaderboard.getTimes(opponents.length + 1);
                 for (int i = 0; i < opponents.length + 1; i++) {
@@ -434,7 +434,7 @@ public class GameScreen implements Screen {
                         font44.setColor(Color.WHITE);
 
                     batch.begin();
-                    font44.draw(batch, this.times[i], WIDTH / 2 - leaderboard.getTexture().getWidth() / 3,
+                    font44.draw(batch, this.times[i], WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 3.0f,
                             620 - (75 * i));
                     batch.end();
                 }

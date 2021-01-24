@@ -28,10 +28,10 @@ public class Boat {
     private Texture[] textureFrames;
     private int frameCounter;
     public Texture texture;
-    private String name;
+    private final String name;
     private boolean finished;
-    private int threshold = 5;
-    private float bankWidth = 40;
+    private final int threshold = 5;
+    private final float bankWidth = 40;
 
     /**
      * Creates a Boat instance in a specified Lane.
@@ -43,7 +43,7 @@ public class Boat {
      * @param name      String identifier.
      */
     public Boat(float yPosition, int width, int height, Lane lane, String name) {
-        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2 - width / 2;
+        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = yPosition;
         this.width = width;
         this.height = height;
@@ -219,7 +219,7 @@ public class Boat {
      * Resets necessary stats for the next race.
      */
     public void Reset() {
-        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2 - width / 2;
+        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = 0;
         this.currentSpeed = 0f;
         this.penalties = 0;
@@ -361,7 +361,7 @@ public class Boat {
 
     /**
      * 
-     * @return Float representing the manouverability of the boat.
+     * @return Float representing the maneuverability of the boat.
      */
     public float getManeuverability() {
         return this.MANEUVERABILITY;
@@ -429,7 +429,7 @@ public class Boat {
      */
     public void setLane(Lane lane) {
         this.lane = lane;
-        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2 - width / 2;
+        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
     }
 
 }

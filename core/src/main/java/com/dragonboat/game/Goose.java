@@ -39,11 +39,11 @@ public class Goose extends Obstacle {
 	 * direction.
 	 */
 	public void changeDirection() {
-		HashMap<String, ArrayList<String>> cardinals = new HashMap<String, ArrayList<String>>();
+		HashMap<String, ArrayList<String>> cardinals = new HashMap<>();
 
-		cardinals.put("East", new ArrayList<String>(Arrays.asList("South")));
-		cardinals.put("South", new ArrayList<String>(Arrays.asList("East", "West")));
-		cardinals.put("West", new ArrayList<String>(Arrays.asList("South")));
+		cardinals.put("East", new ArrayList<>(Arrays.asList("South")));
+		cardinals.put("South", new ArrayList<>(Arrays.asList("East", "West")));
+		cardinals.put("West", new ArrayList<>(Arrays.asList("South")));
 
 		direction = cardinals.get(direction).get(new Random().nextInt(cardinals.get(direction).size()));
 	}
@@ -78,12 +78,12 @@ public class Goose extends Obstacle {
 			changeDirection();
 		}
 
-		if (canGoEast && this.direction == "East") {
+		if (canGoEast && this.direction.equals("East")) {
 			this.setX(this.getX() + moveVal);
 			if (backgroundOffset > 0 && backgroundOffset < 2160) {
 				this.setY(this.getY() - moveVal);
 			}
-		} else if (canGoWest && this.direction == "West") {
+		} else if (canGoWest && this.direction.equals("West")) {
 			this.setX(this.getX() - moveVal);
 			if (backgroundOffset > 0 && backgroundOffset < 2160) {
 				this.setY(this.getY() - moveVal);

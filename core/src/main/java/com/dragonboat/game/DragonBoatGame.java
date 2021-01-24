@@ -212,25 +212,25 @@ public class DragonBoatGame extends Game {
 				if (podium[i].getName().startsWith("Player")) {
 					playerWon = true;
 					batch.begin();
-					batch.draw(player.texture, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
+					batch.draw(player.texture, Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() / 3.0f);
 					batch.end();
 					switch (i) {
 						case 0:
 							batch.begin();
-							batch.draw(new Texture(Gdx.files.internal("medal gold.png")), Gdx.graphics.getWidth() / 3,
-									Gdx.graphics.getHeight() / 3);
+							batch.draw(new Texture(Gdx.files.internal("medal gold.png")), Gdx.graphics.getWidth() / 3.0f,
+									Gdx.graphics.getHeight() / 3.0f);
 							batch.end();
 							break;
 						case 1:
 							batch.begin();
-							batch.draw(new Texture(Gdx.files.internal("medal silver.png")), Gdx.graphics.getWidth() / 3,
-									Gdx.graphics.getHeight() / 3);
+							batch.draw(new Texture(Gdx.files.internal("medal silver.png")), Gdx.graphics.getWidth() / 3.0f,
+									Gdx.graphics.getHeight() / 3.0f);
 							batch.end();
 							break;
 						case 2:
 							batch.begin();
-							batch.draw(new Texture(Gdx.files.internal("medal bronze.png")), Gdx.graphics.getWidth() / 3,
-									Gdx.graphics.getHeight() / 3);
+							batch.draw(new Texture(Gdx.files.internal("medal bronze.png")), Gdx.graphics.getWidth() / 3.0f,
+									Gdx.graphics.getHeight() / 3.0f);
 							batch.end();
 							break;
 					}

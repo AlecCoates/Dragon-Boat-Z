@@ -62,8 +62,8 @@ public class ProgressBar {
 	 */
 	public boolean allFinished(int finishY) {
 		float[] progress = this.getProgress(finishY);
-		for (int i = 0; i < progress.length; i++) {
-			if (progress[i] != 1) {
+		for (float v : progress) {
+			if (v != 1) {
 				return false;
 			}
 		}
@@ -103,8 +103,8 @@ public class ProgressBar {
 	 * @return String representing player time ":" penalty time.
 	 */
 	public String getPlayerTimeString() {
-		return String.valueOf((float) Math.round(this.playerTime * 10) / 10) + " + "
-				+ String.valueOf((float) Math.round(this.playerBoat.getPenalty() * 10) / 10);
+		return (float) Math.round(this.playerTime * 10) / 10 + " + "
+				+ (float) Math.round(this.playerBoat.getPenalty() * 10) / 10;
 	}
 
 	/**

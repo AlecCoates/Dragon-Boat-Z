@@ -25,7 +25,7 @@ public class Opponent extends Boat {
      */
     public Opponent(int yPosition, int width, int height, Lane lane, String name) {
         super(yPosition, width, height, lane, name);
-        sortedIncomingObstacles = new ArrayList<Obstacle>();
+        sortedIncomingObstacles = new ArrayList<>();
     }
 
     /**
@@ -48,7 +48,7 @@ public class Opponent extends Boat {
      * 3) If nothing, speed up.
      * </p>
      * 
-     * @param backgroundOffset
+     * @param backgroundOffset Background offset
      */
     public void ai(int backgroundOffset) {
 
@@ -64,22 +64,20 @@ public class Opponent extends Boat {
 
         boolean noNewPath = true; // Set to false whenever the Opponent has decided on a new path.
 
-        if (this.steering == "Left") {
+        if (this.steering.equals("Left")) {
             this.SteerLeft();
             this.steering = "None";
             noNewPath = false;
-        } else if (this.steering == "Right") {
+        } else if (this.steering.equals("Right")) {
             this.SteerRight();
             this.steering = "None";
             noNewPath = false;
-        } else {
-            noNewPath = true;
         }
 
         /*
          * 1) If not in lane, go back to lane.
          */
-        if (this.CheckIfInLane() == false || !noNewPath) {
+        if (!this.CheckIfInLane() || !noNewPath) {
             // Commence route back into lane.
             if (leftSide - this.lane.getLeftBoundary() <= 0) {
                 // Will only be negative if the boat is further left than the left boundary of the lane.
@@ -107,7 +105,7 @@ public class Opponent extends Boat {
                     } else {
                         boolean inserted = false;
                         int index = 0;
-                        while (inserted == false) {
+                        while (!inserted) {
                             Obstacle thisObstacle;
                             if (index < sortedIncomingObstacles.size()) {
                                 thisObstacle = sortedIncomingObstacles.get(index);
@@ -137,7 +135,7 @@ public class Opponent extends Boat {
                     if (obs.getX() + obs.width < leftSide) {
                         // The obstacle is far left of the boat.
 
-                        if ((obs.getClass() == Goose.class) && ((Goose) obs).direction == "East") {
+                        if ((obs.getClass() == Goose.class) && ((Goose) obs).direction.equals("East")) {
                             this.SteerRight();
                             this.steering = "Right";
                         }
@@ -152,7 +150,7 @@ public class Opponent extends Boat {
                          * about that.
                          */
 
-                        if ((obs.getClass() == Goose.class) && ((Goose) obs).direction == "West") {
+                        if ((obs.getClass() == Goose.class) && ((Goose) obs).direction.equals("West")) {
                             this.SteerLeft();
                             this.steering = "Left";
                         }
@@ -165,12 +163,12 @@ public class Opponent extends Boat {
                          * horizontally, steer around it and opposite it.
                          */
 
-                        if ((obs.getClass() == Goose.class) && ((Goose) obs).direction == "East") {
+                        if ((obs.getClass() == Goose.class) && ((Goose) obs).direction.equals("East")) {
                             this.SteerLeft();
                             this.steering = "Left";
                         }
 
-                        else if ((obs.getClass() == Goose.class) && ((Goose) obs).direction == "West") {
+                        else if ((obs.getClass() == Goose.class) && ((Goose) obs).direction.equals("West")) {
                             this.SteerRight();
                             this.steering = "Right";
                         }

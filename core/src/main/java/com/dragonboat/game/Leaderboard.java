@@ -24,9 +24,7 @@ public class Leaderboard {
     public Leaderboard(Player player, Opponent[] opponents) {
         this.sortedBoats = new Boat[opponents.length + 1];
         this.sortedBoats[0] = player;
-        for (int i = 0; i < opponents.length; i++) {
-            this.sortedBoats[i + 1] = opponents[i];
-        }
+        System.arraycopy(opponents, 0, this.sortedBoats, 1, opponents.length);
 
         this.texture = new Texture(Gdx.files.internal("leaderboard nolines.png"));
     }
@@ -39,9 +37,7 @@ public class Leaderboard {
     }
 
     static {
-        /**
-         * Defines the comparator used to compare fastest times of boats.
-         */
+        //Defines the comparator used to compare fastest times of boats.
         ascRaceTime = new Comparator<Boat>() {
             @Override
             public int compare(Boat boat1, Boat boat2) {
@@ -87,9 +83,7 @@ public class Leaderboard {
      */
     public Boat[] getFinalists(int places) {
         Boat[] finalists = new Boat[places];
-        for (int i = 0; i < places; i++) {
-            finalists[i] = sortedBoats[i];
-        }
+        if (places >= 0) System.arraycopy(sortedBoats, 0, finalists, 0, places);
 
         return finalists;
     }

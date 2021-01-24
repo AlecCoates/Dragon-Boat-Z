@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Lane {
     private final int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
-    private int obstacleLimit;
+    private final int obstacleLimit;
 
     /**
      * Creates a lane instance.
