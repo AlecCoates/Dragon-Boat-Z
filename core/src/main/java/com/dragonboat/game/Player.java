@@ -29,8 +29,9 @@ public class Player extends Boat {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             this.IncreaseSpeed();
             this.IncreaseTiredness();
-        } else
+        } else {
             this.DecreaseTiredness();
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             // Call method associated

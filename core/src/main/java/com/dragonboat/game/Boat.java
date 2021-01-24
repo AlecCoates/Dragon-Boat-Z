@@ -31,6 +31,7 @@ public class Boat {
     private String name;
     private boolean finished;
     private int threshold = 5;
+    private float bankWidth = 40;
 
     /**
      * Creates a Boat instance in a specified Lane.
@@ -62,11 +63,12 @@ public class Boat {
      * and speed, and decreases the speed by 3%.
      */
     public void SteerLeft() {
-        if (this.xPosition >= 0) {
+        if (this.xPosition > bankWidth) {
             this.xPosition -= this.MANEUVERABILITY * this.currentSpeed;
             this.currentSpeed *= 0.985;
+        } else {
+            this.xPosition = bankWidth;
         }
-
     }
 
     /**
@@ -74,11 +76,12 @@ public class Boat {
      * and speed, and decreases the speed by 3%.
      */
     public void SteerRight() {
-        if (this.xPosition + this.width <= Gdx.graphics.getHeight()) {
+        if (this.xPosition + this.width < Gdx.graphics.getWidth() - bankWidth) {
             this.xPosition += this.MANEUVERABILITY * this.currentSpeed;
             this.currentSpeed *= 0.985;
+        } else {
+            this.xPosition = Gdx.graphics.getWidth() - bankWidth - this.width;
         }
-
     }
 
     /**
