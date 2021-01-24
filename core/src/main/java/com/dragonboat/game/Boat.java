@@ -28,10 +28,11 @@ public class Boat {
     private Texture[] textureFrames;
     private int frameCounter;
     public Texture texture;
-    private final String name;
+    private String name;
     private boolean finished;
     private final int threshold = 5;
-    private final float bankWidth = 40;
+
+    private static final float bankWidth = 40;
 
     /**
      * Creates a Boat instance in a specified Lane.
