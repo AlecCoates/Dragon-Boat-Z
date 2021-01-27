@@ -23,7 +23,7 @@ public class Boat {
     private int durability;
     protected float yPosition, xPosition, penalties;
     protected int width, height;
-    float currentSpeed, fastestLegTime, tiredness;
+    protected float currentSpeed, fastestLegTime, tiredness;
     protected Lane lane;
     private Texture[] textureFrames;
     private int frameCounter;
@@ -32,7 +32,7 @@ public class Boat {
     private boolean finished;
     private final int threshold = 5;
 
-    static float bankWidth = 40;
+    public static float bankWidth = 40;
 
     /**
      * Creates a Boat instance in a specified Lane.
