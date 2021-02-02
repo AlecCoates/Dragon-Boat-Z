@@ -13,6 +13,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * <p>
@@ -21,10 +22,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
  * <p>
  * Initialises all the objects necessary for the game, starts music, creates
  * Lanes, randomises Obstacle spawns, initialises blank Player and Opponents,
- * initialises a Progress Bar and Leaderboard, and instantiates a Menu Screen.
+ * initialises a Progress Bar and Leaderboard, and instantiates a Difficulty selection screen.
  * </p>
  * 
- * @see MenuScreen
+ * @see DifficultyScreen
  */
 public class DragonBoatGame extends Game {
 
@@ -35,7 +36,8 @@ public class DragonBoatGame extends Game {
 	protected boolean debug_verboseoutput = false;
 
 	protected Random rnd;
-	private MenuScreen menuScreen;
+	private DifficultyScreen difficultyScreen;
+	private Stage stage;
 	public Lane[] lanes;
 	public Player player;
 	public Course course;
@@ -46,6 +48,7 @@ public class DragonBoatGame extends Game {
 	public int noOfObstacles;
 	public int playerChoice;
 	public int difficulty = 1;
+	public int selectedDifficulty = 1;
 	public Music music;
 	public boolean ended = false;
 	public FreeTypeFontGenerator generator;
@@ -66,12 +69,12 @@ public class DragonBoatGame extends Game {
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("cantgobackwards.mp3"));
 		music.setLooping(true);
-		music.setVolume(0.4f);
+		music.setVolume(0.005f);
 		music.play();
 
 		courseTexture = new Texture(Gdx.files.internal("background sprite.png"));
 		lanes = new Lane[7];
-		noOfObstacles = 8;
+		noOfObstacles = 4 * (selectedDifficulty * difficulty);
 		obstacleTimes = new ArrayList[lanes.length];
 
 		/*
@@ -122,8 +125,14 @@ public class DragonBoatGame extends Game {
 		batch = new SpriteBatch();
 
 		// Display the menu screen.
-		menuScreen = new MenuScreen(this);
-		setScreen(menuScreen);
+		//menuScreen = new MenuScreen(this);
+		//setScreen(menuScreen);
+
+		difficultyScreen = new DifficultyScreen(this);
+		setScreen(difficultyScreen);
+
+
+
 	}
 
 	/**
@@ -137,7 +146,7 @@ public class DragonBoatGame extends Game {
 		if(debug_norandom) rnd = new Random(1);
 		else rnd = new Random();
 
-		noOfObstacles = 8 * difficulty;
+		noOfObstacles = 4 * (selectedDifficulty * difficulty);
 		obstacleTimes = new ArrayList[lanes.length];
 		for (int x = 0; x < lanes.length; x++) {
 			lanes[x].obstacles = new ArrayList<>();
