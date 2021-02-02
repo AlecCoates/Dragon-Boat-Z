@@ -17,20 +17,20 @@ public class Boat {
      * https://drive.google.com/file/d/15O95umnJIoApnsj8I9ejEtMxrDGYJWAC/view?usp=sharing
      */
 
-    private int ROBUSTNESS;
-    private float ACCELERATION, MANEUVERABILITY, MAXSPEED;
+    protected int ROBUSTNESS;
+    protected float ACCELERATION, MANEUVERABILITY, MAXSPEED;
 
-    private int durability;
+    protected int durability;
     protected float yPosition, xPosition, penalties;
     protected int width, height;
     protected float currentSpeed, fastestLegTime, tiredness;
     protected Lane lane;
-    private Texture[] textureFrames;
-    private int frameCounter;
+    protected Texture[] textureFrames;
+    protected int frameCounter;
     public Texture texture;
-    private String name;
-    private boolean finished;
-    private final int threshold = 5;
+    protected String name;
+    protected boolean finished;
+    protected int threshold;
 
     public static float bankWidth = 40;
 
@@ -57,6 +57,7 @@ public class Boat {
         this.textureFrames = new Texture[4];
         frameCounter = 0;
         this.name = name;
+        this.threshold = 5;
     }
 
     /**
@@ -153,7 +154,7 @@ public class Boat {
      */
     public boolean ApplyDamage(int obstacleDamage) {
         this.durability -= obstacleDamage / this.ROBUSTNESS;
-        this.currentSpeed *= 0.9;
+        this.currentSpeed *= 0.9f;
         return this.durability <= 0;
     }
 
@@ -222,18 +223,17 @@ public class Boat {
         this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = 0;
         this.currentSpeed = 0f;
-        this.penalties = 0;
+        this.penalties = 0f;
         this.durability = 50;
         this.tiredness = 0f;
         this.finished = false;
-
     }
 
     /**
      * Resets the boat's fastest leg time.
      */
     public void ResetFastestLegTime() {
-        this.fastestLegTime = 0;
+        this.fastestLegTime = 0f;
     }
 
     // getters and setters
@@ -324,7 +324,7 @@ public class Boat {
      * @return Float representing the progress of the boat from 0 to 1.
      */
     public float getProgress(int finishY) {
-        return Math.min((this.yPosition) / finishY, 1);
+        return Math.min((this.yPosition) / finishY, 1f);
     }
 
     /**

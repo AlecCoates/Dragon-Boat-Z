@@ -3,6 +3,7 @@ package com.dragonboat.game;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -11,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Lane {
     private final int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
-    private final int obstacleLimit;
+    protected final int obstacleLimit;
 
     /**
      * Creates a lane instance.
@@ -58,18 +59,53 @@ public class Lane {
      * @param obstacleType Obstacle type.
      */
     public void SpawnObstacle(int x, int y, String obstacleType) {
+        SpawnObstacle(x, y, obstacleType, false);
+    }
+
+    /**
+     * <p>
+     * Spawns obstacle in the lane.
+     * </p>
+     * <p>
+     * Spawns specified obstacle in the lane. Checks that the obstacle limit hasn't
+     * been reached, if not checks the obstacle type for Goose or Log and
+     * instantiates it as the corresponding obstacle, with the correct texture. Then
+     * adds it to the Lane's obstacle list.
+     * </p>
+     *
+     * @param x            X-position for the obstacle spawn location.
+     * @param y            Y-position for the obstacle spawn location.
+     * @param obstacleType Obstacle type.
+     * @param noTexture    Debug parameter to stop LibGDX loading texture assets.
+     */
+    public void SpawnObstacle(int x, int y, String obstacleType, boolean noTexture) {
         if (this.obstacles.size() <= this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
-                Goose goose = new Goose(x, y, new Texture(Gdx.files.internal("gooseSouthsprite.png")), this);
+                Texture t;
+                if (noTexture) {
+                    t = new Texture(new Pixmap(1, 1, Pixmap.Format.RGB888));
+                } else {
+                    t = new Texture(Gdx.files.internal("gooseSouthsprite.png"));
+                }
+
+                Goose goose = new Goose(x, y, t, this);
                 this.obstacles.add(goose);
 
             } else if (obstacleType.equals("Log")) {
-                Log log = new Log(x, y, new Texture(Gdx.files.internal("logBig sprite.png")));
+                Texture t;
+                if (noTexture) {
+                    t = new Texture(new Pixmap(1, 1, Pixmap.Format.RGB888));
+                } else {
+                    t = new Texture(Gdx.files.internal("logBig sprite.png"));
+                }
+
+                Log log = new Log(x, y, t);
                 this.obstacles.add(log);
 
             }
-        } else
+        } else {
             System.out.println("Obstacle limit reached.");
+        }
     }
 
     /**

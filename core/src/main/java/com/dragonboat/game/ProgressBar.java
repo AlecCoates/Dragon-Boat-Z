@@ -10,10 +10,10 @@ public class ProgressBar {
 
 	public Texture texture, playerIcon, opponentIcon;
 
-	private Player playerBoat;
-	private Opponent[] opponentBoats;
-	private float timeSeconds;
-	private float playerTime;
+	protected Player playerBoat;
+	protected Opponent[] opponentBoats;
+	protected float timeSeconds;
+	protected float playerTime;
 
 	/**
 	 * Creates a progress bar that tracks the player and opponent boats progress
@@ -23,12 +23,25 @@ public class ProgressBar {
 	 * @param opponents Array of opponent boats.
 	 */
 	public ProgressBar(Player player, Opponent[] opponents) {
+		this(player, opponents, false);
+	}
+
+	/**
+	 * Creates a progress bar that tracks the player and opponent boats progress
+	 * along the course.
+	 *
+	 * @param player    The player's boat.
+	 * @param opponents Array of opponent boats.
+	 * @param noTexture Debug parameter to stop LibGDX loading texture assets.
+	 */
+	public ProgressBar(Player player, Opponent[] opponents, boolean noTexture) {
 		this.playerBoat = player;
 		this.opponentBoats = opponents;
-		this.texture = new Texture(Gdx.files.internal("top bar sprite.png"));
-		this.playerIcon = new Texture(Gdx.files.internal("progress icon player.png"));
-		this.opponentIcon = new Texture(Gdx.files.internal("progress icon enemy.png"));
-
+		if (!noTexture) {
+			this.texture = new Texture(Gdx.files.internal("top bar sprite.png"));
+			this.playerIcon = new Texture(Gdx.files.internal("progress icon player.png"));
+			this.opponentIcon = new Texture(Gdx.files.internal("progress icon enemy.png"));
+		}
 	}
 
 	/**

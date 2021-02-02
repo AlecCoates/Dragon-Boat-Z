@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class Obstacle {
 	protected float yPosition, xPosition;
-	private int damage;
+	protected int damage;
 	public int width, height;
 	public Texture texture;
 

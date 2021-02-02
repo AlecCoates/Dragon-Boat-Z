@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.Texture;
  * Represents a leaderboard for after each race.
  */
 public class Leaderboard {
-    private Boat[] sortedBoats;
-    static private Comparator<Boat> ascRaceTime;
-    private Texture texture;
+    protected Boat[] sortedBoats;
+    static protected Comparator<Boat> ascRaceTime;
+    protected Texture texture;
 
     /**
      * Creates a leaderboard with an array of all boats.
@@ -22,11 +22,23 @@ public class Leaderboard {
      * @param opponents Array of opponent boats.
      */
     public Leaderboard(Player player, Opponent[] opponents) {
+        this(player, opponents, false);
+    }
+
+    /**
+     * Creates a leaderboard with an array of all boats.
+     *
+     * @param player    Player object.
+     * @param opponents Array of opponent boats.
+     * @param noTexture Debug parameter to stop LibGDX loading texture assets.
+     */
+    public Leaderboard(Player player, Opponent[] opponents, boolean noTexture) {
         this.sortedBoats = new Boat[opponents.length + 1];
         this.sortedBoats[0] = player;
         System.arraycopy(opponents, 0, this.sortedBoats, 1, opponents.length);
-
-        this.texture = new Texture(Gdx.files.internal("leaderboard nolines.png"));
+        if (!noTexture) {
+            this.texture = new Texture(Gdx.files.internal("leaderboard nolines.png"));
+        }
     }
 
     /**
