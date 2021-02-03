@@ -72,24 +72,21 @@ public class Goose extends Obstacle {
 			canGoWest = true;
 		}
 
+		//Move horizontally if able
+		if (canGoEast && this.direction.equals("East")) {
+			this.setX(this.getX() + moveVal);
+		} else if (canGoWest && this.direction.equals("West")) {
+			this.setX(this.getX() - moveVal);
+		}
+		//Move vertically if in limits
+		if (backgroundOffset > 0 && backgroundOffset < 2160) {
+			this.setY(this.getY() - moveVal);
+		}
+
 		// Chance of goose changing direction.
 		int randomMove = 20;
 		if (new Random().nextInt(randomMove) == randomMove - 1) {
 			changeDirection();
-		}
-
-		if (canGoEast && this.direction.equals("East")) {
-			this.setX(this.getX() + moveVal);
-			if (backgroundOffset > 0 && backgroundOffset < 2160) {
-				this.setY(this.getY() - moveVal);
-			}
-		} else if (canGoWest && this.direction.equals("West")) {
-			this.setX(this.getX() - moveVal);
-			if (backgroundOffset > 0 && backgroundOffset < 2160) {
-				this.setY(this.getY() - moveVal);
-			}
-		} else {
-			this.setY(this.getY() - moveVal);
 		}
 	}
 
