@@ -94,6 +94,7 @@ public class Leaderboard {
      * @return Array representing the boats.
      */
     public Boat[] getFinalists(int places) {
+        this.UpdateOrder();
         Boat[] finalists = new Boat[places];
         if (places >= 0) System.arraycopy(sortedBoats, 0, finalists, 0, places);
 
