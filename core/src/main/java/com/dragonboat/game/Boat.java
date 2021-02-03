@@ -124,20 +124,23 @@ public class Boat {
      * @return Boolean representing if a collision occurs.
      */
     public boolean CheckCollisions(int backgroundOffset) {
+        boolean hitObstacle = false;
         // Iterate through obstacles.
         ArrayList<Obstacle> obstacles = this.lane.obstacles;
-        ArrayList<Integer> obstaclesToRemove = new ArrayList<>();
+        ArrayList<Obstacle> obstaclesToRemove = new ArrayList<>();
         for (Obstacle o : obstacles) {
-            if (o.getX() > this.xPosition + threshold && o.getX() < this.xPosition + this.width - threshold) {
-                if (o.getY() + backgroundOffset > this.yPosition + threshold
-                        && o.getY() + backgroundOffset < this.yPosition + this.height - threshold) {
+            if (o.getX() + o.width > this.xPosition + threshold && o.getX() < this.xPosition + this.width - threshold) {
+                if (o.getY() + o.height + backgroundOffset > this.yPosition + threshold && o.getY() + backgroundOffset < this.yPosition + this.height - threshold) {
                     this.ApplyDamage(o.getDamage());
-                    obstaclesToRemove.add(obstacles.indexOf(o));
+                    obstaclesToRemove.add(o);
+                    hitObstacle = true;
                 }
             }
         }
-        for (int i : obstaclesToRemove) {
-            this.lane.RemoveObstacle(obstacles.get(i));
+        for (Obstacle obstacle : obstaclesToRemove) {
+            this.lane.RemoveObstacle(obstacle);
+        }
+        if (hitObstacle) {
             return true;
         }
         return false;
