@@ -258,7 +258,11 @@ public class DragonBoatGame extends Game {
 
 	public void endGame() {
 		this.ended = true;
+	}
 
+	public void startGame() {
+		this.setScreen(new MenuScreen(this));
+		this.ended = false;
 	}
 
 	/**
