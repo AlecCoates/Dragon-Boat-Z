@@ -79,7 +79,7 @@ public class Lane {
      * @param noTexture    Debug parameter to stop LibGDX loading texture assets.
      */
     public void SpawnObstacle(int x, int y, String obstacleType, boolean noTexture) {
-        if (this.obstacles.size() <= this.obstacleLimit) {
+        if (this.obstacles.size() < this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
                 Texture t;
                 if (noTexture) {
