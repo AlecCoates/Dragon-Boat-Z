@@ -18,6 +18,7 @@ import java.awt.*;
 /**
  * Difficulty Screen class for Dragon Boat Game. This is the select screen for difficulty.
  * Once difficulty clicked game will proceed to menu screen where to select a boat.
+ * Selected difficulty chosen as integer and alters amount of obstacles and speed of them in GameScreen
  *
  * @see MenuScreen
  */
