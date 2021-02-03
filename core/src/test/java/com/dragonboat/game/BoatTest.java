@@ -64,10 +64,10 @@ public class BoatTest {
         //Test steering right-side of right bank
         testBoat = new Boat(15, 5, 15, new Lane(0,10,10), "A");
         testBoat.setStats(100,5,10,7);
-        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width + 10;
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - 5 + 10;
         testBoat.currentSpeed = 7;
         testBoat.SteerRight();
-        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - 5, testBoat.xPosition, 0.0002);
         assertEquals(7, testBoat.currentSpeed, 0.0002);
     }
 

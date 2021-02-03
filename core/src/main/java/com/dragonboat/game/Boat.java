@@ -65,11 +65,12 @@ public class Boat {
      * and speed, and decreases the speed by 3%.
      */
     public void SteerLeft() {
-        if (this.xPosition >= 0) {
-            this.xPosition -= this.MANEUVERABILITY * this.currentSpeed;
+        if (this.xPosition > bankWidth) {
+            this.xPosition = Math.max(this.xPosition - this.MANEUVERABILITY * this.currentSpeed, bankWidth);
             this.currentSpeed *= 0.985;
+        } else {
+            this.xPosition = bankWidth;
         }
-
     }
 
     /**
@@ -77,11 +78,12 @@ public class Boat {
      * and speed, and decreases the speed by 3%.
      */
     public void SteerRight() {
-        if (this.xPosition + this.width <= Gdx.graphics.getHeight()) {
-            this.xPosition += this.MANEUVERABILITY * this.currentSpeed;
+        if (this.xPosition + this.width < Gdx.graphics.getWidth() - bankWidth) {
+            this.xPosition = Math.min(this.xPosition + this.MANEUVERABILITY * this.currentSpeed, Gdx.graphics.getWidth() - bankWidth - this.width);
             this.currentSpeed *= 0.985;
+        } else {
+            this.xPosition = Gdx.graphics.getWidth() - bankWidth - this.width;
         }
-
     }
 
     /**
