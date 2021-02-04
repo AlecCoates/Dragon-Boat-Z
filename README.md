@@ -1,4 +1,7 @@
+<!doctype html>
+<html>
 <head>
+  <meta charset="utf-8">
   <title>Dragon Boat Z</title>
 </head>
 
@@ -252,3 +255,4 @@ focused on. This was to ensure a successful completion of the entire project.
 
 </details>
 </body>
+</html>
