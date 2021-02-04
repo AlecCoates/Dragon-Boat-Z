@@ -2,7 +2,7 @@ pull_request_rules:
   - name: Automatic merge for Jacoco pull requests
     conditions:
       - base=main
-      - author=github-actions
+      - author=github-actions[bot]
       - label=jacoco
     actions:
       merge:
@@ -11,8 +11,7 @@ pull_request_rules:
   - name: Automatic delete for merged Jacoco pull requests
     conditions:
       - base=main
-      - author=github-actions
+      - author=github-actions[bot]
       - label=jacoco
       - merged
     actions:
-      delete_head_branch: { }
