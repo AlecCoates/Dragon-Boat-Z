@@ -14,7 +14,7 @@ core,com.dragonboat.game,Leaderboard.new Comparator() {...},0,9,0,0,0,2,0,2,0,2
 core,com.dragonboat.game,Leaderboard,17,98,2,4,4,21,4,7,2,6
 core,com.dragonboat.game,DifficultyScreen.new ChangeListener() {...},22,0,0,0,4,0,2,0,2,0
 core,com.dragonboat.game,Log,0,11,0,0,0,2,0,1,0,1
-core,com.dragonboat.game,Boat,284,483,7,31,37,82,24,34,19,20
+core,com.dragonboat.game,Boat,284,477,7,31,37,82,24,34,19,20
 core,com.dragonboat.game,MenuScreen.new InputAdapter() {...},232,0,32,0,38,0,18,0,2,0
 core,com.dragonboat.game,Opponent,421,17,70,0,87,4,37,1,2,1
 core,com.dragonboat.game,Player,59,9,8,0,16,2,6,1,2,1
