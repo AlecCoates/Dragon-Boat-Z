@@ -67,7 +67,7 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 
 
 # Assessment 1 Content
-<details><summary></summary>
+<details open><summary></summary>
 
 ### Deliverables
 
@@ -108,7 +108,7 @@ understanding of how GitHub Pages works.
 </details>
 
 
-<details>
+<details open>
 <summary><strong> Sprint 2 - 15/10/2020 </strong></summary>
 
 Having completed the Customer meeting during the last Sprint, other tasks and deliverables could now be started. The priorities
