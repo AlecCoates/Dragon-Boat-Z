@@ -108,7 +108,7 @@ understanding of how GitHub Pages works.
 </details>
 
 
-<details open>
+<details>
 <summary><strong> Sprint 2 - 15/10/2020 </strong></summary>
 
 Having completed the Customer meeting during the last Sprint, other tasks and deliverables could now be started. The priorities
@@ -218,7 +218,7 @@ focused on. This was to ensure a successful completion of the entire project.
 
 
 # Assessment 2 Content
-<details><summary></summary>
+<details open><summary></summary>
 
 ### Testing
 <details><summary>Test Designs</summary>
