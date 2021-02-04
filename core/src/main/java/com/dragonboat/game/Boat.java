@@ -141,6 +141,7 @@ public class Boat {
         }
         for (Obstacle obstacle : obstaclesToRemove) {
             this.lane.RemoveObstacle(obstacle);
+            return true;
         }
         if (hitObstacle) {
             return true;
