@@ -84,7 +84,6 @@ project(":core") {
     jacocoTestReport {
         dependsOn test
         reports {
-            xml.enabled(true)
             csv.enabled(true)
         }
     }
