@@ -29,6 +29,7 @@ public class Boat {
     private int frameCounter;
     public Texture texture;
     private String name;
+    protected char label;
     private boolean finished;
     private final int threshold = 5;
     public static float bankWidth = 40;
@@ -40,11 +41,11 @@ public class Boat {
         public float yPosition, xPosition, penalties;
         public int width, height;
         public float currentSpeed, fastestLegTime, tiredness;
-        //public String lane;
+        public Lane lane;
         public int frameCounter;
         public String name;
         public boolean finished;
-        public String texture;
+        public char label;
 
         public BoatSpriteDescriptor(){}
 
@@ -62,11 +63,11 @@ public class Boat {
             this.currentSpeed = oldBoat.getCurrentSpeed();
             this.fastestLegTime = oldBoat.getFastestTime();
             this.tiredness = oldBoat.tiredness;
-            //this.lane = oldBoat.lane.saveState();
+            this.lane = oldBoat.lane;
             this.frameCounter = oldBoat.frameCounter;
             this.name = oldBoat.getName();
             this.finished = oldBoat.finished();
-            this.texture = oldBoat.texture.toString();
+            this.label = oldBoat.label;
         }
     }
 
@@ -494,5 +495,36 @@ public class Boat {
     public void setLane(Lane lane) {
         this.lane = lane;
         this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
+    }
+
+    /**
+     * <p>
+     * Assigns the selected boat template to the boat.
+     * </p>
+     * <p>
+     * This includes stats and texture.
+     * </p>
+     *
+     * @param boatNo Number of the boat template selected.
+     */
+    public void ChooseBoat(int boatNo) {
+        ChooseBoat((char) (65 + boatNo));
+    }
+
+    /**
+     * <p>
+     * Assigns the selected boat template to the boat.
+     * </p>
+     * <p>
+     * This includes stats and texture.
+     * </p>
+     *
+     * @param boatChar Character of the boat template selected.
+     */
+    public void ChooseBoat(char boatChar) {
+        this.label = boatChar;
+        this.setTexture(new Texture(Gdx.files.internal("boat" + label + " sprite1.png")));
+        this.GenerateTextureFrames(label);
+        this.setStats(label);
     }
 }

@@ -117,7 +117,9 @@ public class DragonBoatGame extends Game {
 		leaderboard = new Leaderboard(player, opponents);
 
 		// Set up font.
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("8bitOperatorPlus-Regular.ttf"));
+		System.out.println(Gdx.files.getExternalStoragePath());
+		System.out.println(Gdx.files.getLocalStoragePath());
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/8bitOperatorPlus-Regular.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 28;
 		font28 = generator.generateFont(parameter);

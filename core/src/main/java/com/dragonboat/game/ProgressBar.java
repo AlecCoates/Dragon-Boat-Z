@@ -32,10 +32,9 @@ public class ProgressBar {
 	}
 	public ProgressBar(){}
 
-	public String saveState(){
-		Json json = new Json();
-		//System.out.print(json.prettyPrint(this));
-		return json.toJson(this);
+	public ProgressBar saveState(){
+		//return new Json().toJson(this);
+		return this;
 	}
 
 	public void setOpponentBoats(Opponent[] opponentBoats){
