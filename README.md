@@ -1,8 +1,5 @@
 <head>
-
-Dragon Boat Z
-============
-
+  <title>Dragon Boat Z</title>
 </head>
 
 <body>
