@@ -44,7 +44,7 @@ jobs:
       id: coverage
       with:
         percentage: "50"
-        filename: "./core/build/jacoco/jacocoTestReport.xml"
+        filename: "/home/runner/work/Dragon-Boat-Z/Dragon-Boat-Z/core/build/jacoco/jacocoTestReport.xml"
 
       # Use the output from the `coverage` step
     - name: Generate the badge SVG image
