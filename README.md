@@ -1,4 +1,4 @@
-![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=main)
+![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gradle%20Build/badge.svg?branch=main)
 ![Coverage](.github/badges/jacoco.svg)
 
 
