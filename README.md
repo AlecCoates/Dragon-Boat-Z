@@ -1,9 +1,11 @@
 # Contents
 <details open><summary></summary>
+
 - [About Us](#about-us)
 - [Game Description](#game-description)
 - [Assessment 1 Content](#assessment-1-content)
 - [Assessment 2 Content](#assessment-2-content)
+
 </details>
 
 
