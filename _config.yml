@@ -1,3 +1,7 @@
 theme: jekyll-theme-cayman
 title: [Dragon Boat Z]
 description: [Welcome to our team website]
+include:
+  - README.md
+optional_front_matter:
+  enabled: false
