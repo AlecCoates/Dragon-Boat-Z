@@ -16,14 +16,12 @@ Ever wanted to race Dragon boats down the River Ouse?
 Of course, the answer is yes and we have just the game for you.
 DragonBoat Z!
 
-Our Team consists of:
+Our Team (Quackthulu) consists of:
 
 * Aaron Price
 * Alec Coates
 * Charlie Curedale-Rayner
 * Eleanor Griffin-Smith
-* Will Dalgleish
-* Xinyi Zhang
 
 # Game Description
 
@@ -90,7 +88,7 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 #### Sprint Dropdowns
 
 <details>
-  <summary><strong> Sprint 1 - 08/10/2020 </strong></summary>
+<summary><strong> Sprint 1 - 08/10/2020 </strong></summary>
 
 Having completed the task of setting up Jira and other resources needed for the project, the focus was on preparatory
 work for the upcoming week. This involved adding to the existing set of Customer Questions constructed and develop an
@@ -103,8 +101,8 @@ understanding of how GitHub Pages works.
 <br>
 </details>
 
-<details>
 
+<details>
 <summary><strong> Sprint 2 - 15/10/2020 </strong></summary>
 
 Having completed the Customer meeting during the last Sprint, other tasks and deliverables could now be started. The priorities
@@ -157,7 +155,7 @@ of these tasks and discuss if any would need to be reassigned.
 </details>
 
 <details> 
-  <summary><strong> Sprint 5 - 05/11/2020 </strong></summary>
+<summary><strong> Sprint 5 - 05/11/2020 </strong></summary>
 
 The backlog of tasks T14 and T11, from the previous Sprint, were assigned the highest priority, as continued programming work depended on their completion. With the aim of reaching the milestone M4, at the end of this Sprint, the prototype development was a high focus. The specific tasks related to the prototype were stated within the assignee's task description. Method Selection and Planning were a focus within the Deliverables board to continue to append changes that had occurred during the project lifecycle.
 
@@ -198,7 +196,7 @@ managed to implement and any additional features we may include.
 </details>
 
 <details>
-  <summary><strong> Sprint 7 - 19/11/2020 </strong></summary>
+<summary><strong> Sprint 7 - 19/11/2020 </strong></summary>
 
 Having reached the completion of the game, a focus on the game testing and peer review of finalised deliverables was
 focused on. This was to ensure a successful completion of the entire project.
