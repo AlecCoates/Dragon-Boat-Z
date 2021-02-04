@@ -1,4 +1,6 @@
 ![Java CI with Gradle](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=main)
+![coverage](.github/badges/jacoco.svg)
+
 
 # Contents
 <details open><summary></summary>
