@@ -1,21 +1,11 @@
 package com.dragonboat.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
+import java.util.*;
 
 class SaveLoadGame {
     private DragonBoatGame dragonBoatGame;
@@ -30,41 +20,48 @@ class SaveLoadGame {
     }
 
     public void saveGame(DragonBoatGame dragonBoatGame, String fileName){
-        this.fileName = fileName;
-        this.dragonBoatGame = dragonBoatGame;
+        try {
+            this.fileName = fileName;
+            this.dragonBoatGame = dragonBoatGame;
 
-        ArrayList<Object> saveData = new ArrayList<>();
-        saveData.add(dragonBoatGame.rnd);
-        for(Lane lane: dragonBoatGame.lanes){
-            saveData.add(lane.saveState());
-        }
-        saveData.add(dragonBoatGame.player.saveState());
-        saveData.add(dragonBoatGame.opponents.length);
-        for(Opponent opponent: dragonBoatGame.opponents){
-            saveData.add(opponent.saveState());
-        }
-        saveData.add(dragonBoatGame.progressBar.saveState());
+            HashMap<String, Object> saveData = new HashMap<>();
 
-        saveData.add(dragonBoatGame.obstacleTimes.length); //7
-        saveData.add(dragonBoatGame.obstacleTimes[0].size()); //4
-        System.out.println(dragonBoatGame.obstacleTimes);
-        for(int i=0; i<dragonBoatGame.obstacleTimes.length;i++){
-            for(int j=0; j<dragonBoatGame.obstacleTimes[i].size();j++){
-                saveData.add((Integer) dragonBoatGame.obstacleTimes[i].get(j));
+            saveData.put("rnd", dragonBoatGame.rnd);
+
+            Lane.LaneSpriteDescriptor[] lanes = new Lane.LaneSpriteDescriptor[dragonBoatGame.lanes.length];
+            for (int i = 0; i < dragonBoatGame.lanes.length; i++) {
+                lanes[i] = dragonBoatGame.lanes[i].saveState();
             }
+            saveData.put("lanes", lanes);
+
+            saveData.put("player", dragonBoatGame.player.saveState());
+
+            Boat.BoatSpriteDescriptor[] opponents = new Boat.BoatSpriteDescriptor[dragonBoatGame.opponents.length];
+            for (int i = 0; i < dragonBoatGame.opponents.length; i++) {
+                opponents[i] = dragonBoatGame.opponents[i].saveState();
+            }
+            saveData.put("opponents", opponents);
+
+            saveData.put("progessBar", dragonBoatGame.progressBar.saveState());
+
+            LinkedList<Integer[]> tempObstacleTimes = new LinkedList<>();
+            for (int i = 0; i < dragonBoatGame.obstacleTimes.length; i++) {
+                tempObstacleTimes.add(dragonBoatGame.obstacleTimes[i].toArray(new Integer[dragonBoatGame.obstacleTimes[i].size()]));
+            }
+            saveData.put("obstacleTimes", tempObstacleTimes.toArray());
+
+            saveData.put("difficulty", dragonBoatGame.difficulty);
+            saveData.put("selectedDifficulty", dragonBoatGame.selectedDifficulty);
+            saveData.put("ended", dragonBoatGame.ended);
+
+            Json json = new Json();
+            String saveString = json.toJson(saveData);
+
+            FileHandle file = Gdx.files.local(fileName + ".json");
+            file.writeString(saveString, false);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        //saveData.add(dragonBoatGame.obstacleTimes);
-        saveData.add(dragonBoatGame.difficulty);
-        saveData.add(dragonBoatGame.selectedDifficulty);
-        saveData.add(dragonBoatGame.ended);
-        //saveData.add(dragonBoatGame.getBatch()); //Don't think we need?
-
-        Json json = new Json();
-        String saveString = json.toJson(saveData);
-
-        FileHandle file = Gdx.files.local(fileName + ".json");
-        file.writeString(saveString, false);
     }
 
     public void loadGame(DragonBoatGame dragonBoatGame, String fileName){

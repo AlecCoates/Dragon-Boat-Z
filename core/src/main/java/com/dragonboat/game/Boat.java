@@ -115,15 +115,12 @@ public class Boat {
         this.frameCounter = disc.frameCounter;
         this.name = disc.name;
         this.finished = disc.finished;
-
-
     }
 
-    public String saveState(){
+    public BoatSpriteDescriptor saveState(){
         BoatSpriteDescriptor disc = new BoatSpriteDescriptor(this);
-        Json json = new Json();
-        //System.out.print(json.prettyPrint(disc));
-        return json.toJson(disc);
+        //return new Json().toJson(disc);
+        return disc;
     }
 
     /**

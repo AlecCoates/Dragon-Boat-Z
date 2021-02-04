@@ -54,23 +54,22 @@ public class Obstacle {
 		this.texture = texture;
 		this.name = name;
 	}
-	public Obstacle(String info){
-		Json json = new Json();
-		Obstacle.ObstacleSpriteDescriptor disc = json.fromJson(Obstacle.ObstacleSpriteDescriptor.class,info);
+	public Obstacle(ObstacleSpriteDescriptor info){
+		//Json json = new Json();
+		//Obstacle.ObstacleSpriteDescriptor disc = json.fromJson(Obstacle.ObstacleSpriteDescriptor.class,info);
 
-		this.damage = disc.damage;
-		this.xPosition = disc.xPosition;
-		this.yPosition = disc.yPosition;
-		this.width = disc.width;
-		this.height = disc.height;
-		this.name = disc.name;
+		this.damage = info.damage;
+		this.xPosition = info.xPosition;
+		this.yPosition = info.yPosition;
+		this.width = info.width;
+		this.height = info.height;
+		this.name = info.name;
 	}
 
-	public String saveState() {
+	public ObstacleSpriteDescriptor saveState() {
 		ObstacleSpriteDescriptor disc = new ObstacleSpriteDescriptor(this);
-		Json json = new Json();
-		System.out.print(json.prettyPrint(disc));
-		return json.toJson(disc);
+		//return new Json().toJson(disc);
+		return disc;
 	}
 
 	public String getName(){

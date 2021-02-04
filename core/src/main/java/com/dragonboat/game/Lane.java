@@ -18,7 +18,7 @@ public class Lane {
     static class LaneSpriteDescriptor {
         private int LEFTBOUNDARY, RIGHTBOUNDARY;
         private int obstacleLimit;
-        private ArrayList<String> gooses, logs;
+        private ArrayList<Obstacle.ObstacleSpriteDescriptor> geese, logs;
 
         //Used for the return from json file
         public LaneSpriteDescriptor (){}
@@ -27,17 +27,19 @@ public class Lane {
             LEFTBOUNDARY = oldLane.getLeftBoundary();
             RIGHTBOUNDARY = oldLane.getRightBoundary();
             obstacleLimit = oldLane.obstacleLimit;
-            gooses = new ArrayList<>();
+            geese = new ArrayList<>();
             logs = new ArrayList<>();
 
             for(Obstacle obstacle: oldLane.obstacles){
                 System.out.println(obstacle.getClass());
                 if(obstacle.getName() == "goose") {
                     System.out.println("goose");
-                    gooses.add(obstacle.saveState());
+                    Goose goose = (Goose) obstacle;
+                    geese.add(goose.saveState());
                 }else{
                     System.out.println("log");
-                    logs.add(obstacle.saveState());
+                    Log log = (Log) obstacle;
+                    logs.add(log.saveState());
                 }
             }
         }
@@ -66,11 +68,11 @@ public class Lane {
         this.obstacleLimit = disc.obstacleLimit;
 
         obstacles = new ArrayList<>();
-        for(String goose: disc.gooses){
-            this.obstacles.add(new Obstacle(goose));
+        for(Obstacle.ObstacleSpriteDescriptor goose: disc.geese){
+            this.obstacles.add((Goose) new Obstacle(goose));
         }
-        for(String log: disc.logs){
-            this.obstacles.add(new Obstacle(log));
+        for(Obstacle.ObstacleSpriteDescriptor log: disc.logs){
+            this.obstacles.add((Log) new Obstacle(log));
         }
     }
 
@@ -89,11 +91,10 @@ public class Lane {
         obstacles = new ArrayList<>();
     }
 
-    public String saveState(){
+    public LaneSpriteDescriptor saveState(){
         LaneSpriteDescriptor disc = new LaneSpriteDescriptor(this);
-        Json json = new Json();
-
-        return json.toJson(disc);
+        //return new Json().toJson(disc);
+        return disc;
     }
 
     /**

@@ -11,9 +11,24 @@ import com.badlogic.gdx.graphics.Texture;
  * Represents a goose obstacle on the course.
  */
 public class Goose extends Obstacle {
-
 	public String direction = "South"; // Facing south by default.
 	public Lane givenLane;
+
+
+	static class GooseSpriteDescriptor extends ObstacleSpriteDescriptor {
+		public String direction;
+		public Lane givenLane;
+
+		//Used for the return from json file
+		public GooseSpriteDescriptor(){}
+
+		public GooseSpriteDescriptor(Goose goose) {
+			super((Obstacle) goose);
+			this.direction = goose.direction;
+			this.givenLane = goose.givenLane;
+		}
+	}
+
 
 	/**
 	 * <p>

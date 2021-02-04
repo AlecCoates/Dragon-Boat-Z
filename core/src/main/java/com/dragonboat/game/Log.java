@@ -7,6 +7,15 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class Log extends Obstacle {
 
+	static class LogSpriteDescriptor extends ObstacleSpriteDescriptor {
+		//Used for the return from json file
+		public LogSpriteDescriptor(){}
+
+		public LogSpriteDescriptor(Log log) {
+			super((Obstacle) log);
+		}
+	}
+
 	/**
 	 * Creates a log instance.
 	 * 
@@ -17,4 +26,5 @@ public class Log extends Obstacle {
 	public Log(int xPosition, int yPosition, Texture texture) {
 		super(15, xPosition, yPosition, texture.getWidth(), texture.getHeight(), texture, "log");
 	}
+
 }
