@@ -62,6 +62,16 @@ public class LaneTest {
         }
         testLane.RemoveObstacle(testObstacle);
         assertEquals(9, testLane.obstacles.size(), 0.0002);
+
+        //Test Remove From Above Full
+        testLane = new Lane(0, 20, 10);
+        testObstacle = new Obstacle(5, 10, 30, 5, 8, new Texture(new Pixmap(1,1,Pixmap.Format.RGB888)));
+        testLane.obstacles.add(testObstacle);
+        for (int i = 0; i < 12; i++) {
+            testLane.obstacles.add(new Obstacle(5, 20, 40, 5, 8, new Texture(new Pixmap(1,1,Pixmap.Format.RGB888))));
+        }
+        testLane.RemoveObstacle(testObstacle);
+        assertEquals(12, testLane.obstacles.size(), 0.0002);
     }
 
 }
