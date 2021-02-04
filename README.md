@@ -61,7 +61,8 @@ Whilst navigating the obstacles, the player must make sure to stay in their lane
 If the player manages to achieve one of the 3 fastest times across the 3 legs, they will qualify for the final race where they will compete against the other 2 fastest boats.
 Upon completing the final race, the player will be awarded a medal, bronze, silver, or gold respective to their finishing position.
 
-# Assessment 1 Content
+<details>
+<summary><h1> Assessment 1 Content </h1><summary>
 
 ### Deliverables
 
@@ -180,6 +181,7 @@ Due to some minor issues with the construction of the legs of the game in the pr
 we envision that the final tasks to have a functioning game will be finished on time. There will be a high focus on the programming elements needed for the final product. During the second meeting of this sprint, if there is extra time to implement additional functionality of the game the task, Animations, will be attempted and potentially additional features.
 The Deliverables board focused on the finalising of the Implementation document, reflecting features that we have unsuccessfully
 managed to implement and any additional features we may include.
+
 <br>
 <br>
 <strong> Deliverables Board </strong>
@@ -192,7 +194,6 @@ managed to implement and any additional features we may include.
 <br>
 <a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%206%20-%20Implementation.png">Sprint 6 Jira Implementation Board</a>
 <br>
-
 </details>
 
 <details>
@@ -201,9 +202,11 @@ managed to implement and any additional features we may include.
 Having reached the completion of the game, a focus on the game testing and peer review of finalised deliverables was
 focused on. This was to ensure a successful completion of the entire project.
 <img src="docs/sprints/Sprint 7.png">
+
 <br>
 <br>
 <a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%207.png">Sprint 7 Jira Board</a>
 <br>
+</details>
 
 </details>
