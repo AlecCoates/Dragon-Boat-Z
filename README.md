@@ -1,8 +1,3 @@
----
-layout: default
-title: Dragon Boat Z
----
-
 # Contents
 <details open><summary></summary>
 
