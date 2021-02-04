@@ -67,7 +67,7 @@ public class Boat {
     public void SteerLeft() {
         if (this.xPosition > bankWidth) {
             this.xPosition = Math.max(this.xPosition - this.MANEUVERABILITY * this.currentSpeed, bankWidth);
-            this.currentSpeed *= 0.985;
+            this.currentSpeed *= 0.985f;
         } else {
             this.xPosition = bankWidth;
         }
@@ -80,7 +80,7 @@ public class Boat {
     public void SteerRight() {
         if (this.xPosition + this.width < Gdx.graphics.getWidth() - bankWidth) {
             this.xPosition = Math.min(this.xPosition + this.MANEUVERABILITY * this.currentSpeed, Gdx.graphics.getWidth() - bankWidth - this.width);
-            this.currentSpeed *= 0.985;
+            this.currentSpeed *= 0.985f;
         } else {
             this.xPosition = Gdx.graphics.getWidth() - bankWidth - this.width;
         }
@@ -92,7 +92,7 @@ public class Boat {
      */
     public void MoveForward() {
         this.yPosition += this.currentSpeed;
-        this.currentSpeed *= 0.9992;
+        this.currentSpeed *= 0.9992f;
     }
 
     /**
