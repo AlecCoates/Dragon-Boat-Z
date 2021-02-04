@@ -228,7 +228,7 @@ focused on. This was to ensure a successful completion of the entire project.
 * <a href="docs/tests/Test Designs/System Tests.pdf">System Tests</a>
 
 </details>
-<details><summary>Test Results</summary>
+<details style="text-indent:50px;"><summary>Test Results</summary>
   <details><summary>Inherited Code</summary>
 
   * <a href="docs/tests/Test Results/00 - Inherited Code/Unit Test Results.html">Unit Test Results</a>
