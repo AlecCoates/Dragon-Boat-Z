@@ -39,9 +39,7 @@ jobs:
       with:
         java-version: 1.11
 
-    - name: Copy Jacoco CSV
-      run: |
-        cp ./core/build/jacoco/test/jacocoTestReport.csv ./jacoco/jacoco.csv
+
 
     - name: Generate Jacoco Badge
       id: jacoco
