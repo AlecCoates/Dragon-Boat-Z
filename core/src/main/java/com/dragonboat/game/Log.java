@@ -15,6 +15,6 @@ public class Log extends Obstacle {
 	 * @param texture   Texture asset for the log.
 	 */
 	public Log(int xPosition, int yPosition, Texture texture) {
-		super(15, xPosition, yPosition, texture.getWidth(), texture.getHeight(), texture);
+		super(15, xPosition, yPosition, texture.getWidth(), texture.getHeight(), texture, "log");
 	}
 }

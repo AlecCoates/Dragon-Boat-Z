@@ -1,174 +1,92 @@
 package com.dragonboat.game;
 
-import com.badlogic.gdx.graphics.Texture;
-import org.junit.jupiter.api.Test;
+import com.badlogic.gdx.Gdx;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class BoatTest {
-    private int ROBUSTNESS, MAXSPEED;
-    private float ACCELERATION, MANEUVERABILITY;
-
-    private int durability;
-    protected float yPosition, xPosition, penalties;
-    protected int width, height;
-    private float currentSpeed, fastestLegTime, tiredness;
-    protected Lane lane;
-    private Texture[] textureFrames;
-    private int frameCounter;
-    public Texture texture;
-    private String name;
-    private boolean finished;
-    private final int threshold = 5;
-
-    private static final float bankWidth = 40;
+@RunWith(GdxTestRunner.class)
+public class BoatTest {
 
     @Test
-    void steerLeft() {
-        assertEquals(1, 2 / 2);
+    public void steerLeft() {
+        Boat testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Boat.bankWidth + 27;
+        testBoat.currentSpeed = 3;
+        testBoat.SteerLeft();
+        assertEquals(Boat.bankWidth + 27 - 7 * 3, testBoat.xPosition, 0.0002);
+        assertEquals(3 * 0.985, testBoat.getCurrentSpeed(), 0.0002);
+
+        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Boat.bankWidth;
+        testBoat.currentSpeed = 5;
+        testBoat.SteerLeft();
+        assertEquals(Boat.bankWidth, testBoat.xPosition, 0.0002);
+        assertEquals(5, testBoat.getCurrentSpeed(), 0.0002);
+
+        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Boat.bankWidth - 10;
+        testBoat.currentSpeed = 7;
+        testBoat.SteerLeft();
+        assertEquals(Boat.bankWidth, testBoat.xPosition, 0.0002);
+        assertEquals(7, testBoat.getCurrentSpeed(), 0.0002);
     }
 
     @Test
-    void steerRight() {
+    public void steerRight() {
+        Boat testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27;
+        testBoat.currentSpeed = 3;
+        testBoat.SteerRight();
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27 + 7 * 3, testBoat.xPosition, 0.0002);
+        assertEquals(3 * 0.985, testBoat.getCurrentSpeed(), 0.0002);
+
+        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width;
+        testBoat.currentSpeed = 5;
+        testBoat.SteerRight();
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
+        assertEquals(5, testBoat.getCurrentSpeed(), 0.0002);
+
+        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width + 10;
+        testBoat.currentSpeed = 7;
+        testBoat.SteerRight();
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
+        assertEquals(7, testBoat.getCurrentSpeed(), 0.0002);
     }
 
     @Test
-    void moveForward() {
+    public void moveForward() {
+        Boat testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27;
+        testBoat.currentSpeed = 3;
+        testBoat.SteerRight();
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27 + 7 * 3, testBoat.xPosition, 0.0002);
+        assertEquals(3 * 0.985, testBoat.getCurrentSpeed(), 0.0002);
+
+        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width;
+        testBoat.currentSpeed = 5;
+        testBoat.SteerRight();
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
+        assertEquals(5, testBoat.getCurrentSpeed(), 0.0002);
+
+        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        testBoat.setStats(100,5,10,7);
+        testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width + 10;
+        testBoat.currentSpeed = 7;
+        testBoat.SteerRight();
+        assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
+        assertEquals(7, testBoat.getCurrentSpeed(), 0.0002);
     }
 
-    @Test
-    void increaseSpeed() {
-    }
-
-    @Test
-    void decreaseSpeed() {
-    }
-
-    @Test
-    void checkCollisions() {
-    }
-
-    @Test
-    void applyDamage() {
-    }
-
-    @Test
-    void checkIfInLane() {
-    }
-
-    @Test
-    void updateFastestTime() {
-    }
-
-    @Test
-    void increaseTiredness() {
-    }
-
-    @Test
-    void decreaseTiredness() {
-    }
-
-    @Test
-    void advanceTextureFrame() {
-    }
-
-    @Test
-    void generateTextureFrames() {
-    }
-
-    @Test
-    void reset() {
-    }
-
-    @Test
-    void resetFastestLegTime() {
-    }
-
-    @Test
-    void setTexture() {
-    }
-
-    @Test
-    void setTextureFrames() {
-    }
-
-    @Test
-    void getFastestTime() {
-    }
-
-    @Test
-    void getX() {
-    }
-
-    @Test
-    void getY() {
-    }
-
-    @Test
-    void getHeight() {
-    }
-
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void finished() {
-    }
-
-    @Test
-    void setFinished() {
-    }
-
-    @Test
-    void getCurrentSpeed() {
-    }
-
-    @Test
-    void getProgress() {
-    }
-
-    @Test
-    void setStats() {
-    }
-
-    @Test
-    void testSetStats() {
-    }
-
-    @Test
-    void getManeuverability() {
-    }
-
-    @Test
-    void getAcceleration() {
-    }
-
-    @Test
-    void getRobustness() {
-    }
-
-    @Test
-    void getDurability() {
-    }
-
-    @Test
-    void getMaxSpeed() {
-    }
-
-    @Test
-    void getTiredness() {
-    }
-
-    @Test
-    void getPenalty() {
-    }
-
-    @Test
-    void applyPenalty() {
-    }
-
-    @Test
-    void setLane() {
-    }
 }

@@ -1,9 +1,11 @@
 package com.dragonboat.game;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 
 /**
  * Represents a lane on the course.
@@ -12,6 +14,34 @@ public class Lane {
     private final int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
     private final int obstacleLimit;
+
+    static class LaneSpriteDescriptor {
+        private int LEFTBOUNDARY, RIGHTBOUNDARY;
+        private int obstacleLimit;
+        private ArrayList<String> gooses, logs;
+
+        //Used for the return from json file
+        public LaneSpriteDescriptor (){}
+
+        LaneSpriteDescriptor (Lane oldLane){
+            LEFTBOUNDARY = oldLane.getLeftBoundary();
+            RIGHTBOUNDARY = oldLane.getRightBoundary();
+            obstacleLimit = oldLane.obstacleLimit;
+            gooses = new ArrayList<>();
+            logs = new ArrayList<>();
+
+            for(Obstacle obstacle: oldLane.obstacles){
+                System.out.println(obstacle.getClass());
+                if(obstacle.getName() == "goose") {
+                    System.out.println("goose");
+                    gooses.add(obstacle.saveState());
+                }else{
+                    System.out.println("log");
+                    logs.add(obstacle.saveState());
+                }
+            }
+        }
+    }
 
     /**
      * Creates a lane instance.
@@ -27,6 +57,23 @@ public class Lane {
         obstacles = new ArrayList<>();
     }
 
+    public Lane(String info){
+        Json json = new Json();
+        LaneSpriteDescriptor disc = json.fromJson(LaneSpriteDescriptor.class,info);
+
+        this.LEFTBOUNDARY = disc.LEFTBOUNDARY;
+        this.RIGHTBOUNDARY = disc.RIGHTBOUNDARY;
+        this.obstacleLimit = disc.obstacleLimit;
+
+        obstacles = new ArrayList<>();
+        for(String goose: disc.gooses){
+            this.obstacles.add(new Obstacle(goose));
+        }
+        for(String log: disc.logs){
+            this.obstacles.add(new Obstacle(log));
+        }
+    }
+
     /**
      * Creates a lane instance.
      * 
@@ -40,6 +87,13 @@ public class Lane {
         this.obstacleLimit = obstacleLimit;
 
         obstacles = new ArrayList<>();
+    }
+
+    public String saveState(){
+        LaneSpriteDescriptor disc = new LaneSpriteDescriptor(this);
+        Json json = new Json();
+
+        return json.toJson(disc);
     }
 
     /**

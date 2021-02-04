@@ -3,6 +3,7 @@ package com.dragonboat.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 
 /**
  * Represents the player's boat.
@@ -20,6 +21,10 @@ public class Player extends Boat {
      */
     public Player(int yPosition, int width, int height, Lane lane, String name) {
         super(yPosition, width, height, lane, name);
+    }
+
+    public Player(String info) {
+        super(info);
     }
 
     /**

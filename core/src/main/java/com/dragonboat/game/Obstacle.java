@@ -1,6 +1,7 @@
 package com.dragonboat.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 
 /**
  * Represents an obstacle on the course.
@@ -9,10 +10,30 @@ import com.badlogic.gdx.graphics.Texture;
  * @see Goose
  */
 public class Obstacle {
+	private String name;
 	protected float yPosition, xPosition;
 	private int damage;
 	public int width, height;
 	public Texture texture;
+
+	static class ObstacleSpriteDescriptor {
+		protected float yPosition, xPosition;
+		private int damage;
+		public int width, height;
+		public String name;
+
+		//Used for the return from json file
+		public ObstacleSpriteDescriptor(){}
+
+		public ObstacleSpriteDescriptor(Obstacle oldObstacle) {
+			this.damage = oldObstacle.getDamage();
+			this.xPosition = oldObstacle.getX();
+			this.yPosition = oldObstacle.getY();
+			this.width = oldObstacle.width;
+			this.height = oldObstacle.getHeight();
+			this.name = oldObstacle.name;
+		}
+	}
 
 	/**
 	 * Creates an obstacle instance.
@@ -24,13 +45,36 @@ public class Obstacle {
 	 * @param height    Height of the obstacle.
 	 * @param texture   Texture asset for the obstacle.
 	 */
-	public Obstacle(int damage, int xPosition, int yPosition, int width, int height, Texture texture) {
+	public Obstacle(int damage, int xPosition, int yPosition, int width, int height, Texture texture, String name) {
 		this.damage = damage;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 		this.width = width;
 		this.height = height;
 		this.texture = texture;
+		this.name = name;
+	}
+	public Obstacle(String info){
+		Json json = new Json();
+		Obstacle.ObstacleSpriteDescriptor disc = json.fromJson(Obstacle.ObstacleSpriteDescriptor.class,info);
+
+		this.damage = disc.damage;
+		this.xPosition = disc.xPosition;
+		this.yPosition = disc.yPosition;
+		this.width = disc.width;
+		this.height = disc.height;
+		this.name = disc.name;
+	}
+
+	public String saveState() {
+		ObstacleSpriteDescriptor disc = new ObstacleSpriteDescriptor(this);
+		Json json = new Json();
+		System.out.print(json.prettyPrint(disc));
+		return json.toJson(disc);
+	}
+
+	public String getName(){
+		return this.name;
 	}
 
 	/**

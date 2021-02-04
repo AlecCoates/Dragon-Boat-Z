@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 
 /**
  * Represents a Boat, controlled by either a Player or Opponent.
@@ -17,13 +18,12 @@ public class Boat {
      * https://drive.google.com/file/d/15O95umnJIoApnsj8I9ejEtMxrDGYJWAC/view?usp=sharing
      */
 
-    private int ROBUSTNESS, MAXSPEED;
-    private float ACCELERATION, MANEUVERABILITY;
-
+    private int ROBUSTNESS;
+    private float ACCELERATION, MANEUVERABILITY, MAXSPEED;
     private int durability;
     protected float yPosition, xPosition, penalties;
     protected int width, height;
-    private float currentSpeed, fastestLegTime, tiredness;
+    protected float currentSpeed, fastestLegTime, tiredness;
     protected Lane lane;
     private Texture[] textureFrames;
     private int frameCounter;
@@ -31,8 +31,44 @@ public class Boat {
     private String name;
     private boolean finished;
     private final int threshold = 5;
+    public static float bankWidth = 40;
 
-    private static final float bankWidth = 40;
+    static class BoatSpriteDescriptor {
+        public int ROBUSTNESS;
+        public float ACCELERATION, MANEUVERABILITY, MAXSPEED;
+        public int durability;
+        public float yPosition, xPosition, penalties;
+        public int width, height;
+        public float currentSpeed, fastestLegTime, tiredness;
+        //public String lane;
+        public int frameCounter;
+        public String name;
+        public boolean finished;
+        public String texture;
+
+        public BoatSpriteDescriptor(){}
+
+        public BoatSpriteDescriptor(Boat oldBoat) {
+            this.ROBUSTNESS = oldBoat.getRobustness();
+            this.MAXSPEED = oldBoat.getMaxSpeed();
+            this.ACCELERATION = oldBoat.getAcceleration();
+            this.MANEUVERABILITY = oldBoat.getManeuverability();
+            this.durability = oldBoat.getDurability();
+            this.yPosition = oldBoat.getY();
+            this.xPosition = oldBoat.getX();
+            this.penalties = oldBoat.getPenalty();
+            this.width = oldBoat.width;
+            this.height = oldBoat.getHeight();
+            this.currentSpeed = oldBoat.getCurrentSpeed();
+            this.fastestLegTime = oldBoat.getFastestTime();
+            this.tiredness = oldBoat.tiredness;
+            //this.lane = oldBoat.lane.saveState();
+            this.frameCounter = oldBoat.frameCounter;
+            this.name = oldBoat.getName();
+            this.finished = oldBoat.finished();
+            this.texture = oldBoat.texture.toString();
+        }
+    }
 
     /**
      * Creates a Boat instance in a specified Lane.
@@ -57,6 +93,37 @@ public class Boat {
         this.textureFrames = new Texture[4];
         frameCounter = 0;
         this.name = name;
+    }
+
+    public Boat(String info){
+        Json json = new Json();
+        BoatSpriteDescriptor disc = json.fromJson(BoatSpriteDescriptor.class,info);
+
+        this.ROBUSTNESS = disc.ROBUSTNESS;
+        this.ACCELERATION = disc.ACCELERATION;
+        this.MANEUVERABILITY = disc.MANEUVERABILITY;
+        this.MAXSPEED = disc.MAXSPEED;
+        this.durability = disc.durability;
+        this.yPosition = disc.yPosition;
+        this.xPosition = disc.xPosition;
+        this.penalties = disc.penalties;
+        this.width = disc.width;
+        this.height = disc.height;
+        this.currentSpeed = disc.currentSpeed;
+        this.fastestLegTime = disc.fastestLegTime;
+        this.tiredness = disc.tiredness;
+        this.frameCounter = disc.frameCounter;
+        this.name = disc.name;
+        this.finished = disc.finished;
+
+
+    }
+
+    public String saveState(){
+        BoatSpriteDescriptor disc = new BoatSpriteDescriptor(this);
+        Json json = new Json();
+        //System.out.print(json.prettyPrint(disc));
+        return json.toJson(disc);
     }
 
     /**
@@ -100,8 +167,7 @@ public class Boat {
      */
     public void IncreaseSpeed() {
         if (this.tiredness <= 75) {
-            this.currentSpeed = (this.currentSpeed + this.ACCELERATION) >= this.MAXSPEED ? this.MAXSPEED
-                    : this.currentSpeed + this.ACCELERATION;
+            this.currentSpeed = Math.min(this.currentSpeed + this.ACCELERATION, this.MAXSPEED);
         }
     }
 
@@ -116,7 +182,7 @@ public class Boat {
          * https://denysalmaral.com/2019/05/boat-sim-notes-1-water-friction.html to be
          * more realistic.
          */
-        this.currentSpeed = (this.currentSpeed - 0.015) <= 0 ? 0 : this.currentSpeed - 0.015f;
+        this.currentSpeed = Math.max(this.currentSpeed - 0.015f, 0);
     }
 
     /**
@@ -336,11 +402,11 @@ public class Boat {
      * @param acceleration    How much the speed increases each frame.
      * @param maneuverability How easily the boat can move left or right.
      */
-    public void setStats(int maxspeed, int robustness, float acceleration, float maneuverability) {
-        this.MAXSPEED = maxspeed / 2;
+    public void setStats(float maxspeed, int robustness, float acceleration, float maneuverability) {
+        this.MAXSPEED = maxspeed;
         this.ROBUSTNESS = robustness;
-        this.ACCELERATION = acceleration / 64;
-        this.MANEUVERABILITY = maneuverability / 8;
+        this.ACCELERATION = acceleration;
+        this.MANEUVERABILITY = maneuverability;
     }
 
     /**
@@ -350,10 +416,10 @@ public class Boat {
      * @param boatLabel A character between A-G representing a specific boat.
      */
     public void setStats(char boatLabel) {
-        int[] maxspeeds = { 5, 4, 5, 5, 4, 7, 5 };
+        float[] maxspeeds = { 2.5f, 2.0f, 2.5f, 2.5f, 2.0f, 3.5f, 2.5f };
         int[] robustnesses = { 2, 4, 1, 4, 8, 3, 5 };
-        float[] accelerations = { 6f, 2f, 8f, 4f, 3f, 1.4f, 2f };
-        float[] maneuverabilities = { 3f, 8f, 3f, 4f, 2f, 1f, 5f };
+        float[] accelerations = { 0.09375f, 0.03125f, 0.125f, 0.06254f, 0.046875f, 0.021875f, 0.03125f };
+        float[] maneuverabilities = { 0.375f, 1.0f, 0.375f, 0.5f, 0.25f, 0.125f, 0.625f };
 
         int boatNo = boatLabel - 65;
 
@@ -396,7 +462,7 @@ public class Boat {
      * 
      * @return Int representing the maximum speed of the boat.
      */
-    public int getMaxSpeed() {
+    public float getMaxSpeed() {
         return this.MAXSPEED;
     }
 
@@ -432,5 +498,4 @@ public class Boat {
         this.lane = lane;
         this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
     }
-
 }

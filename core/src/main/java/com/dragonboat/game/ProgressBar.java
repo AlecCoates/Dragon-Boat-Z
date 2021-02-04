@@ -2,16 +2,17 @@ package com.dragonboat.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 
 /**
  * Represents a progress bar.
  */
 public class ProgressBar {
 
-	public Texture texture, playerIcon, opponentIcon;
+	public transient Texture texture, playerIcon, opponentIcon;
 
-	private Player playerBoat;
-	private Opponent[] opponentBoats;
+	private transient Player playerBoat;
+	private transient Opponent[] opponentBoats;
 	private float timeSeconds;
 	private float playerTime;
 
@@ -28,7 +29,21 @@ public class ProgressBar {
 		this.texture = new Texture(Gdx.files.internal("top bar sprite.png"));
 		this.playerIcon = new Texture(Gdx.files.internal("progress icon player.png"));
 		this.opponentIcon = new Texture(Gdx.files.internal("progress icon enemy.png"));
+	}
+	public ProgressBar(){}
 
+	public String saveState(){
+		Json json = new Json();
+		//System.out.print(json.prettyPrint(this));
+		return json.toJson(this);
+	}
+
+	public void setOpponentBoats(Opponent[] opponentBoats){
+		this.opponentBoats = opponentBoats;
+	}
+
+	public void setPlayerBoat(Player player){
+		this.playerBoat = player;
 	}
 
 	/**

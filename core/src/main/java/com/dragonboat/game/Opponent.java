@@ -28,6 +28,10 @@ public class Opponent extends Boat {
         sortedIncomingObstacles = new ArrayList<>();
     }
 
+    public Opponent(String info) {
+        super(info);
+    }
+
     /**
      * <p>
      * Controls the AI behaviour of the boat.
