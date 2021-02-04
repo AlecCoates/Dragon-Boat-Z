@@ -61,8 +61,8 @@ Whilst navigating the obstacles, the player must make sure to stay in their lane
 If the player manages to achieve one of the 3 fastest times across the 3 legs, they will qualify for the final race where they will compete against the other 2 fastest boats.
 Upon completing the final race, the player will be awarded a medal, bronze, silver, or gold respective to their finishing position.
 
+# Assessment 1 Content
 <details>
-<summary><h1> Assessment 1 Content </h1></summary>
 
 ### Deliverables
 
