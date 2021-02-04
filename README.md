@@ -79,7 +79,7 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 
 ### Executables
 
-* <a href="https://github.com/TheWill10m/Dragon-Boat-Z/releases/download/v1.0/DragonBoat.jar">Dragon Boat Z Game</a>
+* <a href="releases/download/v1.0/DragonBoat.jar">Dragon Boat Z Game</a>
 
 ### Javadocs
 
@@ -103,7 +103,7 @@ understanding of how GitHub Pages works.
 
 <br>
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%201.png">Sprint 1 Jira Board</a>
+<a href="docs/sprints/Sprint 1.png">Sprint 1 Jira Board</a>
 <br>
 </details>
 
@@ -117,7 +117,7 @@ are the Architecture Abstract diagram that will be reviewed at the second meetin
 
 <br>
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%202.png">Sprint 2 Jira Board</a>
+<a href="docs/sprints/Sprint 2.png">Sprint 2 Jira Board</a>
 <br>
 </details>
 
@@ -133,7 +133,7 @@ as this was considered an iterative process throughout the course of the project
 
 <br>
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%203.png">Sprint 3 Jira Board</a>
+<a href="docs/sprints/Sprint 3.png">Sprint 3 Jira Board</a>
 <br>
 </details>
 
@@ -151,12 +151,12 @@ of these tasks and discuss if any would need to be reassigned.
 <strong> Deliverables Board </strong>
 <img src="docs/sprints/Sprint 4 - Deliverables.png">
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%204%20-%20Deliverables.png">Sprint 4 Delievrables Jira Board</a>
+<a href="docs/sprints/Sprint 4 - Deliverables.png">Sprint 4 Delievrables Jira Board</a>
 <br>
 <strong> Implementation Board </strong>
 <img src="docs/sprints/Sprint 4 - Implementation.png">
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%204%20-%20Implementation.png">Sprint 4 Implementation Jira Board</a>
+<a href="docs/sprints/Sprint 4 - Implementation.png">Sprint 4 Implementation Jira Board</a>
 <br>
 </details>
 
@@ -170,12 +170,12 @@ The backlog of tasks T14 and T11, from the previous Sprint, were assigned the hi
 <strong> Deliverables Board </strong>
 <img src="docs/sprints/Sprint_5_-_Deliverables.png">
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint_5_-_Deliverables.png">Sprint 5 Jira Deliverables Board</a>
+<a href="Sprint_5_-_Deliverables.png">Sprint 5 Jira Deliverables Board</a>
 <br>
 <strong> Implementation Board </strong>
 <img src="docs/sprints/Sprint_5_-_Implementation.png">
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint_5_-_Implementation.png">Sprint 5 Jira Implementation Board</a>
+<a href="docs/sprints/Sprint_5_-_Implementation.png">Sprint 5 Jira Implementation Board</a>
 <br>
 </details>
 
@@ -192,12 +192,12 @@ managed to implement and any additional features we may include.
 <strong> Deliverables Board </strong>
 <img src="docs/sprints/Sprint 6 - Deliverables.png">
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%206%20-%20Deliverables.png">Sprint 6 Jira Deliverables Board</a>
+<a href="docs/sprints/Sprint 6-Deliverables.png">Sprint 6 Jira Deliverables Board</a>
 <br>
 <strong> Implementation Board </strong>
 <img src="docs/sprints/Sprint 6 - Implementation.png">
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%206%20-%20Implementation.png">Sprint 6 Jira Implementation Board</a>
+<a href="docs/sprints/Sprint6-Implementation.png">Sprint 6 Jira Implementation Board</a>
 <br>
 </details>
 
@@ -210,7 +210,7 @@ focused on. This was to ensure a successful completion of the entire project.
 
 <br>
 <br>
-<a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%207.png">Sprint 7 Jira Board</a>
+<a href="docs/sprints/Sprint 7.png">Sprint 7 Jira Board</a>
 <br>
 </details>
 
