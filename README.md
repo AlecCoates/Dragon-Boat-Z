@@ -2,7 +2,7 @@
 
 - [About Us](#about-us)
 - [Game Description](#game-description)
-- [Assessment Content](#assessment-content)
+- [Assessment 1 Content](#assessment-1-content)
   - [Deliverables](#deliverables)
   - [Executables](#executables)
   - [Javadocs](#javadocs)
@@ -62,7 +62,7 @@ If the player manages to achieve one of the 3 fastest times across the 3 legs, t
 Upon completing the final race, the player will be awarded a medal, bronze, silver, or gold respective to their finishing position.
 
 # Assessment 1 Content
-<details>
+<details><summary></summary>
 
 ### Deliverables
 
