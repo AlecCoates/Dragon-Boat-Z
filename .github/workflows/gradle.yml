@@ -41,7 +41,7 @@ jobs:
 
     - name: Copy Jacoco CSV
       run: |
-        cp ./core/build/jacoco/jacocoTestReport.csv ./jacoco/jacoco.csv
+        cp ./core/build/jacoco/test/jacocoTestReport.csv ./jacoco/jacoco.csv
 
     - name: Generate Jacoco Badge
       id: jacoco
