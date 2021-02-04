@@ -53,6 +53,7 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
     apply plugin: "java-library"
+    apply plugin: "jacoco"
 
     sourceSets.main.java.srcDirs = [ "src/main/java/" ]
     sourceSets.test.java.srcDirs = [ "src/test/java/" ]
@@ -71,4 +72,16 @@ project(":core") {
         testCompile "org.mockito:mockito-all:$mockitoVersion"
     }
 
+    jacoco {
+        toolVersion = "0.8.5"
+        reportsDir = file("$buildDir/jacoco")
+    }
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test
+    }
 }
