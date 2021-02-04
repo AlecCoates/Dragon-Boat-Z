@@ -55,7 +55,7 @@ Obstacle limit reached.&#13;
         <test duration="5" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetTimes" name="testGetTimes" status="passed"/>
         <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetFinalists" name="testGetFinalists" status="passed"/>
         <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetPodium" name="testGetPodium" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testStartTimer" name="testStartTimer" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testUpdateOrder" name="testUpdateOrder" status="passed"/>
     </suite>
     <suite duration="1" locationUrl="java:suite://com.dragonboat.game.ObstacleTest" name="com.dragonboat.game.ObstacleTest" status="passed">
         <test duration="1" locationUrl="java:test://com.dragonboat.game.ObstacleTest.testMove" name="testMove" status="passed"/>

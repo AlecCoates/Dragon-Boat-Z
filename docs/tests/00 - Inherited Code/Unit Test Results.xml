@@ -266,7 +266,7 @@ Caused by: java.lang.AssertionError: expected:&amp;lt;com.dragonboat.game.Oppone
 	... 20 more&#13;
 </output>
         </test>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testStartTimer" name="testStartTimer" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testUpdateOrder" name="testUpdateOrder" status="passed"/>
     </suite>
     <suite duration="2" locationUrl="java:suite://com.dragonboat.game.GooseTest" name="com.dragonboat.game.GooseTest" status="failed">
         <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseTest.testChangeDirection" name="testChangeDirection" status="passed"/>

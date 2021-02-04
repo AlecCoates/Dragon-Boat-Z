@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class LeaderboardTest {
 
     @Test
-    public void testStartTimer() {
+    public void testUpdateOrder() {
         Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
         testPlayer.fastestLegTime = 26;
         Opponent[] testOpponents = new Opponent[6];
