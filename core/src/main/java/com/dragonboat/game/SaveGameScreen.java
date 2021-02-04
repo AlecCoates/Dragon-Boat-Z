@@ -71,7 +71,7 @@ public class SaveGameScreen implements Screen {
         save2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile1 = new SaveLoadGame(parent, fileName1, true);
+                SaveLoadGame saveFile2 = new SaveLoadGame(parent, fileName2, true);
                 System.out.println("Saved_2");
             }
         });
@@ -79,7 +79,7 @@ public class SaveGameScreen implements Screen {
         save3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile1 = new SaveLoadGame(parent, fileName1, true);
+                SaveLoadGame saveFile3 = new SaveLoadGame(parent, fileName3, true);
                 System.out.println("Saved_3");
             }
         });

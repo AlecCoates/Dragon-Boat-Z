@@ -1,5 +1,7 @@
-## Java
+## Project specific
+SaveState*
 
+## Java
 *.class
 *.war
 *.ear
