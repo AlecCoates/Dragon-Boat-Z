@@ -1,15 +1,14 @@
 # Contents
-
+<details open><summary></summary>
 - [About Us](#about-us)
 - [Game Description](#game-description)
 - [Assessment 1 Content](#assessment-1-content)
-  - [Deliverables](#deliverables)
-  - [Executables](#executables)
-  - [Javadocs](#javadocs)
-  - [Weekly Snapshots](#weekly-snapshots)
+- [Assessment 2 Content](#assessment-2-content)
+</details>
+
 
 # About Us
-
+<details open><summary></summary>
 <img src="core/assets/dragonboatz Logo.png">
 
 Ever wanted to race Dragon boats down the River Ouse?
@@ -22,9 +21,11 @@ Our Team (Quackthulu) consists of:
 * Alec Coates
 * Charlie Curedale-Rayner
 * Eleanor Griffin-Smith
+</details>
+
 
 # Game Description
-
+<details open><summary></summary>
 <img src="core/assets/example screen for website.png">
 
 Dragon Boat Z is a single-player Boat Racing game based on the annual Dragon Boat Race held in York along the
@@ -60,6 +61,8 @@ Whilst navigating the obstacles, the player must make sure to stay in their lane
 
 If the player manages to achieve one of the 3 fastest times across the 3 legs, they will qualify for the final race where they will compete against the other 2 fastest boats.
 Upon completing the final race, the player will be awarded a medal, bronze, silver, or gold respective to their finishing position.
+</details>
+
 
 # Assessment 1 Content
 <details><summary></summary>
@@ -208,5 +211,11 @@ focused on. This was to ensure a successful completion of the entire project.
 <a href="https://thewill10m.github.io/Dragon-Boat-Z/docs/sprints/Sprint%207.png">Sprint 7 Jira Board</a>
 <br>
 </details>
+
+</details>
+
+
+# Assessment 2 Content
+<details><summary></summary>
 
 </details>
