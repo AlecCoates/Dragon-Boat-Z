@@ -228,7 +228,8 @@ focused on. This was to ensure a successful completion of the entire project.
 * <a href="docs/tests/Test Designs/System Tests.pdf">System Tests</a>
 
 </details>
-<details style="text-indent:50px;"><summary>Test Results</summary>
+<details><summary>Test Results</summary>
+  <div style="text-indent:50px;">
   <details><summary>Inherited Code</summary>
 
   * <a href="docs/tests/Test Results/00 - Inherited Code/Unit Test Results.html">Unit Test Results</a>
@@ -242,6 +243,7 @@ focused on. This was to ensure a successful completion of the entire project.
   * <a href="docs/tests/Test Results/01 - Fixed Inherited Code/System Test Results.pdf">System Test Results</a>
 
   </details>
+  </div>
 </details>
 
 </details>
