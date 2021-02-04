@@ -62,7 +62,7 @@ If the player manages to achieve one of the 3 fastest times across the 3 legs, t
 Upon completing the final race, the player will be awarded a medal, bronze, silver, or gold respective to their finishing position.
 
 <details>
-<summary><h1> Assessment 1 Content </h1><summary>
+<summary><h1> Assessment 1 Content </h1></summary>
 
 ### Deliverables
 
