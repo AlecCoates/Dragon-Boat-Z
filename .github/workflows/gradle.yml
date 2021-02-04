@@ -28,12 +28,12 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Check test coverage
-      uses: johanvanhelden/gha-clover-test-coverage-check@v1
+    - name: Generate a coverage value
       id: coverage
-      with:
-        percentage: "50"
-        filename: "coverage.xml"
+      # Generates a GitHub Workflow output named `lines`
+      run: |
+        COVERAGE="$( parse-covergae-report )"
+        echo "##[set-output name=lines;]${COVERAGE}%"
 
       # Use the output from the `coverage` step
     - name: Generate the badge SVG image
