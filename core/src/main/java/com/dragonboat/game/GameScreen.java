@@ -254,7 +254,7 @@ public class GameScreen implements Screen {
                     // If the background hasn't started moving yet, or if the player has reached the
                     // top of the course, move obstacle at set speed.
                     // Else add the player speed to the obstacle speed.
-                    o.Move(0.4f + (backgroundOffset > 0
+                    o.Move((0.4f * game.selectedDifficulty) + (backgroundOffset > 0
                                     && player.getY() + HEIGHT / 2 + player.getHeight() / 2 < course.getTexture().getHeight()
                                     ? player.getCurrentSpeed()
                                     : 0),
