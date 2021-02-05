@@ -24,9 +24,11 @@ public class Boat {
     protected float yPosition, xPosition, penalties;
     protected int width, height;
     protected float currentSpeed, fastestLegTime, tiredness;
-    protected Lane lane;
+    protected Lane[] lanes;
+    protected int laneNo;
+
     private Texture[] textureFrames;
-    private int frameCounter;
+    private int frameCounter = 0;
     public Texture texture;
     private String name;
     protected char label;
@@ -35,13 +37,11 @@ public class Boat {
     public static float bankWidth = 40;
 
     static class BoatSpriteDescriptor {
-        public int ROBUSTNESS;
-        public float ACCELERATION, MANEUVERABILITY, MAXSPEED;
         public int durability;
         public float yPosition, xPosition, penalties;
         public int width, height;
         public float currentSpeed, fastestLegTime, tiredness;
-        public Lane lane;
+        public int laneNo;
         public int frameCounter;
         public String name;
         public boolean finished;
@@ -50,10 +50,6 @@ public class Boat {
         public BoatSpriteDescriptor(){}
 
         public BoatSpriteDescriptor(Boat oldBoat) {
-            this.ROBUSTNESS = oldBoat.getRobustness();
-            this.MAXSPEED = oldBoat.getMaxSpeed();
-            this.ACCELERATION = oldBoat.getAcceleration();
-            this.MANEUVERABILITY = oldBoat.getManeuverability();
             this.durability = oldBoat.getDurability();
             this.yPosition = oldBoat.getY();
             this.xPosition = oldBoat.getX();
@@ -63,7 +59,7 @@ public class Boat {
             this.currentSpeed = oldBoat.getCurrentSpeed();
             this.fastestLegTime = oldBoat.getFastestTime();
             this.tiredness = oldBoat.tiredness;
-            this.lane = oldBoat.lane;
+            this.laneNo = oldBoat.laneNo;
             this.frameCounter = oldBoat.frameCounter;
             this.name = oldBoat.getName();
             this.finished = oldBoat.finished();
@@ -72,16 +68,17 @@ public class Boat {
     }
 
     /**
-     * Creates a Boat instance in a specified Lane.
-     * 
+     * Creates an instance of the player boat.
+     *
      * @param yPosition Y-position of the boat.
      * @param width     Width of the boat.
      * @param height    Height of the boat.
-     * @param lane      Lane object.
-     * @param name      String identifier.
+     * @param lanes     Lanes for the boat.
+     * @param laneNo    Lane number for the boat.
+     * @param name      Name of the boat.
      */
-    public Boat(float yPosition, int width, int height, Lane lane, String name) {
-        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
+    public Boat(float yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {
+        this.xPosition = lanes[laneNo].getRightBoundary() - (lanes[laneNo].getRightBoundary() - lanes[laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = yPosition;
         this.width = width;
         this.height = height;
@@ -89,21 +86,18 @@ public class Boat {
         this.penalties = 0;
         this.durability = 50;
         this.tiredness = 0f;
-        this.lane = lane;
+        this.lanes = lanes;
+        this.laneNo = laneNo;
         this.fastestLegTime = 0;
         this.textureFrames = new Texture[4];
-        frameCounter = 0;
+        this.frameCounter = 0;
         this.name = name;
     }
 
-    public Boat(String info){
-        Json json = new Json();
-        BoatSpriteDescriptor disc = json.fromJson(BoatSpriteDescriptor.class,info);
+    public Boat(BoatSpriteDescriptor disc, DragonBoatGame dragonBoatGame){
+        //Json json = new Json();
+        //BoatSpriteDescriptor disc = json.fromJson(BoatSpriteDescriptor.class,info);
 
-        this.ROBUSTNESS = disc.ROBUSTNESS;
-        this.ACCELERATION = disc.ACCELERATION;
-        this.MANEUVERABILITY = disc.MANEUVERABILITY;
-        this.MAXSPEED = disc.MAXSPEED;
         this.durability = disc.durability;
         this.yPosition = disc.yPosition;
         this.xPosition = disc.xPosition;
@@ -116,6 +110,7 @@ public class Boat {
         this.frameCounter = disc.frameCounter;
         this.name = disc.name;
         this.finished = disc.finished;
+        ChooseBoat(disc.label);
     }
 
     public BoatSpriteDescriptor saveState(){
@@ -191,7 +186,7 @@ public class Boat {
      */
     public boolean CheckCollisions(int backgroundOffset) {
         // Iterate through obstacles.
-        ArrayList<Obstacle> obstacles = this.lane.obstacles;
+        ArrayList<Obstacle> obstacles = this.lanes[this.laneNo].obstacles;
         ArrayList<Integer> obstaclesToRemove = new ArrayList<>();
         for (Obstacle o : obstacles) {
             if (o.getX() > this.xPosition + threshold && o.getX() < this.xPosition + this.width - threshold) {
@@ -203,7 +198,7 @@ public class Boat {
             }
         }
         for (int i : obstaclesToRemove) {
-            this.lane.RemoveObstacle(obstacles.get(i));
+            this.lanes[this.laneNo].RemoveObstacle(obstacles.get(i));
             return true;
         }
         return false;
@@ -228,8 +223,8 @@ public class Boat {
      * @return Boolean representing whether the Boat is in the Lane.
      */
     public boolean CheckIfInLane() {
-        return this.xPosition + threshold > this.lane.getLeftBoundary()
-                && this.xPosition + this.width - threshold < this.lane.getRightBoundary();
+        return this.xPosition + threshold > this.lanes[this.laneNo].getLeftBoundary()
+                && this.xPosition + this.width - threshold < this.lanes[this.laneNo].getRightBoundary();
     }
 
     /**
@@ -284,7 +279,7 @@ public class Boat {
      * Resets necessary stats for the next race.
      */
     public void Reset() {
-        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
+        this.xPosition = lanes[this.laneNo].getRightBoundary() - (lanes[this.laneNo].getRightBoundary() - lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = 0;
         this.currentSpeed = 0f;
         this.penalties = 0;
@@ -490,11 +485,12 @@ public class Boat {
 
     /**
      * 
-     * @param lane Lane object for the boat.
+     * @param lanes Lanes object for the boat.
      */
-    public void setLane(Lane lane) {
-        this.lane = lane;
-        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
+    public void setLane(Lane[] lanes, int laneNo) {
+        this.lanes = lanes;
+        this.laneNo = laneNo;
+        this.xPosition = this.lanes[this.laneNo].getRightBoundary() - (this.lanes[this.laneNo].getRightBoundary() - this.lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
     }
 
     /**

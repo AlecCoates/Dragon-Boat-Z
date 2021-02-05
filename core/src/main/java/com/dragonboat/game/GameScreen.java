@@ -345,12 +345,12 @@ public class GameScreen implements Screen {
          */
         batch.begin();
         batch.draw(player.texture, player.getX(), player.getY() - backgroundOffset);
-        batch.draw(staminaBarEmpty, player.lane.getLeftBoundary(), player.getY() - 20 - backgroundOffset);
-        batch.draw(healthBarEmpty, player.lane.getLeftBoundary(), player.getY() - 40 - backgroundOffset);
-        batch.draw(staminaBarFull, player.lane.getLeftBoundary(), player.getY() - 20 - backgroundOffset, 0, 0,
+        batch.draw(staminaBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset);
+        batch.draw(healthBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset);
+        batch.draw(staminaBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset, 0, 0,
                 Math.round(staminaBarFull.getWidth() * player.getTiredness() / MAX_TIREDNESS),
                 staminaBarFull.getHeight());
-        batch.draw(healthBarFull, player.lane.getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,
+        batch.draw(healthBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,
                 Math.round(healthBarFull.getWidth() * player.getDurability() / (float) MAX_DURABILITY),
                 healthBarFull.getHeight());
         batch.end();

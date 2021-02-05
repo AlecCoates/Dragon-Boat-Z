@@ -38,7 +38,7 @@ class SaveLoadGame {
 
             Boat.BoatSpriteDescriptor[] opponents = new Boat.BoatSpriteDescriptor[dragonBoatGame.opponents.length];
             for (int i = 0; i < dragonBoatGame.opponents.length; i++) {
-                opponents[i] = dragonBoatGame.opponents[i].saveState();
+                opponents[i] = new Boat.BoatSpriteDescriptor(dragonBoatGame.opponents[i]);
             }
             saveData.put("opponents", opponents);
 
@@ -59,7 +59,11 @@ class SaveLoadGame {
             FileHandle file = Gdx.files.local(fileName + ".json");
             file.writeString(saveString, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("\nError: ");
+            System.out.println(e.getMessage());
+            System.out.println(e.getClass());
+            System.out.println(e.getStackTrace());
+            System.out.println("\n");
         }
     }
 

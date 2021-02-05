@@ -14,6 +14,8 @@ public class Lane {
     private final int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
     private final int obstacleLimit;
+    protected Lane[] lanes;
+    protected int laneNo;
 
     static class LaneSpriteDescriptor {
         private int LEFTBOUNDARY, RIGHTBOUNDARY;
@@ -31,15 +33,14 @@ public class Lane {
             logs = new ArrayList<>();
 
             for(Obstacle obstacle: oldLane.obstacles){
-                System.out.println(obstacle.getClass());
-                if(obstacle.getName() == "goose") {
-                    System.out.println("goose");
+                if(obstacle.getName() == "Goose") {
+                    System.out.println("Goose");
                     Goose goose = (Goose) obstacle;
-                    geese.add(goose.saveState());
+                    geese.add(new Goose.GooseSpriteDescriptor(goose));
                 }else{
-                    System.out.println("log");
+                    System.out.println("Log");
                     Log log = (Log) obstacle;
-                    logs.add(log.saveState());
+                    logs.add(new Log.LogSpriteDescriptor(log));
                 }
             }
         }
@@ -51,7 +52,7 @@ public class Lane {
      * @param leftBoundary  X-position for the left boundary of the lane.
      * @param rightBoundary X-position for the right boundary of the lane.
      */
-    public Lane(int leftBoundary, int rightBoundary) {
+    public Lane(int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = 10;
@@ -115,7 +116,7 @@ public class Lane {
     public void SpawnObstacle(int x, int y, String obstacleType) {
         if (this.obstacles.size() <= this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
-                Goose goose = new Goose(x, y, new Texture(Gdx.files.internal("gooseSouthsprite.png")), this);
+                Goose goose = new Goose(x, y, new Texture(Gdx.files.internal("gooseSouthsprite.png")), this.lanes, this.laneNo);
                 this.obstacles.add(goose);
 
             } else if (obstacleType.equals("Log")) {

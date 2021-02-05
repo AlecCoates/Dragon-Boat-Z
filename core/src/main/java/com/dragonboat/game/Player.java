@@ -16,15 +16,16 @@ public class Player extends Boat {
      * @param yPosition Y-position of the boat.
      * @param width     Width of the boat.
      * @param height    Height of the boat.
-     * @param lane      Lane for the boat.
+     * @param lanes     Lanes for the boat.
+     * @param laneNo    Lane number for the boat.
      * @param name      Name of the boat.
      */
-    public Player(int yPosition, int width, int height, Lane lane, String name) {
-        super(yPosition, width, height, lane, name);
+    public Player(int yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {
+        super(yPosition, width, height, lanes, laneNo, name);
     }
 
-    public Player(String info) {
-        super(info);
+    public Player(BoatSpriteDescriptor info, DragonBoatGame dragonBoatGame) {
+        super(info, dragonBoatGame);
     }
 
     /**

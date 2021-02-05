@@ -10,7 +10,8 @@ public class BoatTest {
 
     @Test
     public void steerLeft() {
-        Boat testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        Lane[] lanes = new Lane[]{new Lane(10,10,10)};
+        Boat testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Boat.bankWidth + 27;
         testBoat.currentSpeed = 3;
@@ -18,7 +19,9 @@ public class BoatTest {
         assertEquals(Boat.bankWidth + 27 - 7 * 3, testBoat.xPosition, 0.0002);
         assertEquals(3 * 0.985, testBoat.getCurrentSpeed(), 0.0002);
 
-        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        
+        lanes = new Lane[]{new Lane(10,10,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Boat.bankWidth;
         testBoat.currentSpeed = 5;
@@ -26,7 +29,9 @@ public class BoatTest {
         assertEquals(Boat.bankWidth, testBoat.xPosition, 0.0002);
         assertEquals(5, testBoat.getCurrentSpeed(), 0.0002);
 
-        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        
+        lanes = new Lane[]{new Lane(10,10,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Boat.bankWidth - 10;
         testBoat.currentSpeed = 7;
@@ -37,7 +42,9 @@ public class BoatTest {
 
     @Test
     public void steerRight() {
-        Boat testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+
+        Lane[] lanes = new Lane[]{new Lane(10,10,10)};
+        Boat testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27;
         testBoat.currentSpeed = 3;
@@ -45,7 +52,9 @@ public class BoatTest {
         assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27 + 7 * 3, testBoat.xPosition, 0.0002);
         assertEquals(3 * 0.985, testBoat.getCurrentSpeed(), 0.0002);
 
-        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        
+        lanes = new Lane[]{new Lane(10,10,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width;
         testBoat.currentSpeed = 5;
@@ -53,7 +62,9 @@ public class BoatTest {
         assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
         assertEquals(5, testBoat.getCurrentSpeed(), 0.0002);
 
-        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        
+        lanes = new Lane[]{new Lane(10,10,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width + 10;
         testBoat.currentSpeed = 7;
@@ -64,7 +75,9 @@ public class BoatTest {
 
     @Test
     public void moveForward() {
-        Boat testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+
+        Lane[] lanes = new Lane[]{new Lane(10,10,10)};
+        Boat testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27;
         testBoat.currentSpeed = 3;
@@ -72,7 +85,9 @@ public class BoatTest {
         assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width - 27 + 7 * 3, testBoat.xPosition, 0.0002);
         assertEquals(3 * 0.985, testBoat.getCurrentSpeed(), 0.0002);
 
-        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        
+        lanes = new Lane[]{new Lane(10,10,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width;
         testBoat.currentSpeed = 5;
@@ -80,7 +95,9 @@ public class BoatTest {
         assertEquals(Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width, testBoat.xPosition, 0.0002);
         assertEquals(5, testBoat.getCurrentSpeed(), 0.0002);
 
-        testBoat = new Boat(15, 5, 15, new Lane(10,10,10), "Boat");
+        
+        lanes = new Lane[]{new Lane(10,10,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100,5,10,7);
         testBoat.xPosition = Gdx.graphics.getWidth() - Boat.bankWidth - testBoat.width + 10;
         testBoat.currentSpeed = 7;
