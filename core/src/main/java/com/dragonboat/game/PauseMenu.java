@@ -24,7 +24,6 @@ public class PauseMenu extends Window{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.setScreen(new SaveGameScreen(parent));
-                System.out.println("Game saved");
             }
         });
 

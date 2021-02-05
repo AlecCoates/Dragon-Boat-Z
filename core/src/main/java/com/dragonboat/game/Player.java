@@ -24,10 +24,6 @@ public class Player extends Boat {
         super(yPosition, width, height, lanes, laneNo, name);
     }
 
-    public Player(BoatSpriteDescriptor info, DragonBoatGame dragonBoatGame) {
-        super(info, dragonBoatGame);
-    }
-
     /**
      * Moves the player based on key pressed (W, A, S, D).
      */

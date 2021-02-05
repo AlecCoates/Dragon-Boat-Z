@@ -29,10 +29,6 @@ public class Opponent extends Boat {
         sortedIncomingObstacles = new ArrayList<>();
     }
 
-    public Opponent(BoatSpriteDescriptor info, DragonBoatGame dragonBoatGame) {
-        super(info, dragonBoatGame);
-    }
-
     /**
      * <p>
      * Controls the AI behaviour of the boat.

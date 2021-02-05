@@ -2,6 +2,8 @@ package com.dragonboat.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import javax.swing.*;
@@ -20,51 +22,43 @@ class SaveLoadGame {
     }
 
     public void saveGame(DragonBoatGame dragonBoatGame, String fileName){
-        try {
-            this.fileName = fileName;
-            this.dragonBoatGame = dragonBoatGame;
+        this.fileName = fileName;
+        this.dragonBoatGame = dragonBoatGame;
 
-            HashMap<String, Object> saveData = new HashMap<>();
+        HashMap<String, Object> saveData = new HashMap<>();
 
-            saveData.put("rnd", dragonBoatGame.rnd);
+        saveData.put("rnd", dragonBoatGame.rnd);
 
-            Lane.LaneSpriteDescriptor[] lanes = new Lane.LaneSpriteDescriptor[dragonBoatGame.lanes.length];
-            for (int i = 0; i < dragonBoatGame.lanes.length; i++) {
-                lanes[i] = dragonBoatGame.lanes[i].saveState();
-            }
-            saveData.put("lanes", lanes);
-
-            saveData.put("player", dragonBoatGame.player.saveState());
-
-            Boat.BoatSpriteDescriptor[] opponents = new Boat.BoatSpriteDescriptor[dragonBoatGame.opponents.length];
-            for (int i = 0; i < dragonBoatGame.opponents.length; i++) {
-                opponents[i] = new Boat.BoatSpriteDescriptor(dragonBoatGame.opponents[i]);
-            }
-            saveData.put("opponents", opponents);
-
-            saveData.put("progessBar", dragonBoatGame.progressBar.saveState());
-
-            LinkedList<Integer[]> tempObstacleTimes = new LinkedList<>();
-            for (int i = 0; i < dragonBoatGame.obstacleTimes.length; i++) {
-                tempObstacleTimes.add(dragonBoatGame.obstacleTimes[i].toArray(new Integer[dragonBoatGame.obstacleTimes[i].size()]));
-            }
-            saveData.put("obstacleTimes", tempObstacleTimes.toArray());
-
-            saveData.put("difficulty", dragonBoatGame.difficulty);
-            saveData.put("selectedDifficulty", dragonBoatGame.selectedDifficulty);
-            saveData.put("ended", dragonBoatGame.ended);
-
-            String saveString = new Json().toJson(saveData);
-
-            FileHandle file = Gdx.files.local(fileName + ".json");
-            file.writeString(saveString, false);
-        } catch (Exception e) {
-            System.out.println("\nError: ");
-            System.out.println(e.getMessage());
-            System.out.println(e.getClass());
-            System.out.println(e.getStackTrace());
-            System.out.println("\n");
+        Lane.LaneSpriteDescriptor[] lanes = new Lane.LaneSpriteDescriptor[dragonBoatGame.lanes.length];
+        for (int i = 0; i < dragonBoatGame.lanes.length; i++) {
+            lanes[i] = new Lane.LaneSpriteDescriptor(dragonBoatGame.lanes[i]);
         }
+        saveData.put("lanes", lanes);
+
+        saveData.put("player", new Boat.BoatSpriteDescriptor(dragonBoatGame.player));
+
+        Boat.BoatSpriteDescriptor[] opponents = new Boat.BoatSpriteDescriptor[dragonBoatGame.opponents.length];
+        for (int i = 0; i < dragonBoatGame.opponents.length; i++) {
+            opponents[i] = new Boat.BoatSpriteDescriptor(dragonBoatGame.opponents[i]);
+        }
+        saveData.put("opponents", opponents);
+
+        saveData.put("progessBar", new ProgressBar.ProgressBarSpriteDescriptor(dragonBoatGame.progressBar));
+
+        LinkedList<Integer[]> tempObstacleTimes = new LinkedList<>();
+        for (int i = 0; i < dragonBoatGame.obstacleTimes.length; i++) {
+            tempObstacleTimes.add(dragonBoatGame.obstacleTimes[i].toArray(new Integer[dragonBoatGame.obstacleTimes[i].size()]));
+        }
+        saveData.put("obstacleTimes", tempObstacleTimes.toArray());
+
+        saveData.put("difficulty", dragonBoatGame.difficulty);
+        saveData.put("selectedDifficulty", dragonBoatGame.selectedDifficulty);
+        saveData.put("ended", dragonBoatGame.ended);
+
+        String saveString = new Json().toJson(saveData);
+
+        FileHandle file = Gdx.files.local(fileName + ".json");
+        file.writeString(saveString, false);
     }
 
     public void loadGame(DragonBoatGame dragonBoatGame, String fileName){
@@ -73,34 +67,81 @@ class SaveLoadGame {
         HashMap<String, Object> loadData = new Json().fromJson(HashMap.class, file);
         System.out.println("////////////////////////////////////////////////////");
 
-        //Loading game seed
+        //game seed
         //System.out.println(json.prettyPrint(loadData.get(0)));
         Random newRnd = (Random) loadData.get("rnd");
 
-        //lanes
-        //System.out.println(json.prettyPrint(loadData.get(1)));
-        Lane.LaneSpriteDescriptor[] newLanes = (Lane.LaneSpriteDescriptor[]) loadData.get("lanes");
-        dragonBoatGame.lanes = new Lane[newLanes.length];
+        //difficulty
+        dragonBoatGame.difficulty = (int) loadData.get("difficulty");
+        dragonBoatGame.selectedDifficulty = (int) loadData.get("selectedDifficulty");
+        dragonBoatGame.ended = (boolean) loadData.get("ended");
 
-        /*
+        //lanes and obstacles
+        //System.out.println(json.prettyPrint(loadData.get(1)));
+        Lane.LaneSpriteDescriptor[] loadLanes = (Lane.LaneSpriteDescriptor[]) loadData.get("lanes");
+        dragonBoatGame.lanes = new Lane[loadLanes.length];
+        for (Lane.LaneSpriteDescriptor loadLane : loadLanes) {
+            Lane lane = new Lane(loadLane.LEFTBOUNDARY, loadLane.RIGHTBOUNDARY, dragonBoatGame.lanes, loadLane.laneNo);
+            dragonBoatGame.lanes[loadLane.laneNo] = lane;
+            ArrayList<Obstacle.ObstacleSpriteDescriptor> loadObstacles = loadLane.obstacles;
+            for (Obstacle.ObstacleSpriteDescriptor loadObstacle : loadObstacles) {
+                if (loadObstacle.name == "Goose") {
+                    Goose.GooseSpriteDescriptor loadGoose = (Goose.GooseSpriteDescriptor) loadObstacle;
+                    lane.obstacles.add(new Goose((int) loadGoose.xPosition, (int) loadGoose.yPosition, new Texture(Gdx.files.internal("gooseSouthsprite.png")), dragonBoatGame.lanes, loadLane.laneNo));
+                } else if (loadObstacle.name == "Log") {
+                    Log.LogSpriteDescriptor loadLog = (Log.LogSpriteDescriptor) loadObstacle;
+                    lane.obstacles.add(new Log((int) loadObstacle.xPosition, (int) loadObstacle.yPosition, new Texture(Gdx.files.internal("logBig sprite.png"))));
+                }
+            }
+        }
+
+        //obstacle times
+        Integer[][] loadObstacleTimes = (Integer[][]) loadData.get("obstacleTimes");
+        ArrayList<Integer>[] obstacleTimes = new ArrayList[loadObstacleTimes.length];
+        for (int i = 0; i < loadObstacleTimes.length; i++) {
+            obstacleTimes[i] = new ArrayList<>(Arrays.asList(loadObstacleTimes[i]));
+        }
+        dragonBoatGame.obstacleTimes = obstacleTimes;
+
         //player
         //System.out.println(json.prettyPrint(loadData.get(classCounter)));
-        Player newPlayer = new Player((String) loadData.get(classCounter));
-        newPlayer.setLane(newLanes[3]);
+        Boat.BoatSpriteDescriptor loadPlayer = (Boat.BoatSpriteDescriptor) loadData.get("player");
+        Player player = new Player((int) loadPlayer.yPosition, loadPlayer.width, loadPlayer.height, dragonBoatGame.lanes, loadPlayer.laneNo, loadPlayer.name);
+        player.xPosition = loadPlayer.xPosition;
+        player.penalties = loadPlayer.penalties;
+        player.currentSpeed = loadPlayer.currentSpeed;
+        player.fastestLegTime = loadPlayer.fastestLegTime;
+        player.tiredness = loadPlayer.tiredness;
+        player.frameCounter = loadPlayer.frameCounter;
+        player.finished = loadPlayer.finished;
+        player.label = loadPlayer.label;
+        player.ChooseBoat(player.label);
+        dragonBoatGame.player = player;
 
         //opponents
-        Opponent[] newOpponents = new Opponent[(int) loadData.get(classCounter)];
-        for(int j=0;j<newOpponents.length;j++){
-            newOpponents[j] = new Opponent((String) loadData.get(classCounter+j+1));
-            newOpponents[j].setLane(newLanes[j]);
+        Boat.BoatSpriteDescriptor[] loadOpponents = (Boat.BoatSpriteDescriptor[]) loadData.get("opponents");
+        Opponent[] opponents = new Opponent[loadOpponents.length];
+        for (Boat.BoatSpriteDescriptor loadOpponent : loadOpponents) {
+            Opponent opponent = new Opponent((int) loadPlayer.yPosition, loadPlayer.width, loadPlayer.height, dragonBoatGame.lanes, loadPlayer.laneNo, loadPlayer.name);
+            opponent.xPosition = loadOpponent.xPosition;
+            opponent.penalties = loadOpponent.penalties;
+            opponent.currentSpeed = loadOpponent.currentSpeed;
+            opponent.fastestLegTime = loadOpponent.fastestLegTime;
+            opponent.tiredness = loadOpponent.tiredness;
+            opponent.frameCounter = loadOpponent.frameCounter;
+            opponent.finished = loadOpponent.finished;
+            opponent.label = loadOpponent.label;
+            opponent.ChooseBoat(opponent.label);
         }
 
         //progress bar
-        System.out.println(json.prettyPrint(loadData.get(classCounter)));
-        ProgressBar newProgressBar = json.fromJson(ProgressBar.class, (String) loadData.get(classCounter));
-        newProgressBar.setPlayerBoat(newPlayer);
-        newProgressBar.setOpponentBoats(newOpponents);
+        //System.out.println(json.prettyPrint(loadData.get(classCounter)));
+        ProgressBar.ProgressBarSpriteDescriptor loadProgressBar = (ProgressBar.ProgressBarSpriteDescriptor) loadData.get("progressBar");
+        ProgressBar progressBar = new ProgressBar(player, opponents);
+        progressBar.timeSeconds = loadProgressBar.timeSeconds;
+        progressBar.playerTime = loadProgressBar.playerTime;
 
+        /*
         ArrayList<Integer>[] newObTimes = new ArrayList[(int) loadData.get(classCounter)];
         int innerLoop = (int)loadData.get(classCounter);
 
@@ -110,12 +151,13 @@ class SaveLoadGame {
                 newObTimes[i].add((Integer) loadData.get(classCounter));
             }
         }
-
         dragonBoatGame.loadSave(newRnd, newLanes, newPlayer,
                 newOpponents, newProgressBar, newObTimes,
                 (int) loadData.get(classCounter),
                 (int) loadData.get(classCounter+1),
                 (boolean) loadData.get(classCounter+2));
-    */
+         */
+
+
     }
 }

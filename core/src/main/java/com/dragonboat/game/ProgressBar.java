@@ -11,10 +11,22 @@ public class ProgressBar {
 
 	public transient Texture texture, playerIcon, opponentIcon;
 
-	private transient Player playerBoat;
-	private transient Opponent[] opponentBoats;
-	private float timeSeconds;
-	private float playerTime;
+	protected transient Player playerBoat;
+	protected transient Opponent[] opponentBoats;
+	protected float timeSeconds;
+	protected float playerTime;
+
+	static class ProgressBarSpriteDescriptor {
+		public float timeSeconds;
+		public float playerTime;
+
+		public ProgressBarSpriteDescriptor(){}
+
+		public ProgressBarSpriteDescriptor(ProgressBar oldProgressBar) {
+			this.timeSeconds = oldProgressBar.timeSeconds;
+			this.playerTime = oldProgressBar.playerTime;
+		}
+	}
 
 	/**
 	 * Creates a progress bar that tracks the player and opponent boats progress
@@ -30,7 +42,6 @@ public class ProgressBar {
 		this.playerIcon = new Texture(Gdx.files.internal("progress icon player.png"));
 		this.opponentIcon = new Texture(Gdx.files.internal("progress icon enemy.png"));
 	}
-	public ProgressBar(){}
 
 	public ProgressBar saveState(){
 		//return new Json().toJson(this);

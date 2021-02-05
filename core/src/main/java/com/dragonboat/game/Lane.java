@@ -11,16 +11,17 @@ import com.badlogic.gdx.utils.Json;
  * Represents a lane on the course.
  */
 public class Lane {
-    private final int LEFTBOUNDARY, RIGHTBOUNDARY;
+    public int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
     private final int obstacleLimit;
     protected Lane[] lanes;
     protected int laneNo;
 
     static class LaneSpriteDescriptor {
-        private int LEFTBOUNDARY, RIGHTBOUNDARY;
-        private int obstacleLimit;
-        private ArrayList<Obstacle.ObstacleSpriteDescriptor> geese, logs;
+        public int LEFTBOUNDARY, RIGHTBOUNDARY;
+        public int obstacleLimit;
+        public ArrayList<Obstacle.ObstacleSpriteDescriptor> obstacles;
+        public int laneNo;
 
         //Used for the return from json file
         public LaneSpriteDescriptor (){}
@@ -29,18 +30,17 @@ public class Lane {
             LEFTBOUNDARY = oldLane.getLeftBoundary();
             RIGHTBOUNDARY = oldLane.getRightBoundary();
             obstacleLimit = oldLane.obstacleLimit;
-            geese = new ArrayList<>();
-            logs = new ArrayList<>();
-
+            obstacles = new ArrayList<>();
+            laneNo = oldLane.laneNo;
             for(Obstacle obstacle: oldLane.obstacles){
                 if(obstacle.getName() == "Goose") {
                     System.out.println("Goose");
                     Goose goose = (Goose) obstacle;
-                    geese.add(new Goose.GooseSpriteDescriptor(goose));
+                    obstacles.add(new Goose.GooseSpriteDescriptor(goose));
                 }else{
                     System.out.println("Log");
                     Log log = (Log) obstacle;
-                    logs.add(new Log.LogSpriteDescriptor(log));
+                    obstacles.add(new Log.LogSpriteDescriptor(log));
                 }
             }
         }
@@ -56,25 +56,10 @@ public class Lane {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = 10;
+        this.lanes = lanes;
+        this.laneNo = laneNo;
 
         obstacles = new ArrayList<>();
-    }
-
-    public Lane(String info){
-        Json json = new Json();
-        LaneSpriteDescriptor disc = json.fromJson(LaneSpriteDescriptor.class,info);
-
-        this.LEFTBOUNDARY = disc.LEFTBOUNDARY;
-        this.RIGHTBOUNDARY = disc.RIGHTBOUNDARY;
-        this.obstacleLimit = disc.obstacleLimit;
-
-        obstacles = new ArrayList<>();
-        for(Obstacle.ObstacleSpriteDescriptor goose: disc.geese){
-            this.obstacles.add((Goose) new Obstacle(goose));
-        }
-        for(Obstacle.ObstacleSpriteDescriptor log: disc.logs){
-            this.obstacles.add((Log) new Obstacle(log));
-        }
     }
 
     /**
@@ -90,12 +75,6 @@ public class Lane {
         this.obstacleLimit = obstacleLimit;
 
         obstacles = new ArrayList<>();
-    }
-
-    public LaneSpriteDescriptor saveState(){
-        LaneSpriteDescriptor disc = new LaneSpriteDescriptor(this);
-        //return new Json().toJson(disc);
-        return disc;
     }
 
     /**

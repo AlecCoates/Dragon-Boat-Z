@@ -17,8 +17,8 @@ public class Obstacle {
 	public Texture texture;
 
 	static class ObstacleSpriteDescriptor {
-		protected float yPosition, xPosition;
-		private int damage;
+		public float yPosition, xPosition;
+		public int damage;
 		public int width, height;
 		public String name;
 

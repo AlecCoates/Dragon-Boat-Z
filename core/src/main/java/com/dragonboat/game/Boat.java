@@ -27,13 +27,13 @@ public class Boat {
     protected Lane[] lanes;
     protected int laneNo;
 
-    private Texture[] textureFrames;
-    private int frameCounter = 0;
+    protected Texture[] textureFrames;
+    protected int frameCounter = 0;
     public Texture texture;
-    private String name;
+    protected String name;
     protected char label;
-    private boolean finished;
-    private final int threshold = 5;
+    protected boolean finished;
+    protected final int threshold = 5;
     public static float bankWidth = 40;
 
     static class BoatSpriteDescriptor {
@@ -92,31 +92,6 @@ public class Boat {
         this.textureFrames = new Texture[4];
         this.frameCounter = 0;
         this.name = name;
-    }
-
-    public Boat(BoatSpriteDescriptor disc, DragonBoatGame dragonBoatGame){
-        //Json json = new Json();
-        //BoatSpriteDescriptor disc = json.fromJson(BoatSpriteDescriptor.class,info);
-
-        this.durability = disc.durability;
-        this.yPosition = disc.yPosition;
-        this.xPosition = disc.xPosition;
-        this.penalties = disc.penalties;
-        this.width = disc.width;
-        this.height = disc.height;
-        this.currentSpeed = disc.currentSpeed;
-        this.fastestLegTime = disc.fastestLegTime;
-        this.tiredness = disc.tiredness;
-        this.frameCounter = disc.frameCounter;
-        this.name = disc.name;
-        this.finished = disc.finished;
-        ChooseBoat(disc.label);
-    }
-
-    public BoatSpriteDescriptor saveState(){
-        BoatSpriteDescriptor disc = new BoatSpriteDescriptor(this);
-        //return new Json().toJson(disc);
-        return disc;
     }
 
     /**
