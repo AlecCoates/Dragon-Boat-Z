@@ -50,9 +50,11 @@ public class ProgressBar {
 	public ProgressBar(Player player, Opponent[] opponents, boolean noTexture) {
 		this.playerBoat = player;
 		this.opponentBoats = opponents;
-		this.texture = new Texture(Gdx.files.internal("core/assets/top bar sprite.png"));
-		this.playerIcon = new Texture(Gdx.files.internal("core/assets/progress icon player.png"));
-		this.opponentIcon = new Texture(Gdx.files.internal("core/assets/progress icon enemy.png"));
+		if (!noTexture) {
+			this.texture = new Texture(Gdx.files.internal("core/assets/top bar sprite.png"));
+			this.playerIcon = new Texture(Gdx.files.internal("core/assets/progress icon player.png"));
+			this.opponentIcon = new Texture(Gdx.files.internal("core/assets/progress icon enemy.png"));
+		}
 	}
 
 	public ProgressBar saveState(){

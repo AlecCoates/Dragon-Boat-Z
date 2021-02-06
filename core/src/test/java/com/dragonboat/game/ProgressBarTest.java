@@ -23,7 +23,9 @@ public class ProgressBarTest {
     @Before
     public void setUp() {
         textures = new HashMap<>();
-        textures.put("Test", new Texture(new Pixmap(1,1, Pixmap.Format.RGB888)));
+        textures.put("Goose", new Texture(new Pixmap(5, 15, Pixmap.Format.RGB888)));
+        textures.put("Log", new Texture(new Pixmap(15, 109, Pixmap.Format.RGB888)));
+        textures.put("Test", new Texture(new Pixmap(15, 34, Pixmap.Format.RGB888)));
         lanes = new Lane[]{new Lane(textures, 0,10,10), new Lane(textures, 0,20,10)};
     }
 
@@ -33,8 +35,8 @@ public class ProgressBarTest {
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(0,5,10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         ProgressBar testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         testProgressBar.timeSeconds = 7f;
@@ -51,8 +53,8 @@ public class ProgressBarTest {
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(0,5,10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         ProgressBar testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         testProgressBar.timeSeconds = 12f;
@@ -67,8 +69,8 @@ public class ProgressBarTest {
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(0,5,10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         testProgressBar.timeSeconds = 12f;
@@ -86,8 +88,8 @@ public class ProgressBarTest {
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(0, 5, 10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(0, 5, 10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         ProgressBar testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         assertFalse(testProgressBar.allFinished(65));
@@ -97,8 +99,8 @@ public class ProgressBarTest {
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(0, 5, 10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(0, 5, 10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         assertFalse(testProgressBar.allFinished(65));
@@ -108,8 +110,8 @@ public class ProgressBarTest {
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(80, 5, 10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(80, 5, 10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         assertFalse(testProgressBar.allFinished(65));
@@ -119,8 +121,8 @@ public class ProgressBarTest {
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(80, 5, 10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(80, 5, 10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         assertTrue(testProgressBar.allFinished(65));
@@ -132,8 +134,8 @@ public class ProgressBarTest {
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
-            testOpponents[i] = new Opponent(i + 1, 5, 10, lanes, i, Character.toString((char) (66 + i)));
+            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(i + 1, 5, 10, dynamicLanes, i, Character.toString((char) (66 + i)));
         }
         ProgressBar testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         assertArrayEquals(new float[]{0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1f}, testProgressBar.getProgress(5), 0.0002f);

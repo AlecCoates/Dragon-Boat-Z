@@ -22,7 +22,9 @@ public class BoatTest {
     @Before
     public void setUp() {
         textures = new HashMap<>();
-        textures.put("Test", new Texture(new Pixmap(1,1, Pixmap.Format.RGB888)));
+        textures.put("Goose", new Texture(new Pixmap(5, 15, Pixmap.Format.RGB888)));
+        textures.put("Log", new Texture(new Pixmap(15, 109, Pixmap.Format.RGB888)));
+        textures.put("Test", new Texture(new Pixmap(15, 34, Pixmap.Format.RGB888)));
         lanes = new Lane[]{new Lane(textures, 0,10,10), new Lane(textures, 0,20,10)};
     }
 
