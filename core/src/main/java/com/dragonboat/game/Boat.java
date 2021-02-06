@@ -18,9 +18,9 @@ public class Boat {
      * https://drive.google.com/file/d/15O95umnJIoApnsj8I9ejEtMxrDGYJWAC/view?usp=sharing
      */
 
-    private int ROBUSTNESS;
-    private float ACCELERATION, MANEUVERABILITY, MAXSPEED;
-    private int durability;
+    protected int ROBUSTNESS;
+    protected float ACCELERATION, MANEUVERABILITY, MAXSPEED;
+    protected int durability;
     protected float yPosition, xPosition, penalties;
     protected int width, height;
     protected float currentSpeed, fastestLegTime, tiredness;

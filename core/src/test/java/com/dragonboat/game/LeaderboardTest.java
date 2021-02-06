@@ -1,20 +1,41 @@
 package com.dragonboat.game;
 
-import org.junit.Test;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import org.junit.*;
 import org.junit.runner.RunWith;
+
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class LeaderboardTest {
 
-    /*@Test
+    private HashMap<String, Texture> textures;
+    private Lane[] lanes;
+    private Lane[] dynamicLanes;
+
+    /**
+     * Sets up the test fixture.
+     * (Called before every test case method.)
+     */
+    @Before
+    public void setUp() {
+        textures = new HashMap<>();
+        textures.put("Test", new Texture(new Pixmap(1,1, Pixmap.Format.RGB888)));
+        lanes = new Lane[]{new Lane(textures, 0,10,10), new Lane(textures, 0,20,10)};
+    }
+
+    @Test
     public void testUpdateOrder() {
-        Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
+        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
         testPlayer.fastestLegTime = 26;
         Opponent[] testOpponents = new Opponent[6];
+        dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            testOpponents[i] = new Opponent(0,5,10, new Lane(i * 20,(i+1) * 20, 10), Character.toString((char) (66 + i)));
+            dynamicLanes[testOpponents.length] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i;
         }
         Leaderboard testLeaderboard = new Leaderboard(testPlayer, testOpponents, true);
@@ -28,11 +49,11 @@ public class LeaderboardTest {
 
     @Test
     public void testGetTimes() {
-        Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
+        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         for (int i = 0; i < testOpponents.length; i++) {
-            testOpponents[i] = new Opponent(0,5,10, new Lane(i * 20,(i+1) * 20, 10), Character.toString((char) (66 + i)));
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i + 0.79222f;
         }
         Leaderboard testLeaderboard = new Leaderboard(testPlayer, testOpponents, true);
@@ -41,11 +62,11 @@ public class LeaderboardTest {
 
     @Test
     public void testGetFinalists() {
-        Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
+        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         for (int i = 0; i < testOpponents.length; i++) {
-            testOpponents[i] = new Opponent(0,5,10, new Lane(i * 20,(i+1) * 20, 10), Character.toString((char) (66 + i)));
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i + 0.79222f;
         }
         Leaderboard testLeaderboard = new Leaderboard(testPlayer, testOpponents, true);
@@ -54,15 +75,15 @@ public class LeaderboardTest {
 
     @Test
     public void testGetPodium() {
-        Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
+        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         for (int i = 0; i < testOpponents.length; i++) {
-            testOpponents[i] = new Opponent(0,5,10, new Lane(i * 20,(i+1) * 20, 10), Character.toString((char) (66 + i)));
+            testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i + 0.79222f;
         }
         Leaderboard testLeaderboard = new Leaderboard(testPlayer, testOpponents, true);
         assertArrayEquals(new Boat[]{testOpponents[5], testOpponents[4], testOpponents[3]}, testLeaderboard.getPodium());
-    }*/
+    }
 
 }

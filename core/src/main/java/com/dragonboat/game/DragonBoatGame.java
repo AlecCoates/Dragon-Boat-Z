@@ -80,7 +80,7 @@ public class DragonBoatGame extends Game {
 		obstacleTimes = new ArrayList[lanes.length];
 
 		spriteTextures = new HashMap<>();
-		spriteTextures.put("Goose", new Texture(Gdx.files.internal("core/assets/gooseSouthsprite.png")));
+		spriteTextures.put("Goose", new Texture(Gdx.files.internal("core/assets/gooseSouth Sprite.png")));
 		spriteTextures.put("Log", new Texture(Gdx.files.internal("core/assets/logBig sprite.png")));
 
 		/*
