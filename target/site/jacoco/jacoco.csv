@@ -22,7 +22,7 @@ core,com.dragonboat.game,Boat,336,512,7,29,45,84,26,33,21,20
 core,com.dragonboat.game,MenuScreen.new InputAdapter() {...},232,0,32,0,38,0,18,0,2,0
 core,com.dragonboat.game,Opponent,414,18,70,0,84,4,37,1,2,1
 core,com.dragonboat.game,Obstacle.ObstacleSpriteDescriptor,30,0,0,0,9,0,2,0,2,0
-core,com.dragonboat.game,SaveLoadGame,572,0,22,0,102,0,14,0,3,0
+core,com.dragonboat.game,SaveLoadGame,579,0,22,0,103,0,14,0,3,0
 core,com.dragonboat.game,Player,30,10,8,0,11,2,5,1,1,1
 core,com.dragonboat.game,SaveGameScreen,268,0,0,0,56,0,8,0,8,0
 core,com.dragonboat.game,GameScreen,1783,0,132,0,255,0,75,0,9,0
