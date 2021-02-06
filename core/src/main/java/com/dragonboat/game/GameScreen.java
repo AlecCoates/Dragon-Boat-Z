@@ -72,10 +72,20 @@ public class GameScreen implements Screen {
 
     /**
      * Sets up everything needed for a race to take place.
-     * 
+     *
      * @param game Represents the initial state of DragonBoatGame.
      */
     public GameScreen(DragonBoatGame game) {
+        this(game, false);
+    }
+
+    /**
+     * Sets up everything needed for a race to take place.
+     * 
+     * @param game Represents the initial state of DragonBoatGame.
+     * @param loaded Represents whether the game has been loaded from a save or not.
+     */
+    public GameScreen(DragonBoatGame game, boolean loaded) {
         /*
          * Grab game objects from DragonBoatGame.
          */
@@ -110,17 +120,18 @@ public class GameScreen implements Screen {
         opponents = this.game.opponents;
         rnd = this.game.rnd;
 
-        ArrayList<Integer> possibleBoats = new ArrayList<Integer>();
-        for (int i = 0; i < lanes.length; i++) {
-            if (i != game.playerChoice) {
-                possibleBoats.add(i);
+        ArrayList<Integer> possibleBoats = new ArrayList<>();
+        if (!loaded) {
+            for (int i = 0; i < lanes.length; i++) {
+                if (i != game.playerChoice) {
+                    possibleBoats.add(i);
+                }
+            }
+            for (Opponent o : opponents) {
+                int choice = o.SetRandomBoat(possibleBoats);
+                possibleBoats.remove(choice);
             }
         }
-        for (Opponent o : opponents) {
-            int choice = o.SetRandomBoat(possibleBoats);
-            possibleBoats.remove(choice);
-        }
-
         leaderboard = this.game.leaderboard;
 
         // setup view

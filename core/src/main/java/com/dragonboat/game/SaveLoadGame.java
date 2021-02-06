@@ -74,6 +74,7 @@ class SaveLoadGame {
         //game seed
         //System.out.println(json.prettyPrint(loadData.get(0)));
         Random newRnd = (Random) loadData.get("rnd");
+        dragonBoatGame.rnd = newRnd;
 
         //difficulty
         dragonBoatGame.difficulty = (int) loadData.get("difficulty");
@@ -167,7 +168,7 @@ class SaveLoadGame {
         Opponent[] opponents = new Opponent[loadOpponents.size];
         for (int i = 0; i < loadOpponents.size; i++) {
             Boat.BoatSpriteDescriptor loadOpponent = (Boat.BoatSpriteDescriptor) loadOpponents.get(i);
-            Opponent opponent = new Opponent((int) loadPlayer.yPosition, loadPlayer.width, loadPlayer.height, dragonBoatGame.lanes, loadPlayer.laneNo, loadPlayer.name);
+            Opponent opponent = new Opponent((int) loadOpponent.yPosition, loadOpponent.width, loadOpponent.height, dragonBoatGame.lanes, loadOpponent.laneNo, loadOpponent.name);
             opponent.xPosition = loadOpponent.xPosition;
             opponent.penalties = loadOpponent.penalties;
             opponent.currentSpeed = loadOpponent.currentSpeed;
@@ -177,7 +178,9 @@ class SaveLoadGame {
             opponent.finished = loadOpponent.finished;
             opponent.label = loadOpponent.label;
             opponent.ChooseBoat(opponent.label);
+            opponents[i] = opponent;
         }
+        dragonBoatGame.opponents = opponents;
 
         //progress bar
         //System.out.println(json.prettyPrint(loadData.get(classCounter)));
@@ -185,6 +188,7 @@ class SaveLoadGame {
         ProgressBar progressBar = new ProgressBar(player, opponents);
         progressBar.timeSeconds = loadProgressBar.timeSeconds;
         progressBar.playerTime = loadProgressBar.playerTime;
+        dragonBoatGame.progressBar = progressBar;
 
         /*
         ArrayList<Integer>[] newObTimes = new ArrayList[(int) loadData.get(classCounter)];
