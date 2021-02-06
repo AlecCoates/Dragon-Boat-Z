@@ -24,7 +24,6 @@ public class PauseMenu extends Window{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.setScreen(new SaveGameScreen(parent));
-                System.out.println("Game saved");
             }
         });
 
@@ -41,6 +40,6 @@ public class PauseMenu extends Window{
         super.row().pad(10,0,0,10);
         super.add("Press Esc to resume game");
     }
-    private static Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+    private static Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
 }

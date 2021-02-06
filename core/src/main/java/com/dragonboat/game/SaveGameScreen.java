@@ -2,6 +2,7 @@ package com.dragonboat.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,6 +20,9 @@ public class SaveGameScreen implements Screen {
     private Label subtTitle1;
     private Label subtTitle2;
     private Label subtTitle3;
+    private String fileName1 = "SaveState1";
+    private String fileName2 = "SaveState2";
+    private String fileName3 = "SaveState3";
 
 
     /**
@@ -53,27 +57,30 @@ public class SaveGameScreen implements Screen {
         /*
         * Creates all required buttons
          */
-        Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
         final TextButton save1Button = new TextButton("Save",skin);
         save1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Saved");
+                SaveLoadGame saveFile1 = new SaveLoadGame(parent, fileName1, true);
+                System.out.println("Saved_1");
             }
         });
         final TextButton save2Button = new TextButton("Save",skin);
         save2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Saved");
+                SaveLoadGame saveFile2 = new SaveLoadGame(parent, fileName2, true);
+                System.out.println("Saved_2");
             }
         });
         final TextButton save3Button = new TextButton("Save",skin);
         save3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Saved");
+                SaveLoadGame saveFile3 = new SaveLoadGame(parent, fileName3, true);
+                System.out.println("Saved_3");
             }
         });
 
@@ -81,21 +88,27 @@ public class SaveGameScreen implements Screen {
         load1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Loaded");
+                SaveLoadGame loadFile1 = new SaveLoadGame(parent, fileName1, false);
+                parent.setScreen(new GameScreen(parent, true));
+                System.out.println("Loaded_1");
             }
         });
         final TextButton load2Button = new TextButton("Load",skin);
         load2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Loaded");
+                SaveLoadGame loadFile2 = new SaveLoadGame(parent, fileName2, false);
+                parent.setScreen(new GameScreen(parent, true));
+                System.out.println("Loaded_2");
             }
         });
         final TextButton load3Button = new TextButton("Load",skin);
         load3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Loaded");
+                SaveLoadGame loadFile3 = new SaveLoadGame(parent, fileName3, false);
+                parent.setScreen(new GameScreen(parent, true));
+                System.out.println("Loaded_3");
             }
         });
 

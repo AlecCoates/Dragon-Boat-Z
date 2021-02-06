@@ -2,18 +2,31 @@ package com.dragonboat.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 
 /**
  * Represents a progress bar.
  */
 public class ProgressBar {
 
-	public Texture texture, playerIcon, opponentIcon;
+	public transient Texture texture, playerIcon, opponentIcon;
 
-	protected Player playerBoat;
-	protected Opponent[] opponentBoats;
-	protected float timeSeconds;
-	protected float playerTime;
+	protected transient Player playerBoat;
+	protected transient Opponent[] opponentBoats;
+	protected float timeSeconds = 0;
+	protected float playerTime = 0;
+
+	static class ProgressBarSpriteDescriptor {
+		public float timeSeconds;
+		public float playerTime;
+
+		public ProgressBarSpriteDescriptor(){}
+
+		public ProgressBarSpriteDescriptor(ProgressBar oldProgressBar) {
+			this.timeSeconds = oldProgressBar.timeSeconds;
+			this.playerTime = oldProgressBar.playerTime;
+		}
+	}
 
 	/**
 	 * Creates a progress bar that tracks the player and opponent boats progress
@@ -37,11 +50,22 @@ public class ProgressBar {
 	public ProgressBar(Player player, Opponent[] opponents, boolean noTexture) {
 		this.playerBoat = player;
 		this.opponentBoats = opponents;
-		if (!noTexture) {
-			this.texture = new Texture(Gdx.files.internal("top bar sprite.png"));
-			this.playerIcon = new Texture(Gdx.files.internal("progress icon player.png"));
-			this.opponentIcon = new Texture(Gdx.files.internal("progress icon enemy.png"));
-		}
+		this.texture = new Texture(Gdx.files.internal("core/assets/top bar sprite.png"));
+		this.playerIcon = new Texture(Gdx.files.internal("core/assets/progress icon player.png"));
+		this.opponentIcon = new Texture(Gdx.files.internal("core/assets/progress icon enemy.png"));
+	}
+
+	public ProgressBar saveState(){
+		//return new Json().toJson(this);
+		return this;
+	}
+
+	public void setOpponentBoats(Opponent[] opponentBoats){
+		this.opponentBoats = opponentBoats;
+	}
+
+	public void setPlayerBoat(Player player){
+		this.playerBoat = player;
 	}
 
 	/**

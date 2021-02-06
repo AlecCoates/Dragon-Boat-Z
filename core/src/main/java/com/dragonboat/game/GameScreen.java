@@ -61,7 +61,7 @@ public class GameScreen implements Screen {
     private final FreeTypeFontGenerator generator;
     private final FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private final BitmapFont font18,font28,font44;
-    private final Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+    private final Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
     // timing
     private int backgroundOffset;
@@ -72,10 +72,20 @@ public class GameScreen implements Screen {
 
     /**
      * Sets up everything needed for a race to take place.
-     * 
+     *
      * @param game Represents the initial state of DragonBoatGame.
      */
     public GameScreen(DragonBoatGame game) {
+        this(game, false);
+    }
+
+    /**
+     * Sets up everything needed for a race to take place.
+     * 
+     * @param game Represents the initial state of DragonBoatGame.
+     * @param loaded Represents whether the game has been loaded from a save or not.
+     */
+    public GameScreen(DragonBoatGame game, boolean loaded) {
         /*
          * Grab game objects from DragonBoatGame.
          */
@@ -110,17 +120,18 @@ public class GameScreen implements Screen {
         opponents = this.game.opponents;
         rnd = this.game.rnd;
 
-        ArrayList<Integer> possibleBoats = new ArrayList<Integer>();
-        for (int i = 0; i < lanes.length; i++) {
-            if (i != game.playerChoice) {
-                possibleBoats.add(i);
+        ArrayList<Integer> possibleBoats = new ArrayList<>();
+        if (!loaded) {
+            for (int i = 0; i < lanes.length; i++) {
+                if (i != game.playerChoice) {
+                    possibleBoats.add(i);
+                }
+            }
+            for (Opponent o : opponents) {
+                int choice = o.SetRandomBoat(possibleBoats);
+                possibleBoats.remove(choice);
             }
         }
-        for (Opponent o : opponents) {
-            int choice = o.SetRandomBoat(possibleBoats);
-            possibleBoats.remove(choice);
-        }
-
         leaderboard = this.game.leaderboard;
 
         // setup view
@@ -139,10 +150,10 @@ public class GameScreen implements Screen {
         font28 = generator.generateFont(parameter);
         parameter.size = 44;
         font44 = generator.generateFont(parameter);
-        staminaBarFull = new Texture(Gdx.files.internal("bar stamina yellow.png"));
-        staminaBarEmpty = new Texture(Gdx.files.internal("bar stamina grey.png"));
-        healthBarFull = new Texture(Gdx.files.internal("bar health yellow.png"));
-        healthBarEmpty = new Texture(Gdx.files.internal("bar health grey.png"));
+        staminaBarFull = new Texture(Gdx.files.internal("core/assets/bar stamina yellow.png"));
+        staminaBarEmpty = new Texture(Gdx.files.internal("core/assets/bar stamina grey.png"));
+        healthBarFull = new Texture(Gdx.files.internal("core/assets/bar health yellow.png"));
+        healthBarEmpty = new Texture(Gdx.files.internal("core/assets/bar health grey.png"));
     }
 
     /**
@@ -224,7 +235,7 @@ public class GameScreen implements Screen {
                     // spawn an obstacle in lane i.
                     int xCoord = lanes[i].getLeftBoundary()
                             + rnd.nextInt(lanes[i].getRightBoundary() - lanes[i].getLeftBoundary() - 15);
-                    lanes[i].SpawnObstacle(xCoord, HEIGHT + 40, obstacleTypes[rnd.nextInt(obstacleTypes.length)]);
+                    lanes[i].SpawnObstacle(game.spriteTextures, xCoord, HEIGHT + 40, obstacleTypes[rnd.nextInt(obstacleTypes.length)]);
                     // make sure obstacle is only spawned once.
                     this.game.obstacleTimes[i].remove(0);
                 }
@@ -345,12 +356,12 @@ public class GameScreen implements Screen {
          */
         batch.begin();
         batch.draw(player.texture, player.getX(), player.getY() - backgroundOffset);
-        batch.draw(staminaBarEmpty, player.lane.getLeftBoundary(), player.getY() - 20 - backgroundOffset);
-        batch.draw(healthBarEmpty, player.lane.getLeftBoundary(), player.getY() - 40 - backgroundOffset);
-        batch.draw(staminaBarFull, player.lane.getLeftBoundary(), player.getY() - 20 - backgroundOffset, 0, 0,
+        batch.draw(staminaBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset);
+        batch.draw(healthBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset);
+        batch.draw(staminaBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset, 0, 0,
                 Math.round(staminaBarFull.getWidth() * player.getTiredness() / MAX_TIREDNESS),
                 staminaBarFull.getHeight());
-        batch.draw(healthBarFull, player.lane.getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,
+        batch.draw(healthBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,
                 Math.round(healthBarFull.getWidth() * player.getDurability() / (float) MAX_DURABILITY),
                 healthBarFull.getHeight());
         batch.end();
