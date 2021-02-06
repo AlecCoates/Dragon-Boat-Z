@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class GooseTest {
 
-    @Test
+    /*@Test
     public void testChangeDirection() {
         //Test facing South
         Goose testGoose = new Goose(0, 0, new Texture(new Pixmap(1,1,Pixmap.Format.RGB888)), new Lane(0, 20, 10));
@@ -95,6 +95,6 @@ public class GooseTest {
         testGoose.Move(2f, 20);
         assertEquals(30 - 2, testGoose.yPosition, 0.0002f);
         assertEquals(21 - 2, testGoose.xPosition, 0.0002f);
-    }
+    }*/
 
 }

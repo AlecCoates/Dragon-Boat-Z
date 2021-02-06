@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class ProgressBarTest {
 
-    @Test
+    /*@Test
     public void testStartTimer() {
         Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
         Opponent[] testOpponents = new Opponent[6];
@@ -102,6 +102,6 @@ public class ProgressBarTest {
         }
         ProgressBar testProgressBar = new ProgressBar(testPlayer, testOpponents, true);
         assertArrayEquals(new float[]{0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1f}, testProgressBar.getProgress(5), 0.0002f);
-    }
+    }*/
 
 }

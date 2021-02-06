@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class LeaderboardTest {
 
-    @Test
+    /*@Test
     public void testUpdateOrder() {
         Player testPlayer = new Player(0,5,10, new Lane(0,20, 10), "A");
         testPlayer.fastestLegTime = 26;
@@ -63,6 +63,6 @@ public class LeaderboardTest {
         }
         Leaderboard testLeaderboard = new Leaderboard(testPlayer, testOpponents, true);
         assertArrayEquals(new Boat[]{testOpponents[5], testOpponents[4], testOpponents[3]}, testLeaderboard.getPodium());
-    }
+    }*/
 
 }

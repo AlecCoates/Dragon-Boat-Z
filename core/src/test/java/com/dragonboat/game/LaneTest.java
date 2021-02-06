@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(GdxTestRunner.class)
 public class LaneTest {
 
-    @Test
+    /*@Test
     public void testSpawnObstacle() {
         //Test Spawn Less Than Limit
         Lane testLane = new Lane(0, 20, 10);
@@ -72,6 +72,6 @@ public class LaneTest {
         }
         testLane.RemoveObstacle(testObstacle);
         assertEquals(12, testLane.obstacles.size(), 0.0002);
-    }
+    }*/
 
 }
