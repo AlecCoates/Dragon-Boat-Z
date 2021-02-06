@@ -32,7 +32,7 @@ public class Boat {
     protected String name;
     protected char label;
     protected boolean finished;
-    protected final int threshold = 5;
+    protected int threshold = 5;
     public static float bankWidth = 40;
 
     static class BoatSpriteDescriptor {
@@ -163,17 +163,17 @@ public class Boat {
         boolean hitObstacle = false;
         // Iterate through obstacles.
         ArrayList<Obstacle> obstacles = this.lanes[this.laneNo].obstacles;
-        ArrayList<Integer> obstaclesToRemove = new ArrayList<>();
+        ArrayList<Integer> obstacleIndexesToRemove = new ArrayList<>();
         for (Obstacle o : obstacles) {
             if (o.getX() + o.width > this.xPosition + threshold && o.getX() < this.xPosition + this.width - threshold) {
                 if (o.getY() + o.height + backgroundOffset > this.yPosition + threshold && o.getY() + backgroundOffset < this.yPosition + this.height - threshold) {
                     this.ApplyDamage(o.getDamage());
-                    obstaclesToRemove.add(o);
+                    obstacleIndexesToRemove.add(obstacles.indexOf(o));
                     hitObstacle = true;
                 }
             }
         }
-        for (int i : obstaclesToRemove) {
+        for (int i : obstacleIndexesToRemove) {
             this.lanes[this.laneNo].RemoveObstacle(obstacles.get(i));
             return true;
         }
