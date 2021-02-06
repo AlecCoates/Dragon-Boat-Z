@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Json;
 
+import java.util.HashMap;
+
 /**
  * Represents an obstacle on the course.
  * 
@@ -46,16 +48,12 @@ public class Obstacle {
 	 * @param height    Height of the obstacle.
 	 * @param name      Name of the obstacle.
 	 */
-	public Obstacle(int damage, int xPosition, int yPosition, Integer width, Integer height, String name) {
+	public Obstacle(HashMap<String, Texture> textures, int damage, int xPosition, int yPosition, Integer width, Integer height, String name) {
 		this.damage = damage;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 		this.name = name;
-		if (this.name == "Goose") {
-			this.texture = new Texture(Gdx.files.internal("gooseSouthsprite.png"));
-		} else if (this.name == "Log") {
-			this.texture = new Texture(Gdx.files.internal("logBig sprite.png"));
-		}
+		this.texture = textures.get(name);
 		if (width != null) {
 			this.width = width;
 		} else {

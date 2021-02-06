@@ -2,6 +2,8 @@ package com.dragonboat.game;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.HashMap;
+
 /**
  * Represents a log obstacle on the course.
  */
@@ -22,8 +24,8 @@ public class Log extends Obstacle {
 	 * @param xPosition X-position.
 	 * @param yPosition Y-position.
 	 */
-	public Log(int xPosition, int yPosition) {
-		super(15, xPosition, yPosition, null, null, "Log");
+	public Log(HashMap<String, Texture> textures, int xPosition, int yPosition) {
+		super(textures, 15, xPosition, yPosition, null, null, "Log");
 	}
 
 }

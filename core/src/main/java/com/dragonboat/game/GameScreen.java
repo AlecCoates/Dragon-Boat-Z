@@ -61,7 +61,7 @@ public class GameScreen implements Screen {
     private final FreeTypeFontGenerator generator;
     private final FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private final BitmapFont font18,font28,font44;
-    private final Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+    private final Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
     // timing
     private int backgroundOffset;
@@ -139,10 +139,10 @@ public class GameScreen implements Screen {
         font28 = generator.generateFont(parameter);
         parameter.size = 44;
         font44 = generator.generateFont(parameter);
-        staminaBarFull = new Texture(Gdx.files.internal("bar stamina yellow.png"));
-        staminaBarEmpty = new Texture(Gdx.files.internal("bar stamina grey.png"));
-        healthBarFull = new Texture(Gdx.files.internal("bar health yellow.png"));
-        healthBarEmpty = new Texture(Gdx.files.internal("bar health grey.png"));
+        staminaBarFull = new Texture(Gdx.files.internal("core/assets/bar stamina yellow.png"));
+        staminaBarEmpty = new Texture(Gdx.files.internal("core/assets/bar stamina grey.png"));
+        healthBarFull = new Texture(Gdx.files.internal("core/assets/bar health yellow.png"));
+        healthBarEmpty = new Texture(Gdx.files.internal("core/assets/bar health grey.png"));
     }
 
     /**
@@ -224,7 +224,7 @@ public class GameScreen implements Screen {
                     // spawn an obstacle in lane i.
                     int xCoord = lanes[i].getLeftBoundary()
                             + rnd.nextInt(lanes[i].getRightBoundary() - lanes[i].getLeftBoundary() - 15);
-                    lanes[i].SpawnObstacle(xCoord, HEIGHT + 40, obstacleTypes[rnd.nextInt(obstacleTypes.length)]);
+                    lanes[i].SpawnObstacle(game.spriteTextures, xCoord, HEIGHT + 40, obstacleTypes[rnd.nextInt(obstacleTypes.length)]);
                     // make sure obstacle is only spawned once.
                     this.game.obstacleTimes[i].remove(0);
                 }

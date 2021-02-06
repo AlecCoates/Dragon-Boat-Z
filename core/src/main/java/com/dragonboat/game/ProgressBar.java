@@ -13,8 +13,8 @@ public class ProgressBar {
 
 	protected transient Player playerBoat;
 	protected transient Opponent[] opponentBoats;
-	protected float timeSeconds;
-	protected float playerTime;
+	protected float timeSeconds = 0;
+	protected float playerTime = 0;
 
 	static class ProgressBarSpriteDescriptor {
 		public float timeSeconds;
@@ -38,9 +38,9 @@ public class ProgressBar {
 	public ProgressBar(Player player, Opponent[] opponents) {
 		this.playerBoat = player;
 		this.opponentBoats = opponents;
-		this.texture = new Texture(Gdx.files.internal("top bar sprite.png"));
-		this.playerIcon = new Texture(Gdx.files.internal("progress icon player.png"));
-		this.opponentIcon = new Texture(Gdx.files.internal("progress icon enemy.png"));
+		this.texture = new Texture(Gdx.files.internal("core/assets/top bar sprite.png"));
+		this.playerIcon = new Texture(Gdx.files.internal("core/assets/progress icon player.png"));
+		this.opponentIcon = new Texture(Gdx.files.internal("core/assets/progress icon enemy.png"));
 	}
 
 	public ProgressBar saveState(){

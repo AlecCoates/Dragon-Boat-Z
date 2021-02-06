@@ -57,7 +57,7 @@ public class SaveGameScreen implements Screen {
         /*
         * Creates all required buttons
          */
-        Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
         final TextButton save1Button = new TextButton("Save",skin);
         save1Button.addListener(new ChangeListener() {
@@ -88,7 +88,6 @@ public class SaveGameScreen implements Screen {
         load1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
                 SaveLoadGame loadFile1 = new SaveLoadGame(parent, fileName1, false);
                 parent.setScreen(new GameScreen(parent));
                 System.out.println("Loaded_1");

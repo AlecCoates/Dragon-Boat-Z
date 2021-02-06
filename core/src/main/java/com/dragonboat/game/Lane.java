@@ -2,6 +2,7 @@ package com.dragonboat.game;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,9 +17,9 @@ import com.badlogic.gdx.utils.JsonWriter;
 public class Lane {
     public int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
-    private final int obstacleLimit;
+    protected int obstacleLimit;
     protected Lane[] lanes;
-    protected int laneNo;
+    protected int laneNo = 0;
 
     static class LaneSpriteDescriptor {
         public int LEFTBOUNDARY, RIGHTBOUNDARY;
@@ -35,13 +36,11 @@ public class Lane {
             obstacleLimit = oldLane.obstacleLimit;
             obstacles = new ArrayList<>();
             laneNo = oldLane.laneNo;
-            for(Obstacle obstacle: oldLane.obstacles){
-                if(obstacle.getName() == "Goose") {
-                    System.out.println("Goose");
+            for (Obstacle obstacle: oldLane.obstacles) {
+                if (obstacle.getName().equals("Goose")) {
                     Goose goose = (Goose) obstacle;
                     obstacles.add(new Goose.GooseSpriteDescriptor(goose));
-                }else{
-                    System.out.println("Log");
+                } else if (obstacle.getName().equals("Log")) {
                     Log log = (Log) obstacle;
                     obstacles.add(new Log.LogSpriteDescriptor(log));
                 }
@@ -73,7 +72,7 @@ public class Lane {
      * @param leftBoundary  X-position for the left boundary of the lane.
      * @param rightBoundary X-position for the right boundary of the lane.
      */
-    public Lane(int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
+    public Lane(HashMap<String, Texture> textures, int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = 10;
@@ -90,7 +89,7 @@ public class Lane {
      * @param rightBoundary X-position for the right boundary of the lane.
      * @param obstacleLimit Limit for the number of obstacles in the lane.
      */
-    public Lane(int leftBoundary, int rightBoundary, int obstacleLimit) {
+    public Lane(HashMap<String, Texture> textures, int leftBoundary, int rightBoundary, int obstacleLimit) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = obstacleLimit;
@@ -113,14 +112,14 @@ public class Lane {
      * @param y            Y-position for the obstacle spawn location.
      * @param obstacleType Obstacle type.
      */
-    public void SpawnObstacle(int x, int y, String obstacleType) {
+    public void SpawnObstacle(HashMap<String, Texture> textures, int x, int y, String obstacleType) {
         if (this.obstacles.size() <= this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
-                Goose goose = new Goose(x, y, this.lanes, this.laneNo);
+                Goose goose = new Goose(textures, x, y, this.lanes, this.laneNo);
                 this.obstacles.add(goose);
 
             } else if (obstacleType.equals("Log")) {
-                Log log = new Log(x, y);
+                Log log = new Log(textures, x, y);
                 this.obstacles.add(log);
 
             }

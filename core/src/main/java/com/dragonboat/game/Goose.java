@@ -45,8 +45,8 @@ public class Goose extends Obstacle {
 	 * @param lanes     Lanes in the map.
 	 * @param laneNo    Lane number the goose will spawn in.
 	 */
-	public Goose(int xPosition, int yPosition, Lane[] lanes, int laneNo) {
-		super(10, xPosition, yPosition, null, null, "Goose");
+	public Goose(HashMap<String, Texture> textures, int xPosition, int yPosition, Lane[] lanes, int laneNo) {
+		super(textures, 10, xPosition, yPosition, null, null, "Goose");
 		this.lanes = lanes;
 		this.laneNo = laneNo;
 	}

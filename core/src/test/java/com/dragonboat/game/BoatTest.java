@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class BoatTest {
 
+    /*
     @Test
     public void steerLeft() {
         Lane[] lanes = new Lane[]{new Lane(10,10,10)};
@@ -106,4 +107,6 @@ public class BoatTest {
         assertEquals(7, testBoat.getCurrentSpeed(), 0.0002);
     }
 
+
+     */
 }

@@ -25,8 +25,7 @@ public class Boat {
     protected int width, height;
     protected float currentSpeed, fastestLegTime, tiredness;
     protected Lane[] lanes;
-    protected int laneNo;
-
+    protected int laneNo = 0;
     protected Texture[] textureFrames;
     protected int frameCounter = 0;
     public Texture texture;
@@ -245,7 +244,7 @@ public class Boat {
     public void GenerateTextureFrames(char boatName) {
         Texture[] frames = new Texture[4];
         for (int i = 1; i <= frames.length; i++) {
-            frames[i - 1] = new Texture(Gdx.files.internal("boat" + boatName + " sprite" + i + ".png"));
+            frames[i - 1] = new Texture(Gdx.files.internal("core/assets/boat" + boatName + " sprite" + i + ".png"));
         }
         this.setTextureFrames(frames);
     }
@@ -494,7 +493,7 @@ public class Boat {
      */
     public void ChooseBoat(char boatChar) {
         this.label = boatChar;
-        this.setTexture(new Texture(Gdx.files.internal("boat" + label + " sprite1.png")));
+        this.setTexture(new Texture(Gdx.files.internal("core/assets/boat" + label + " sprite1.png")));
         this.GenerateTextureFrames(label);
         this.setStats(label);
     }

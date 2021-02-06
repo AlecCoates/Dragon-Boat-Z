@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 import com.badlogic.gdx.audio.Music;
@@ -53,6 +54,7 @@ public class DragonBoatGame extends Game {
 	public boolean ended = false;
 	public FreeTypeFontGenerator generator;
 	public FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+	public HashMap<String, Texture> spriteTextures;
 	private SpriteBatch batch;
 	private BitmapFont font28;
 	private Texture courseTexture;
@@ -67,15 +69,19 @@ public class DragonBoatGame extends Game {
 		if(debug_norandom) rnd = new Random(1);
 		else rnd = new Random();
 
-		music = Gdx.audio.newMusic(Gdx.files.internal("cantgobackwards.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("core/assets/cantgobackwards.mp3"));
 		music.setLooping(true);
-		music.setVolume(0f);
+		music.setVolume(0.1f);
 		music.play();
 
-		courseTexture = new Texture(Gdx.files.internal("background sprite.png"));
+		courseTexture = new Texture(Gdx.files.internal("core/assets/background sprite.png"));
 		lanes = new Lane[7];
 		noOfObstacles = 4 * (selectedDifficulty * difficulty);
 		obstacleTimes = new ArrayList[lanes.length];
+
+		spriteTextures = new HashMap<>();
+		spriteTextures.put("Goose", new Texture(Gdx.files.internal("core/assets/gooseSouthsprite.png")));
+		spriteTextures.put("Log", new Texture(Gdx.files.internal("core/assets/logBig sprite.png")));
 
 		/*
 		 * Instantiate each lane, and allocate obstacles by creating a random sequence
@@ -83,7 +89,7 @@ public class DragonBoatGame extends Game {
 		 */
 		for (int x = 0; x < lanes.length; x++) {
 			obstacleTimes[x] = new ArrayList<>();
-			lanes[x] = new Lane((x * w / lanes.length) + 40, (((x + 1) * w) / lanes.length) + 40, lanes, x);
+			lanes[x] = new Lane(spriteTextures, (x * w / lanes.length) + 40, (((x + 1) * w) / lanes.length) + 40, lanes, x);
 			int maxY = (courseTexture.getHeight() - (5 * noOfObstacles)) / noOfObstacles;
 			for (int y = 0; y < noOfObstacles; y++) {
 				obstacleTimes[x].add(rnd.nextInt(maxY - 5) + 5 + maxY * y);
@@ -115,7 +121,6 @@ public class DragonBoatGame extends Game {
 		// Instantiate the progress bar and leaderboard.
 		progressBar = new ProgressBar(player, opponents);
 		leaderboard = new Leaderboard(player, opponents);
-
 		// Set up font.
 		System.out.println(Gdx.files.getExternalStoragePath());
 		System.out.println(Gdx.files.getLocalStoragePath());
@@ -213,7 +218,7 @@ public class DragonBoatGame extends Game {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			boolean playerWon = false;
 			batch.begin();
-			batch.draw(new Texture(Gdx.files.internal("end screen.png")), 0, 0);
+			batch.draw(new Texture(Gdx.files.internal("core/assets/end screen.png")), 0, 0);
 			batch.end();
 			Boat[] podium = leaderboard.getPodium();
 			for (int i = 0; i < podium.length; i++) {
@@ -229,19 +234,19 @@ public class DragonBoatGame extends Game {
 					switch (i) {
 						case 0:
 							batch.begin();
-							batch.draw(new Texture(Gdx.files.internal("medal gold.png")), Gdx.graphics.getWidth() / 3.0f,
+							batch.draw(new Texture(Gdx.files.internal("core/assets/medal gold.png")), Gdx.graphics.getWidth() / 3.0f,
 									Gdx.graphics.getHeight() / 3.0f);
 							batch.end();
 							break;
 						case 1:
 							batch.begin();
-							batch.draw(new Texture(Gdx.files.internal("medal silver.png")), Gdx.graphics.getWidth() / 3.0f,
+							batch.draw(new Texture(Gdx.files.internal("core/assets/medal silver.png")), Gdx.graphics.getWidth() / 3.0f,
 									Gdx.graphics.getHeight() / 3.0f);
 							batch.end();
 							break;
 						case 2:
 							batch.begin();
-							batch.draw(new Texture(Gdx.files.internal("medal bronze.png")), Gdx.graphics.getWidth() / 3.0f,
+							batch.draw(new Texture(Gdx.files.internal("core/assets/medal bronze.png")), Gdx.graphics.getWidth() / 3.0f,
 									Gdx.graphics.getHeight() / 3.0f);
 							batch.end();
 							break;

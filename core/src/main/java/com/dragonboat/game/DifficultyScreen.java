@@ -58,7 +58,7 @@ public class DifficultyScreen implements Screen {
         * Creates buttons to add
          */
 
-        Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
         final TextButton easyButton = new TextButton("EASY",skin);
         easyButton.addListener(new ChangeListener() {
