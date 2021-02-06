@@ -175,9 +175,8 @@ public class Boat {
         }
         for (int i : obstacleIndexesToRemove) {
             this.lanes[this.laneNo].RemoveObstacle(obstacles.get(i));
-            return true;
         }
-        return false;
+        return hitObstacle;
     }
 
     /**
