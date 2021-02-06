@@ -67,7 +67,6 @@ class SaveLoadGame {
 
     public void loadGame(DragonBoatGame dragonBoatGame, String fileName){
         FileHandle file = Gdx.files.local(fileName + ".json");
-        //String fileNameContents = file.readString();
         HashMap<String, Object> loadData = new Json().fromJson(HashMap.class, file);
 
         //game seed
@@ -157,5 +156,6 @@ class SaveLoadGame {
         progressBar.playerTime = loadProgressBar.playerTime;
         dragonBoatGame.progressBar = progressBar;
 
+        dragonBoatGame.leaderboard = new Leaderboard(player, opponents);
     }
 }
