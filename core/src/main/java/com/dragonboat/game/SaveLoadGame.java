@@ -5,6 +5,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 
 import javax.swing.*;
 import java.util.*;
@@ -29,17 +31,18 @@ class SaveLoadGame {
 
         saveData.put("rnd", dragonBoatGame.rnd);
 
-        Lane.LaneSpriteDescriptor[] lanes = new Lane.LaneSpriteDescriptor[dragonBoatGame.lanes.length];
+        ArrayList<Lane.LaneSpriteDescriptor> lanes = new ArrayList<>();
         for (int i = 0; i < dragonBoatGame.lanes.length; i++) {
-            lanes[i] = new Lane.LaneSpriteDescriptor(dragonBoatGame.lanes[i]);
+            lanes = new ArrayList<>();
+            lanes.add(new Lane.LaneSpriteDescriptor(dragonBoatGame.lanes[i]));
         }
         saveData.put("lanes", lanes);
 
         saveData.put("player", new Boat.BoatSpriteDescriptor(dragonBoatGame.player));
 
-        Boat.BoatSpriteDescriptor[] opponents = new Boat.BoatSpriteDescriptor[dragonBoatGame.opponents.length];
+        ArrayList<Boat.BoatSpriteDescriptor> opponents = new ArrayList<>();
         for (int i = 0; i < dragonBoatGame.opponents.length; i++) {
-            opponents[i] = new Boat.BoatSpriteDescriptor(dragonBoatGame.opponents[i]);
+            opponents.add(new Boat.BoatSpriteDescriptor(dragonBoatGame.opponents[i]));
         }
         saveData.put("opponents", opponents);
 
@@ -55,7 +58,9 @@ class SaveLoadGame {
         saveData.put("selectedDifficulty", dragonBoatGame.selectedDifficulty);
         saveData.put("ended", dragonBoatGame.ended);
 
-        String saveString = new Json().toJson(saveData);
+        Json json = new Json();
+        json.setOutputType(JsonWriter.OutputType.json);
+        String saveString = json.toJson(saveData);
 
         FileHandle file = Gdx.files.local(fileName + ".json");
         file.writeString(saveString, false);
@@ -78,19 +83,27 @@ class SaveLoadGame {
 
         //lanes and obstacles
         //System.out.println(json.prettyPrint(loadData.get(1)));
-        Lane.LaneSpriteDescriptor[] loadLanes = (Lane.LaneSpriteDescriptor[]) loadData.get("lanes");
+        System.out.println(loadData.get("lanes").getClass());
+        Array<Object> arrayLoadLanes = (Array<Object>) loadData.get("lanes");
+        Lane.LaneSpriteDescriptor[] loadLanes = new Lane.LaneSpriteDescriptor[arrayLoadLanes.size];
+        for (int i = 0; i < arrayLoadLanes.size; i++) {
+            loadLanes[i] = (Lane.LaneSpriteDescriptor) arrayLoadLanes.get(i);
+        }
         dragonBoatGame.lanes = new Lane[loadLanes.length];
         for (Lane.LaneSpriteDescriptor loadLane : loadLanes) {
             Lane lane = new Lane(loadLane.LEFTBOUNDARY, loadLane.RIGHTBOUNDARY, dragonBoatGame.lanes, loadLane.laneNo);
             dragonBoatGame.lanes[loadLane.laneNo] = lane;
+            System.out.println(11);
             ArrayList<Obstacle.ObstacleSpriteDescriptor> loadObstacles = loadLane.obstacles;
+            System.out.println(12);
             for (Obstacle.ObstacleSpriteDescriptor loadObstacle : loadObstacles) {
+                System.out.println(13);
                 if (loadObstacle.name == "Goose") {
                     Goose.GooseSpriteDescriptor loadGoose = (Goose.GooseSpriteDescriptor) loadObstacle;
-                    lane.obstacles.add(new Goose((int) loadGoose.xPosition, (int) loadGoose.yPosition, new Texture(Gdx.files.internal("gooseSouthsprite.png")), dragonBoatGame.lanes, loadLane.laneNo));
+                    lane.obstacles.add(new Goose((int) loadGoose.xPosition, (int) loadGoose.yPosition, dragonBoatGame.lanes, loadLane.laneNo));
                 } else if (loadObstacle.name == "Log") {
                     Log.LogSpriteDescriptor loadLog = (Log.LogSpriteDescriptor) loadObstacle;
-                    lane.obstacles.add(new Log((int) loadObstacle.xPosition, (int) loadObstacle.yPosition, new Texture(Gdx.files.internal("logBig sprite.png"))));
+                    lane.obstacles.add(new Log((int) loadObstacle.xPosition, (int) loadObstacle.yPosition));
                 }
             }
         }

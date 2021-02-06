@@ -42,12 +42,11 @@ public class Goose extends Obstacle {
 	 * 
 	 * @param xPosition X-position.
 	 * @param yPosition Y-position.
-	 * @param texture   Texture asset for the goose.
 	 * @param lanes     Lanes in the map.
 	 * @param laneNo    Lane number the goose will spawn in.
 	 */
-	public Goose(int xPosition, int yPosition, Texture texture, Lane[] lanes, int laneNo) {
-		super(10, xPosition, yPosition, texture.getWidth(), texture.getHeight(), texture, "Goose");
+	public Goose(int xPosition, int yPosition, Lane[] lanes, int laneNo) {
+		super(10, xPosition, yPosition, null, null, "Goose");
 		this.lanes = lanes;
 		this.laneNo = laneNo;
 	}

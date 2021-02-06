@@ -1,5 +1,6 @@
 package com.dragonboat.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Json;
 
@@ -43,27 +44,28 @@ public class Obstacle {
 	 * @param yPosition Y-position.
 	 * @param width     Width of the obstacle.
 	 * @param height    Height of the obstacle.
-	 * @param texture   Texture asset for the obstacle.
+	 * @param name      Name of the obstacle.
 	 */
-	public Obstacle(int damage, int xPosition, int yPosition, int width, int height, Texture texture, String name) {
+	public Obstacle(int damage, int xPosition, int yPosition, Integer width, Integer height, String name) {
 		this.damage = damage;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
-		this.width = width;
-		this.height = height;
-		this.texture = texture;
 		this.name = name;
-	}
-	public Obstacle(ObstacleSpriteDescriptor info){
-		//Json json = new Json();
-		//Obstacle.ObstacleSpriteDescriptor disc = json.fromJson(Obstacle.ObstacleSpriteDescriptor.class,info);
-
-		this.damage = info.damage;
-		this.xPosition = info.xPosition;
-		this.yPosition = info.yPosition;
-		this.width = info.width;
-		this.height = info.height;
-		this.name = info.name;
+		if (this.name == "Goose") {
+			this.texture = new Texture(Gdx.files.internal("gooseSouthsprite.png"));
+		} else if (this.name == "Log") {
+			this.texture = new Texture(Gdx.files.internal("logBig sprite.png"));
+		}
+		if (width != null) {
+			this.width = width;
+		} else {
+			this.width = this.texture.getWidth();
+		}
+		if (height != null) {
+			this.height = height;
+		} else {
+			this.height = this.texture.getHeight();
+		}
 	}
 
 	public ObstacleSpriteDescriptor saveState() {

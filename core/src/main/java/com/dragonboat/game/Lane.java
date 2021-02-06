@@ -5,7 +5,10 @@ import java.util.Dictionary;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 
 /**
  * Represents a lane on the course.
@@ -43,6 +46,24 @@ public class Lane {
                     obstacles.add(new Log.LogSpriteDescriptor(log));
                 }
             }
+        }
+
+        LaneSpriteDescriptor (JsonValue oldLane){
+            LEFTBOUNDARY = oldLane.get("LEFTBOUNDARY").asInt();
+            RIGHTBOUNDARY = oldLane.get("RIGHTBOUNDARY").asInt();
+            obstacleLimit = oldLane.get("obstacleLimit").asInt();
+            System.out.println("obstacles1");
+            System.out.println(oldLane.get("obstacles").toString());
+            System.out.println("obstacles");
+            /*Array<Object> arrayLoadObstacles = (Array<Object>) oldLane.get("obstacles");
+            for (int i = 0; i < arrayLoadObstacles.size; i++) {
+                String obstacleName = ((Obstacle.ObstacleSpriteDescriptor) arrayLoadObstacles.get(i)).name;
+                if (obstacleName == "Goose") {
+
+                } else if (obstacleName == "Log") {
+
+                }
+            }*/
         }
     }
 
@@ -95,11 +116,11 @@ public class Lane {
     public void SpawnObstacle(int x, int y, String obstacleType) {
         if (this.obstacles.size() <= this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
-                Goose goose = new Goose(x, y, new Texture(Gdx.files.internal("gooseSouthsprite.png")), this.lanes, this.laneNo);
+                Goose goose = new Goose(x, y, this.lanes, this.laneNo);
                 this.obstacles.add(goose);
 
             } else if (obstacleType.equals("Log")) {
-                Log log = new Log(x, y, new Texture(Gdx.files.internal("logBig sprite.png")));
+                Log log = new Log(x, y);
                 this.obstacles.add(log);
 
             }
