@@ -114,7 +114,7 @@ public class Lane {
      * @param obstacleType Obstacle type.
      */
     public void SpawnObstacle(HashMap<String, Texture> textures, int x, int y, String obstacleType) {
-        if (this.obstacles.size() <= this.obstacleLimit) {
+        if (this.obstacles.size() < this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
                 Goose goose = new Goose(textures, x, y, this.lanes, this.laneNo);
                 this.obstacles.add(goose);

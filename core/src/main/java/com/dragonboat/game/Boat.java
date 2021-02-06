@@ -163,18 +163,18 @@ public class Boat {
         boolean hitObstacle = false;
         // Iterate through obstacles.
         ArrayList<Obstacle> obstacles = this.lanes[this.laneNo].obstacles;
-        ArrayList<Integer> obstacleIndexesToRemove = new ArrayList<>();
+        ArrayList<Obstacle> obstaclesToRemove = new ArrayList<>();
         for (Obstacle o : obstacles) {
             if (o.getX() + o.width > this.xPosition + threshold && o.getX() < this.xPosition + this.width - threshold) {
                 if (o.getY() + o.height + backgroundOffset > this.yPosition + threshold && o.getY() + backgroundOffset < this.yPosition + this.height - threshold) {
                     this.ApplyDamage(o.getDamage());
-                    obstacleIndexesToRemove.add(obstacles.indexOf(o));
+                    obstaclesToRemove.add(o);
                     hitObstacle = true;
                 }
             }
         }
-        for (int i : obstacleIndexesToRemove) {
-            this.lanes[this.laneNo].RemoveObstacle(obstacles.get(i));
+        for (Obstacle obstacleToRemove : obstaclesToRemove) {
+            this.lanes[this.laneNo].RemoveObstacle(obstacleToRemove);
         }
         return hitObstacle;
     }

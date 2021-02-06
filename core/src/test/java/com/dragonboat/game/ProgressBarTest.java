@@ -26,12 +26,12 @@ public class ProgressBarTest {
         textures.put("Goose", new Texture(new Pixmap(5, 15, Pixmap.Format.RGB888)));
         textures.put("Log", new Texture(new Pixmap(15, 109, Pixmap.Format.RGB888)));
         textures.put("Test", new Texture(new Pixmap(15, 34, Pixmap.Format.RGB888)));
-        lanes = new Lane[]{new Lane(textures, 0,10,10), new Lane(textures, 0,20,10)};
     }
 
     @Test
     public void testStartTimer() {
-        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -49,7 +49,8 @@ public class ProgressBarTest {
     @Test
     public void testIncrementTimer() {
         //Test Player Not Finished
-        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -65,7 +66,8 @@ public class ProgressBarTest {
         assertEquals(14.5f, testProgressBar.playerTime, 0.0002);
 
         //Test Player Finished
-        testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        testPlayer = new Player(0,5,10, lanes, 0, "A");
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -84,7 +86,8 @@ public class ProgressBarTest {
     @Test
     public void testAllFinished() {
         //Test None Finished
-        Player testPlayer = new Player(0, 5, 10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0, 5, 10, lanes, 0, "A");
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -95,7 +98,8 @@ public class ProgressBarTest {
         assertFalse(testProgressBar.allFinished(65));
 
         //Test Player Finished
-        testPlayer = new Player(80, 5, 10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        testPlayer = new Player(80, 5, 10, lanes, 0, "A");
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -106,7 +110,8 @@ public class ProgressBarTest {
         assertFalse(testProgressBar.allFinished(65));
 
         //Test Opponents Finished
-        testPlayer = new Player(0, 5, 10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        testPlayer = new Player(0, 5, 10, lanes, 0, "A");
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -117,7 +122,8 @@ public class ProgressBarTest {
         assertFalse(testProgressBar.allFinished(65));
 
         //Test All Finished
-        testPlayer = new Player(80, 5, 10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        testPlayer = new Player(80, 5, 10, lanes, 0, "A");
         testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
@@ -130,7 +136,8 @@ public class ProgressBarTest {
 
     @Test
     public void testGetProgress() {
-        Player testPlayer = new Player(0, 5, 10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0, 5, 10, lanes, 0, "A");
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {

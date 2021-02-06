@@ -25,11 +25,11 @@ public class ObstacleTest {
         textures.put("Goose", new Texture(new Pixmap(5, 15, Pixmap.Format.RGB888)));
         textures.put("Log", new Texture(new Pixmap(15, 109, Pixmap.Format.RGB888)));
         textures.put("Test", new Texture(new Pixmap(15, 34, Pixmap.Format.RGB888)));
-        lanes = new Lane[]{new Lane(textures, 0,10,10), new Lane(textures, 0,20,10)};
     }
 
     @Test
     public void testMove() {
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
         Obstacle testObstacle = new Obstacle(textures,5, 10, 30, 5, 8, "Test");
         testObstacle.Move(10, 20);
         assertEquals(30 - 10, testObstacle.yPosition, 0.0002);

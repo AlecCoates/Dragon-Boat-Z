@@ -26,12 +26,12 @@ public class LeaderboardTest {
         textures.put("Goose", new Texture(new Pixmap(5, 15, Pixmap.Format.RGB888)));
         textures.put("Log", new Texture(new Pixmap(15, 109, Pixmap.Format.RGB888)));
         textures.put("Test", new Texture(new Pixmap(15, 34, Pixmap.Format.RGB888)));
-        lanes = new Lane[]{new Lane(textures, 0,10,10), new Lane(textures, 0,20,10)};
     }
 
     @Test
     public void testUpdateOrder() {
-        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
@@ -51,7 +51,8 @@ public class LeaderboardTest {
 
     @Test
     public void testGetTimes() {
-        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
@@ -66,7 +67,8 @@ public class LeaderboardTest {
 
     @Test
     public void testGetFinalists() {
-        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
@@ -81,7 +83,8 @@ public class LeaderboardTest {
 
     @Test
     public void testGetPodium() {
-        Player testPlayer = new Player(0,5,10, lanes, 1, "A");
+        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
