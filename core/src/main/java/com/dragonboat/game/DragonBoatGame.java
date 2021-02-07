@@ -37,7 +37,8 @@ public class DragonBoatGame extends Game {
 	protected boolean debug_verboseoutput = false;
 
 	protected Random rnd;
-	private DifficultyScreen difficultyScreen;
+	protected DifficultyScreen difficultyScreen;
+	protected GameScreen gameScreen;
 	private Stage stage;
 	public Lane[] lanes;
 	public Player player;
@@ -200,7 +201,8 @@ public class DragonBoatGame extends Game {
 			o.Reset();
 		}
 		progressBar = new ProgressBar(player, opponents);
-		setScreen(new GameScreen(this));
+		this.gameScreen = new GameScreen(this);
+		this.setScreen(this.gameScreen);
 	}
 
 	@Override

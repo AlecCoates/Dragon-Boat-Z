@@ -481,7 +481,6 @@ public class GameScreen implements Screen {
                     @Override
                     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                         game.advanceLeg();
-                        Gdx.input.setInputProcessor(null);
                         return super.touchUp(screenX, screenY, pointer, button);
                     }
                 });
@@ -514,7 +513,6 @@ public class GameScreen implements Screen {
                         @Override
                         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                             game.advanceLeg();
-                            Gdx.input.setInputProcessor(null);
                             return super.touchUp(screenX, screenY, pointer, button);
                         }
                     });

@@ -1,6 +1,8 @@
 package com.dragonboat.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -16,25 +18,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SaveGameScreen implements Screen {
-    private DragonBoatGame parent;
+    private DragonBoatGame game;
+    private InputProcessor oldInputProcessor;
     private Stage stage;
-    private Label titleLabel;
-    private Label subtTitle1;
-    private Label subtTitle2;
-    private Label subtTitle3;
-    private String fileName1 = "SaveState1";
-    private String fileName2 = "SaveState2";
-    private String fileName3 = "SaveState3";
+    private String fileName1 = "saves/SaveState1";
+    private String fileName2 = "saves/SaveState2";
+    private String fileName3 = "saves/SaveState3";
 
 
     /**
      * Creates a Save game screen using textbuttons that once pressed proceed
      * to either save or load a game
      *
-     * @param Game represents the initial state of DragonBoatGame
+     * @param game represents the initial state of DragonBoatGame
      */
-    public SaveGameScreen(DragonBoatGame Game){
-        parent = Game;
+    public SaveGameScreen(DragonBoatGame game){
+        this.game = game;
     }
 
     /**
@@ -47,55 +46,57 @@ public class SaveGameScreen implements Screen {
         * creates stage for the buttons to be displayed adn act upon
          */
         stage = new Stage(new ScreenViewport());
-
         stage.clear();
 
+        oldInputProcessor = Gdx.input.getInputProcessor();
         Gdx.input.setInputProcessor(stage);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
-
         /*
-        * Creates all required buttons
+         * Creates all required buttons
          */
         Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
+
+        final FileHandle file1 = Gdx.files.local(fileName1 + ".json");
+        final FileHandle file2 = Gdx.files.local(fileName2 + ".json");
+        final FileHandle file3 = Gdx.files.local(fileName3 + ".json");
+
+        Table table = new Table(skin);
+        table.setFillParent(true);
+        stage.addActor(table);
+        final SaveGameScreen thisScreen = this;
 
         final TextButton save1Button = new TextButton("Save",skin);
         save1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile1 = new SaveLoadGame(parent, fileName1, true);
-                System.out.println("Saved_1");
+                SaveLoadGame saveFile1 = new SaveLoadGame(game, fileName1, true);
+                thisScreen.reload();
             }
         });
         final TextButton save2Button = new TextButton("Save",skin);
         save2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile2 = new SaveLoadGame(parent, fileName2, true);
-                System.out.println("Saved_2");
+                SaveLoadGame saveFile2 = new SaveLoadGame(game, fileName2, true);
+                thisScreen.reload();
             }
         });
         final TextButton save3Button = new TextButton("Save",skin);
         save3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile3 = new SaveLoadGame(parent, fileName3, true);
-                System.out.println("Saved_3");
+                SaveLoadGame saveFile3 = new SaveLoadGame(game, fileName3, true);
+                thisScreen.reload();
             }
         });
 
         final TextButton load1Button = new TextButton("Load",skin);
-        FileHandle file1 = Gdx.files.local(fileName1 + ".json");
         if (file1.exists() && !file1.isDirectory()) {
             load1Button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    load1Button.setDisabled(false);
-                    SaveLoadGame loadFile1 = new SaveLoadGame(parent, fileName1, false);
-                    parent.setScreen(new GameScreen(parent, true));
-                    System.out.println("Loaded_1");
+                    SaveLoadGame loadFile1 = new SaveLoadGame(game, fileName1, false);
+                    game.setScreen(new GameScreen(game, true));
                 }
             });
         } else {
@@ -105,15 +106,12 @@ public class SaveGameScreen implements Screen {
             load1Button.setColor(color);
         }
         final TextButton load2Button = new TextButton("Load",skin);
-        FileHandle file2 = Gdx.files.local(fileName2 + ".json");
         if (file2.exists() && !file2.isDirectory()) {
             load2Button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    load2Button.setDisabled(false);
-                    SaveLoadGame loadFile2 = new SaveLoadGame(parent, fileName2, false);
-                    parent.setScreen(new GameScreen(parent, true));
-                    System.out.println("Loaded_2");
+                    SaveLoadGame loadFile2 = new SaveLoadGame(game, fileName2, false);
+                    game.setScreen(new GameScreen(game, true));
                 }
             });
         } else {
@@ -123,15 +121,12 @@ public class SaveGameScreen implements Screen {
             load2Button.setColor(color);
         }
         final TextButton load3Button = new TextButton("Load",skin);
-        FileHandle file3 = Gdx.files.local(fileName3 + ".json");
         if (file3.exists() && !file3.isDirectory()) {
             load3Button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    load1Button.setDisabled(false);
-                    SaveLoadGame loadFile3 = new SaveLoadGame(parent, fileName3, false);
-                    parent.setScreen(new GameScreen(parent, true));
-                    System.out.println("Loaded_3");
+                    SaveLoadGame loadFile3 = new SaveLoadGame(game, fileName3, false);
+                    game.setScreen(new GameScreen(game, true));
                 }
             });
         } else {
@@ -141,29 +136,82 @@ public class SaveGameScreen implements Screen {
             load3Button.setColor(color);
         }
 
+        final TextButton delete1Button = new TextButton("Delete",skin);
+        if (file1.exists() && !file1.isDirectory()) {
+            delete1Button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    file1.delete();
+                    thisScreen.reload();
+                }
+            });
+        } else {
+            delete1Button.setTouchable(Touchable.disabled);
+            Color color = load1Button.getColor();
+            color.a = 0.5f;
+            delete1Button.setColor(color);
+        }
+        final TextButton delete2Button = new TextButton("Delete",skin);
+        if (file2.exists() && !file2.isDirectory()) {
+            delete2Button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    file2.delete();
+                    thisScreen.reload();
+                }
+            });
+        } else {
+            delete2Button.setTouchable(Touchable.disabled);
+            Color color = load1Button.getColor();
+            color.a = 0.5f;
+            delete2Button.setColor(color);
+        }
+        final TextButton delete3Button = new TextButton("Delete",skin);
+        if (file3.exists() && !file3.isDirectory()) {
+            delete3Button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    file3.delete();
+                    thisScreen.reload();
+                }
+            });
+        } else {
+            delete3Button.setTouchable(Touchable.disabled);
+            Color color = load1Button.getColor();
+            color.a = 0.5f;
+            delete3Button.setColor(color);
+        }
+
+        final TextButton returnButton = new TextButton("Return",skin);
+        returnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                thisScreen.returnToGame();
+            }
+        });
+
         /*
         * Adds all necessary labels and buttons to table
          */
-
-        titleLabel = new Label("Save/Load Game Select",skin);
-        subtTitle1 = new Label("Save Slot 1: ",skin);
-        subtTitle2 = new Label("Save Slot 2: ",skin);
-        subtTitle3 = new Label("Save Slot 3: ",skin);
-
-        table.add(titleLabel).colspan(2);
+        table.add("Save/Load Game Select").colspan(2);
         table.row().pad(10,0,0,10);
-        table.add(subtTitle1);
+        table.add("Save Slot 1:");
         table.add(save1Button);
         table.add(load1Button);
+        table.add(delete1Button);
         table.row().pad(10,0,0,10);
-        table.add(subtTitle2);
+        table.add("Save Slot 2:");
         table.add(save2Button);
         table.add(load2Button);
+        table.add(delete2Button);
         table.row().pad(10,0,0,10);
-        table.add(subtTitle3);
+        table.add("Save Slot 3:");
         table.add(save3Button);
         table.add(load3Button);
-        table.row().pad(10,0,0,10);
+        table.add(delete3Button);
+        table.row().pad(50,0,0,10);
+        table.add(returnButton);
+
     }
 
     /**
@@ -180,6 +228,17 @@ public class SaveGameScreen implements Screen {
         //tells stage to act and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1/30f));
         stage.draw();
+
+        //Checks for escape key press
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            this.returnToGame();
+        }
+    }
+
+    private void returnToGame() {
+        game.setScreen(game.gameScreen);
+        Gdx.input.setInputProcessor(oldInputProcessor);
+        this.dispose();
     }
 
     @Override
@@ -206,5 +265,11 @@ public class SaveGameScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public void reload() {
+        Gdx.input.setInputProcessor(oldInputProcessor);
+        game.setScreen(new SaveGameScreen(game));
+        this.dispose();
     }
 }
