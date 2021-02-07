@@ -223,6 +223,9 @@ focused on. This was to ensure a successful completion of the entire project.
 
 # Assessment 2 Content
 <details open><summary></summary>
+  
+### Deliverables
+* <a href="docs/deliverables/Req1.pdf">Requirements</a>
 
 ### Testing
 <details><summary>Test Designs</summary>
