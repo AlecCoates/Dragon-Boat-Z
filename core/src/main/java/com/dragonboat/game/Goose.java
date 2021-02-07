@@ -15,14 +15,24 @@ public class Goose extends Obstacle {
 	public Lane[] lanes;
 	public int laneNo;
 
-
+	/**
+	 * Represents a savable/loadable goose obstacle.
+	 *
+	 */
 	static class GooseSpriteDescriptor extends ObstacleSpriteDescriptor {
 		public String direction;
 		public int laneNo;
 
-		//Used for the return from json file
+		/**
+		 * Json requires an empty constructor to regenerate the class from a save file
+		 */
 		public GooseSpriteDescriptor(){}
 
+		/**
+		 * Creates a json friendly instance of the goose obstacle
+		 *
+		 * @param goose The goose obstacle data that needs to be converted to be stored properly
+		 */
 		public GooseSpriteDescriptor(Goose goose) {
 			super((Obstacle) goose);
 			this.direction = goose.direction;

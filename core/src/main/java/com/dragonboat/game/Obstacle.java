@@ -19,15 +19,28 @@ public class Obstacle {
 	public int width, height;
 	public Texture texture;
 
+	/**
+	 * Represents a savable/loadable obstacle.
+	 *
+	 * @see Goose.GooseSpriteDescriptor
+	 * @see Log.LogSpriteDescriptor
+	 */
 	static class ObstacleSpriteDescriptor {
 		public float yPosition, xPosition;
 		public int damage;
 		public int width, height;
 		public String name;
 
-		//Used for the return from json file
+		/**
+		 * Json requires an empty constructor to regenerate the class from a save file
+		 */
 		public ObstacleSpriteDescriptor(){}
 
+		/**
+		 * Creates a json friendly instance of the obstacle
+		 *
+		 * @param oldObstacle The obstacle data that needs to be converted to be stored properly
+		 */
 		public ObstacleSpriteDescriptor(Obstacle oldObstacle) {
 			this.damage = oldObstacle.getDamage();
 			this.xPosition = oldObstacle.getX();

@@ -22,15 +22,32 @@ public class Lane {
     protected Lane[] lanes;
     protected int laneNo = 0;
 
+    /**
+     * Represents a savable/loadable lane.
+     *
+     * @see Obstacle.ObstacleSpriteDescriptor
+     */
     static class LaneSpriteDescriptor {
         public int LEFTBOUNDARY, RIGHTBOUNDARY;
         public int obstacleLimit;
         public ArrayList<Obstacle.ObstacleSpriteDescriptor> obstacles;
         public int laneNo;
 
-        //Used for the return from json file
+        /**
+         * Json requires an empty constructor to regenerate the class from a save file
+         */
         public LaneSpriteDescriptor (){}
 
+        /**
+         * <P>
+         *     Creates a json friendly instance of the lane
+         * </P>
+         * <p>
+         *     Uses goose and log sprite descriptors
+         * </p>
+         *
+         * @param oldLane The obstacle data that needs to be converted to be stored properly
+         */
         LaneSpriteDescriptor (Lane oldLane){
             LEFTBOUNDARY = oldLane.getLeftBoundary();
             RIGHTBOUNDARY = oldLane.getRightBoundary();
@@ -48,23 +65,6 @@ public class Lane {
             }
         }
 
-        LaneSpriteDescriptor (JsonValue oldLane){
-            LEFTBOUNDARY = oldLane.get("LEFTBOUNDARY").asInt();
-            RIGHTBOUNDARY = oldLane.get("RIGHTBOUNDARY").asInt();
-            obstacleLimit = oldLane.get("obstacleLimit").asInt();
-            System.out.println("obstacles1");
-            System.out.println(oldLane.get("obstacles").toString());
-            System.out.println("obstacles");
-            /*Array<Object> arrayLoadObstacles = (Array<Object>) oldLane.get("obstacles");
-            for (int i = 0; i < arrayLoadObstacles.size; i++) {
-                String obstacleName = ((Obstacle.ObstacleSpriteDescriptor) arrayLoadObstacles.get(i)).name;
-                if (obstacleName == "Goose") {
-
-                } else if (obstacleName == "Log") {
-
-                }
-            }*/
-        }
     }
 
     /**

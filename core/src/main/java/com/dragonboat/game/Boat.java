@@ -35,6 +35,9 @@ public class Boat {
     protected int threshold = 5;
     public static float bankWidth = 40;
 
+    /**
+     * Represents a savable/loadable boat.
+     */
     static class BoatSpriteDescriptor {
         public int durability;
         public float yPosition, xPosition, penalties;
@@ -46,8 +49,16 @@ public class Boat {
         public boolean finished;
         public char label;
 
+        /**
+         * Json requires an empty constructor to regenerate the class from a save file
+         */
         public BoatSpriteDescriptor(){}
 
+        /**
+         * Creates a json friendly instance of the obstacle
+         *
+         * @param oldBoat The boat data that needs to be converted to be stored properly
+         */
         public BoatSpriteDescriptor(Boat oldBoat) {
             this.durability = oldBoat.getDurability();
             this.yPosition = oldBoat.getY();

@@ -16,12 +16,23 @@ public class ProgressBar {
 	protected float timeSeconds = 0;
 	protected float playerTime = 0;
 
+	/**
+	 * Represents a savable/loadable ProgressBar.
+	 */
 	static class ProgressBarSpriteDescriptor {
 		public float timeSeconds;
 		public float playerTime;
 
+		/**
+		 * Json requires an empty constructor to regenerate the class from a save file
+		 */
 		public ProgressBarSpriteDescriptor(){}
 
+		/**
+		 * Creates a json friendly instance of the obstacle
+		 *
+		 * @param oldProgressBar The ProgressBar data that needs to be converted to be stored properly
+		 */
 		public ProgressBarSpriteDescriptor(ProgressBar oldProgressBar) {
 			this.timeSeconds = oldProgressBar.timeSeconds;
 			this.playerTime = oldProgressBar.playerTime;

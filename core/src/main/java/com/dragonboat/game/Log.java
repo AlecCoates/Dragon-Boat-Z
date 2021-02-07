@@ -9,10 +9,21 @@ import java.util.HashMap;
  */
 public class Log extends Obstacle {
 
+	/**
+	 * Represents a savable/loadable log obstacle.
+	 *
+	 */
 	static class LogSpriteDescriptor extends ObstacleSpriteDescriptor {
-		//Used for the return from json file
+		/**
+		 * Json requires an empty constructor to regenerate the class from a save file
+		 */
 		public LogSpriteDescriptor(){}
 
+		/**
+		 * Creates a json friendly instance of the log obstacle
+		 *
+		 * @param log The log obstacle data that needs to be converted to be stored properly
+		 */
 		public LogSpriteDescriptor(Log log) {
 			super((Obstacle) log);
 		}
