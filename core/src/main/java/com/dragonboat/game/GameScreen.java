@@ -64,8 +64,8 @@ public class GameScreen implements Screen {
     private final Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
     // timing
-    private int backgroundOffset;
-    private float totalDeltaTime = 0;
+    protected int backgroundOffset = 0;
+    protected float totalDeltaTime = 0;
 
     // global parameters
     private final int WIDTH = 1080, HEIGHT = 720;
@@ -113,12 +113,12 @@ public class GameScreen implements Screen {
         stage.addActor(pauseMenu);
 
         this.game = game;
-        player = this.game.player;
-        course = this.game.course;
-        lanes = this.game.lanes;
-        progressBar = this.game.progressBar;
-        opponents = this.game.opponents;
-        rnd = this.game.rnd;
+        this.player = this.game.player;
+        this.course = this.game.course;
+        this.lanes = this.game.lanes;
+        this.progressBar = this.game.progressBar;
+        this.opponents = this.game.opponents;
+        this.rnd = this.game.rnd;
 
         ArrayList<Integer> possibleBoats = new ArrayList<>();
         if (!loaded) {
@@ -249,7 +249,6 @@ public class GameScreen implements Screen {
             if (player.getCurrentSpeed() > 0 && !started) {
                 // detect start of game (might change this to a countdown)
                 started = true;
-                progressBar.StartTimer();
             }
             if (player.getY() % 5 == 2)
                 player.AdvanceTextureFrame();
@@ -325,8 +324,7 @@ public class GameScreen implements Screen {
                 }
             }
 
-        }
-        else{
+        } else {
             deltaTime = 0;
         }
 
@@ -410,6 +408,7 @@ public class GameScreen implements Screen {
                         + progress[0] * (progressBar.getTexture().getWidth() - 214),
                 HEIGHT - progressBar.getTexture().getHeight() / 2.0f - 10);
         batch.end();
+
         /*
          * Display player time.
          */
@@ -453,6 +452,7 @@ public class GameScreen implements Screen {
             }
             System.out.println("\n\n\n");
         }
+
         /*
          * Check if all boats have passed the finish line, if so, generate the
          * leaderboard.

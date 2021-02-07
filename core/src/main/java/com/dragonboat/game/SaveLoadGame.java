@@ -57,6 +57,10 @@ class SaveLoadGame {
         saveData.put("selectedDifficulty", dragonBoatGame.selectedDifficulty);
         saveData.put("ended", dragonBoatGame.ended);
 
+        saveData.put("started", dragonBoatGame.gameScreen.started);
+        saveData.put("backgroundOffset", dragonBoatGame.gameScreen.backgroundOffset);
+        saveData.put("totalDeltaTime", dragonBoatGame.gameScreen.totalDeltaTime);
+
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
         String saveString = json.toJson(saveData);
@@ -121,6 +125,7 @@ class SaveLoadGame {
         Player player = new Player((int) loadPlayer.yPosition, loadPlayer.width, loadPlayer.height, dragonBoatGame.lanes, loadPlayer.laneNo, loadPlayer.name);
         player.xPosition = loadPlayer.xPosition;
         player.penalties = loadPlayer.penalties;
+        player.durability = loadPlayer.durability;
         player.currentSpeed = loadPlayer.currentSpeed;
         player.fastestLegTime = loadPlayer.fastestLegTime;
         player.tiredness = loadPlayer.tiredness;
@@ -138,6 +143,7 @@ class SaveLoadGame {
             Opponent opponent = new Opponent((int) loadOpponent.yPosition, loadOpponent.width, loadOpponent.height, dragonBoatGame.lanes, loadOpponent.laneNo, loadOpponent.name);
             opponent.xPosition = loadOpponent.xPosition;
             opponent.penalties = loadOpponent.penalties;
+            opponent.durability = loadOpponent.durability;
             opponent.currentSpeed = loadOpponent.currentSpeed;
             opponent.fastestLegTime = loadOpponent.fastestLegTime;
             opponent.tiredness = loadOpponent.tiredness;
@@ -157,5 +163,10 @@ class SaveLoadGame {
         dragonBoatGame.progressBar = progressBar;
 
         dragonBoatGame.leaderboard = new Leaderboard(player, opponents);
+        dragonBoatGame.gameScreen = new GameScreen(dragonBoatGame, true);
+        dragonBoatGame.gameScreen.started = (boolean) loadData.get("started");
+        dragonBoatGame.gameScreen.backgroundOffset = (int) loadData.get("backgroundOffset");
+        dragonBoatGame.gameScreen.totalDeltaTime = (float) loadData.get("totalDeltaTime");
+        dragonBoatGame.setScreen(dragonBoatGame.gameScreen);
     }
 }

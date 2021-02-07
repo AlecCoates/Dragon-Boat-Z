@@ -58,7 +58,6 @@ public class ProgressBar {
 	}
 
 	public ProgressBar saveState(){
-		//return new Json().toJson(this);
 		return this;
 	}
 

@@ -124,8 +124,6 @@ public class DragonBoatGame extends Game {
 		progressBar = new ProgressBar(player, opponents);
 		leaderboard = new Leaderboard(player, opponents);
 		// Set up font.
-		System.out.println(Gdx.files.getExternalStoragePath());
-		System.out.println(Gdx.files.getLocalStoragePath());
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/8bitOperatorPlus-Regular.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 28;
@@ -175,7 +173,11 @@ public class DragonBoatGame extends Game {
 				System.out.println();
 			}
 		}
+
 		player.Reset();
+		for (Opponent o : opponents) {
+			o.Reset();
+		}
 
 		/*
 		 * Set up final leg.
@@ -196,9 +198,6 @@ public class DragonBoatGame extends Game {
 				}
 				b.ResetFastestLegTime();
 			}
-		}
-		for (Opponent o : opponents) {
-			o.Reset();
 		}
 		progressBar = new ProgressBar(player, opponents);
 		this.gameScreen = new GameScreen(this);
