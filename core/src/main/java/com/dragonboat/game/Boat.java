@@ -24,31 +24,36 @@ public class Boat {
     protected float yPosition, xPosition, penalties;
     protected int width, height;
     protected float currentSpeed, fastestLegTime, tiredness;
-    protected Lane[] lanes;
-    protected int laneNo = 0;
-    protected Texture[] textureFrames;
-    protected int frameCounter = 0;
+    protected Lane lane;
+    private Texture[] textureFrames;
+    private int frameCounter;
     public Texture texture;
-    protected String name;
-    protected char label;
-    protected boolean finished;
-    protected final int threshold = 5;
+    private String name;
+    private boolean finished;
+    private final int threshold = 5;
     public static float bankWidth = 40;
+    public char boatName;
 
     static class BoatSpriteDescriptor {
+        public int ROBUSTNESS;
+        public float ACCELERATION, MANEUVERABILITY, MAXSPEED;
         public int durability;
         public float yPosition, xPosition, penalties;
         public int width, height;
         public float currentSpeed, fastestLegTime, tiredness;
-        public int laneNo;
+        //public String lane;
         public int frameCounter;
         public String name;
         public boolean finished;
-        public char label;
+        public char boatName;
 
         public BoatSpriteDescriptor(){}
 
         public BoatSpriteDescriptor(Boat oldBoat) {
+            this.ROBUSTNESS = oldBoat.getRobustness();
+            this.MAXSPEED = oldBoat.getMaxSpeed();
+            this.ACCELERATION = oldBoat.getAcceleration();
+            this.MANEUVERABILITY = oldBoat.getManeuverability();
             this.durability = oldBoat.getDurability();
             this.yPosition = oldBoat.getY();
             this.xPosition = oldBoat.getX();
@@ -58,26 +63,25 @@ public class Boat {
             this.currentSpeed = oldBoat.getCurrentSpeed();
             this.fastestLegTime = oldBoat.getFastestTime();
             this.tiredness = oldBoat.tiredness;
-            this.laneNo = oldBoat.laneNo;
+            //this.lane = oldBoat.lane.saveState();
             this.frameCounter = oldBoat.frameCounter;
             this.name = oldBoat.getName();
             this.finished = oldBoat.finished();
-            this.label = oldBoat.label;
+            this.boatName = oldBoat.boatName;
         }
     }
 
     /**
-     * Creates an instance of the player boat.
-     *
+     * Creates a Boat instance in a specified Lane.
+     * 
      * @param yPosition Y-position of the boat.
      * @param width     Width of the boat.
      * @param height    Height of the boat.
-     * @param lanes     Lanes for the boat.
-     * @param laneNo    Lane number for the boat.
-     * @param name      Name of the boat.
+     * @param lane      Lane object.
+     * @param name      String identifier.
      */
-    public Boat(float yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {
-        this.xPosition = lanes[laneNo].getRightBoundary() - (lanes[laneNo].getRightBoundary() - lanes[laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
+    public Boat(float yPosition, int width, int height, Lane lane, String name) {
+        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = yPosition;
         this.width = width;
         this.height = height;
@@ -85,12 +89,42 @@ public class Boat {
         this.penalties = 0;
         this.durability = 50;
         this.tiredness = 0f;
-        this.lanes = lanes;
-        this.laneNo = laneNo;
+        this.lane = lane;
         this.fastestLegTime = 0;
         this.textureFrames = new Texture[4];
-        this.frameCounter = 0;
+        frameCounter = 0;
         this.name = name;
+    }
+
+    public Boat(String info){
+        Json json = new Json();
+        BoatSpriteDescriptor disc = json.fromJson(BoatSpriteDescriptor.class,info);
+
+        this.ROBUSTNESS = disc.ROBUSTNESS;
+        this.ACCELERATION = disc.ACCELERATION;
+        this.MANEUVERABILITY = disc.MANEUVERABILITY;
+        this.MAXSPEED = disc.MAXSPEED;
+        this.durability = disc.durability;
+        this.yPosition = disc.yPosition;
+        this.xPosition = disc.xPosition;
+        this.penalties = disc.penalties;
+        this.width = disc.width;
+        this.height = disc.height;
+        this.currentSpeed = disc.currentSpeed;
+        this.fastestLegTime = disc.fastestLegTime;
+        this.tiredness = disc.tiredness;
+        this.frameCounter = disc.frameCounter;
+        this.name = disc.name;
+        this.finished = disc.finished;
+
+        GenerateTextureFrames(Character.toUpperCase(disc.boatName));
+    }
+
+    public String saveState(){
+        BoatSpriteDescriptor disc = new BoatSpriteDescriptor(this);
+        Json json = new Json();
+        //System.out.print(json.prettyPrint(disc));
+        return json.toJson(disc);
     }
 
     /**
@@ -160,7 +194,7 @@ public class Boat {
      */
     public boolean CheckCollisions(int backgroundOffset) {
         // Iterate through obstacles.
-        ArrayList<Obstacle> obstacles = this.lanes[this.laneNo].obstacles;
+        ArrayList<Obstacle> obstacles = this.lane.obstacles;
         ArrayList<Integer> obstaclesToRemove = new ArrayList<>();
         for (Obstacle o : obstacles) {
             if (o.getX() > this.xPosition + threshold && o.getX() < this.xPosition + this.width - threshold) {
@@ -172,7 +206,7 @@ public class Boat {
             }
         }
         for (int i : obstaclesToRemove) {
-            this.lanes[this.laneNo].RemoveObstacle(obstacles.get(i));
+            this.lane.RemoveObstacle(obstacles.get(i));
             return true;
         }
         return false;
@@ -197,8 +231,8 @@ public class Boat {
      * @return Boolean representing whether the Boat is in the Lane.
      */
     public boolean CheckIfInLane() {
-        return this.xPosition + threshold > this.lanes[this.laneNo].getLeftBoundary()
-                && this.xPosition + this.width - threshold < this.lanes[this.laneNo].getRightBoundary();
+        return this.xPosition + threshold > this.lane.getLeftBoundary()
+                && this.xPosition + this.width - threshold < this.lane.getRightBoundary();
     }
 
     /**
@@ -242,9 +276,10 @@ public class Boat {
      * @param boatName Boat name, used to get correct asset.
      */
     public void GenerateTextureFrames(char boatName) {
+        this.boatName = boatName;
         Texture[] frames = new Texture[4];
         for (int i = 1; i <= frames.length; i++) {
-            frames[i - 1] = new Texture(Gdx.files.internal("core/assets/boat" + boatName + " sprite" + i + ".png"));
+            frames[i - 1] = new Texture(Gdx.files.internal("boat" + boatName + " sprite" + i + ".png"));
         }
         this.setTextureFrames(frames);
     }
@@ -253,7 +288,7 @@ public class Boat {
      * Resets necessary stats for the next race.
      */
     public void Reset() {
-        this.xPosition = lanes[this.laneNo].getRightBoundary() - (lanes[this.laneNo].getRightBoundary() - lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
+        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
         this.yPosition = 0;
         this.currentSpeed = 0f;
         this.penalties = 0;
@@ -459,42 +494,10 @@ public class Boat {
 
     /**
      * 
-     * @param lanes Lanes object for the boat.
+     * @param lane Lane object for the boat.
      */
-    public void setLane(Lane[] lanes, int laneNo) {
-        this.lanes = lanes;
-        this.laneNo = laneNo;
-        this.xPosition = this.lanes[this.laneNo].getRightBoundary() - (this.lanes[this.laneNo].getRightBoundary() - this.lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
-    }
-
-    /**
-     * <p>
-     * Assigns the selected boat template to the boat.
-     * </p>
-     * <p>
-     * This includes stats and texture.
-     * </p>
-     *
-     * @param boatNo Number of the boat template selected.
-     */
-    public void ChooseBoat(int boatNo) {
-        ChooseBoat((char) (65 + boatNo));
-    }
-
-    /**
-     * <p>
-     * Assigns the selected boat template to the boat.
-     * </p>
-     * <p>
-     * This includes stats and texture.
-     * </p>
-     *
-     * @param boatChar Character of the boat template selected.
-     */
-    public void ChooseBoat(char boatChar) {
-        this.label = boatChar;
-        this.setTexture(new Texture(Gdx.files.internal("core/assets/boat" + label + " sprite1.png")));
-        this.GenerateTextureFrames(label);
-        this.setStats(label);
+    public void setLane(Lane lane) {
+        this.lane = lane;
+        this.xPosition = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2.0f - width / 2.0f;
     }
 }

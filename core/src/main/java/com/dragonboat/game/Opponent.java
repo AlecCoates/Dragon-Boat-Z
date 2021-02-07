@@ -15,18 +15,21 @@ public class Opponent extends Boat {
     private ArrayList<Obstacle> sortedIncomingObstacles;
 
     /**
-     * Creates an instance of the player boat.
-     *
-     * @param yPosition Y-position of the boat.
+     * Creates a opponent instance.
+     * 
+     * @param yPosition Y-position.
      * @param width     Width of the boat.
      * @param height    Height of the boat.
-     * @param lanes     Lanes for the boat.
-     * @param laneNo    Lane number for the boat.
-     * @param name      Name of the boat.
+     * @param lane      Lane for the boat.
+     * @param name      Name of the opponent.
      */
-    public Opponent(int yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {
-        super(yPosition, width, height, lanes, laneNo, name);
-        sortedIncomingObstacles = new ArrayList<>();
+    public Opponent(int yPosition, int width, int height, Lane lane, String name) {
+        super(yPosition, width, height, lane, name);
+        sortedIncomingObstacles = new ArrayList<>(0);
+    }
+
+    public Opponent(String info) {
+        super(info);
     }
 
     /**
@@ -61,7 +64,7 @@ public class Opponent extends Boat {
                                                                      // to start reacting to incoming obstacles.
         int visionDistance = Math.round(yPosition + height) + fov;
 
-        ArrayList<Obstacle> allIncomingObstacles = this.lanes[this.laneNo].obstacles;
+        ArrayList<Obstacle> allIncomingObstacles = this.lane.obstacles;
 
         boolean noNewPath = true; // Set to false whenever the Opponent has decided on a new path.
 
@@ -80,11 +83,11 @@ public class Opponent extends Boat {
          */
         if (!this.CheckIfInLane() || !noNewPath) {
             // Commence route back into lane.
-            if (leftSide - this.lanes[this.laneNo].getLeftBoundary() <= 0) {
+            if (leftSide - this.lane.getLeftBoundary() <= 0) {
                 // Will only be negative if the boat is further left than the left boundary of the lane.
                 this.SteerRight();
                 this.steering = "Right";
-            } else if (rightSide - this.lanes[this.laneNo].getRightBoundary() >= 0) {
+            } else if (rightSide - this.lane.getRightBoundary() >= 0) {
                 // Will only be positive if the boat is further right than the right boundary of the lane.
                 this.SteerLeft();
                 this.steering = "Left";
@@ -210,7 +213,7 @@ public class Opponent extends Boat {
          * 2.5) Move to middle.
          */
         if (noNewPath) {
-            int middle = lanes[this.laneNo].getRightBoundary() - (lanes[this.laneNo].getRightBoundary() - lanes[this.laneNo].getLeftBoundary()) / 2
+            int middle = lane.getRightBoundary() - (lane.getRightBoundary() - lane.getLeftBoundary()) / 2
                     - this.width / 2;
             if (Math.abs(leftSide - middle) < 0.1) {
                 steering = "None";
@@ -243,7 +246,10 @@ public class Opponent extends Boat {
     public int SetRandomBoat(ArrayList<Integer> possibleBoats) {
         Random rnd = new Random();
         int randIndex = rnd.nextInt(possibleBoats.size());
-        this.ChooseBoat(possibleBoats.get(randIndex));
+        char boatLabel = (char) (65 + possibleBoats.get(randIndex));
+        this.setTexture(new Texture(Gdx.files.internal("boat" + boatLabel + " sprite1.png")));
+        this.GenerateTextureFrames(boatLabel);
+        this.setStats(boatLabel);
         return randIndex;
     }
 }

@@ -43,7 +43,6 @@ public class GameScreen implements Screen {
     private final float penalty = 0.016f;
     private boolean ispaused = false;
 
-
     private PauseMenu pauseMenu;
     private Stage stage;
 

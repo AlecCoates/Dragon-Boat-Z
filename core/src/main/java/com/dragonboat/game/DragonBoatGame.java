@@ -304,5 +304,6 @@ public class DragonBoatGame extends Game {
 		this.difficulty = difficulty;
 		this.selectedDifficulty = selectedDifficulty;
 		this.ended = ended;
+
 	}
 }
