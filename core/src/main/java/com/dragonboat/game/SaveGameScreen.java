@@ -96,7 +96,6 @@ public class SaveGameScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     SaveLoadGame loadFile1 = new SaveLoadGame(game, fileName1, false);
-                    game.setScreen(new GameScreen(game, true));
                 }
             });
         } else {
@@ -109,7 +108,6 @@ public class SaveGameScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     SaveLoadGame loadFile2 = new SaveLoadGame(game, fileName2, false);
-                    game.setScreen(new GameScreen(game, true));
                 }
             });
         } else {
@@ -122,7 +120,6 @@ public class SaveGameScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     SaveLoadGame loadFile3 = new SaveLoadGame(game, fileName3, false);
-                    game.setScreen(new GameScreen(game, true));
                 }
             });
         } else {

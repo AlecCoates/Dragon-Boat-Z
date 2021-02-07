@@ -140,7 +140,6 @@ public class GameScreen implements Screen {
 
         // texture setting
         background = course.getTexture();
-        backgroundOffset = 0;
         batch = new SpriteBatch();
         generator = game.generator;
         parameter = game.parameter;
