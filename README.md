@@ -225,7 +225,7 @@ focused on. This was to ensure a successful completion of the entire project.
 <details open><summary></summary>
   
 ### Deliverables
-* <a href="docs/deliverables/Req1.pdf">Requirements</a>
+* <a href="docs/deliverables/Req2.pdf">Requirements</a>
 
 ### Testing
 <details><summary>Test Designs</summary>
