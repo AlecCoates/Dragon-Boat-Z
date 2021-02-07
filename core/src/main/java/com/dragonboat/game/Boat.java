@@ -34,7 +34,7 @@ public class Boat {
     protected boolean finished;
     protected int threshold = 5;
 
-    public static float bankWidth = 40;
+    public static int bankWidth = 40;
     public static int MAX_DURABILITY = 50;
     public static float MAX_TIREDNESS = 100;
 

@@ -65,7 +65,7 @@ public class DragonBoatGame extends Game {
 	 */
 	@Override
 	public void create() {
-		int w = Gdx.graphics.getWidth() - 80;
+		int w = Gdx.graphics.getWidth() - (Boat.bankWidth * 2);
 
 		if(debug_norandom) rnd = new Random(1);
 		else rnd = new Random();
