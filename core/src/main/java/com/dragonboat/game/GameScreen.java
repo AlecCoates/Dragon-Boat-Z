@@ -1,6 +1,7 @@
 package com.dragonboat.game;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -246,8 +247,12 @@ public class GameScreen implements Screen {
                 // detect start of game (might change this to a countdown)
                 started = true;
             }
-            if (player.getY() % 5 == 2)
+
+            Date date = new Date();
+            if (date.getTime() - player.lastFrameTime > (5.0f - player.currentSpeed) * 35.0f) {
+                player.lastFrameTime = date.getTime();
                 player.AdvanceTextureFrame();
+            }
 
             /*
             * Move obstacles
@@ -274,16 +279,18 @@ public class GameScreen implements Screen {
             /*
              * Move opponents. Advance animation frame.
              */
-            for (Opponent o : opponents) {
+            for (int i = 0; i < opponents.length; i++) {
                 if (!started)
                     break;
-                o.MoveForward();
-                o.CheckCollisions(backgroundOffset);
+                opponents[i].MoveForward();
+                opponents[i].CheckCollisions(backgroundOffset);
                 if (Math.round(totalDeltaTime) % 2 == 0) {
-                    o.ai(backgroundOffset);
+                    opponents[i].ai(backgroundOffset);
                 }
-                if (o.getY() % 5 == 2)
-                    o.AdvanceTextureFrame();
+                if (date.getTime() - opponents[i].lastFrameTime > (5.0f - opponents[i].currentSpeed) * 35.0f) {
+                    opponents[i].lastFrameTime = date.getTime();
+                    opponents[i].AdvanceTextureFrame();
+                }
             }
 
             /*

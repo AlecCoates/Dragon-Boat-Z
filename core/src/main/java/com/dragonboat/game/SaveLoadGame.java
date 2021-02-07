@@ -127,6 +127,7 @@ class SaveLoadGame {
         player.fastestLegTime = loadPlayer.fastestLegTime;
         player.tiredness = loadPlayer.tiredness;
         player.frameCounter = loadPlayer.frameCounter;
+        player.lastFrameTime = loadPlayer.lastFrameTime;
         player.finished = loadPlayer.finished;
         player.label = loadPlayer.label;
         player.ChooseBoat(player.label);
@@ -145,6 +146,7 @@ class SaveLoadGame {
             opponent.fastestLegTime = loadOpponent.fastestLegTime;
             opponent.tiredness = loadOpponent.tiredness;
             opponent.frameCounter = loadOpponent.frameCounter;
+            opponent.lastFrameTime = loadOpponent.lastFrameTime;
             opponent.finished = loadOpponent.finished;
             opponent.label = loadOpponent.label;
             opponent.ChooseBoat(opponent.label);
