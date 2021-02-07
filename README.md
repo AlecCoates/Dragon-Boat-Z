@@ -1,6 +1,5 @@
 ![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gradle%20Build/badge.svg?branch=main)
 ![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)
-![Coverage](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacoco.svg)
 
 
 # Contents
