@@ -29,7 +29,7 @@ core,com.dragonboat.game,SaveGameScreen,475,0,26,0,97,0,23,0,10,0
 core,com.dragonboat.game,GameScreen,1783,0,132,0,255,0,75,0,9,0
 core,com.dragonboat.game,PauseMenu,104,0,0,0,18,0,2,0,2,0
 core,com.dragonboat.game,Lane,26,80,1,5,8,21,2,7,1,5
-core,com.dragonboat.game,Goose,0,192,2,18,0,29,2,11,0,3
+core,com.dragonboat.game,Goose,2,190,3,17,1,28,3,10,0,3
 core,com.dragonboat.game,SaveGameScreen.new ChangeListener() {...},25,0,0,0,4,0,2,0,2,0
 core,com.dragonboat.game,SaveGameScreen.new ChangeListener() {...},13,0,0,0,3,0,2,0,2,0
 core,com.dragonboat.game,Lane.LaneSpriteDescriptor,72,0,6,0,16,0,5,0,2,0
