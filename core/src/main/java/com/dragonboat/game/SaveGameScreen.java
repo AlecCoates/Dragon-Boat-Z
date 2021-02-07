@@ -3,9 +3,11 @@ package com.dragonboat.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -85,32 +87,59 @@ public class SaveGameScreen implements Screen {
         });
 
         final TextButton load1Button = new TextButton("Load",skin);
-        load1Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame loadFile1 = new SaveLoadGame(parent, fileName1, false);
-                parent.setScreen(new GameScreen(parent, true));
-                System.out.println("Loaded_1");
-            }
-        });
+        FileHandle file1 = Gdx.files.local(fileName1 + ".json");
+        if (file1.exists() && !file1.isDirectory()) {
+            load1Button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    load1Button.setDisabled(false);
+                    SaveLoadGame loadFile1 = new SaveLoadGame(parent, fileName1, false);
+                    parent.setScreen(new GameScreen(parent, true));
+                    System.out.println("Loaded_1");
+                }
+            });
+        } else {
+            load1Button.setTouchable(Touchable.disabled);
+            Color color = load1Button.getColor();
+            color.a = 0.5f;
+            load1Button.setColor(color);
+        }
         final TextButton load2Button = new TextButton("Load",skin);
-        load2Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame loadFile2 = new SaveLoadGame(parent, fileName2, false);
-                parent.setScreen(new GameScreen(parent, true));
-                System.out.println("Loaded_2");
-            }
-        });
+        FileHandle file2 = Gdx.files.local(fileName2 + ".json");
+        if (file2.exists() && !file2.isDirectory()) {
+            load2Button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    load2Button.setDisabled(false);
+                    SaveLoadGame loadFile2 = new SaveLoadGame(parent, fileName2, false);
+                    parent.setScreen(new GameScreen(parent, true));
+                    System.out.println("Loaded_2");
+                }
+            });
+        } else {
+            load2Button.setTouchable(Touchable.disabled);
+            Color color = load2Button.getColor();
+            color.a = 0.5f;
+            load2Button.setColor(color);
+        }
         final TextButton load3Button = new TextButton("Load",skin);
-        load3Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame loadFile3 = new SaveLoadGame(parent, fileName3, false);
-                parent.setScreen(new GameScreen(parent, true));
-                System.out.println("Loaded_3");
-            }
-        });
+        FileHandle file3 = Gdx.files.local(fileName3 + ".json");
+        if (file3.exists() && !file3.isDirectory()) {
+            load3Button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    load1Button.setDisabled(false);
+                    SaveLoadGame loadFile3 = new SaveLoadGame(parent, fileName3, false);
+                    parent.setScreen(new GameScreen(parent, true));
+                    System.out.println("Loaded_3");
+                }
+            });
+        } else {
+            load3Button.setTouchable(Touchable.disabled);
+            Color color = load3Button.getColor();
+            color.a = 0.5f;
+            load3Button.setColor(color);
+        }
 
         /*
         * Adds all necessary labels and buttons to table

@@ -10,8 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 /**
  * PauseMenu class is the basis of pause menu for the main game.
  */
-public class PauseMenu extends Window{
+public class PauseMenu extends Window {
     private DragonBoatGame parent;
+
     /**
      * Constructor creates the structure of pause menu containing title and save game text button
      */

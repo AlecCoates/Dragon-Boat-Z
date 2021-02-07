@@ -83,6 +83,7 @@ public class DragonBoatGame extends Game {
 		spriteTextures.put("Goose", new Texture(Gdx.files.internal("core/assets/gooseSouth Sprite.png")));
 		spriteTextures.put("Log", new Texture(Gdx.files.internal("core/assets/logBig sprite.png")));
 
+
 		/*
 		 * Instantiate each lane, and allocate obstacles by creating a random sequence
 		 * of Y values for obstacles to spawn at for each lane.
