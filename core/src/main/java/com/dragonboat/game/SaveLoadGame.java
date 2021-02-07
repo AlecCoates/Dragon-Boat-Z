@@ -63,7 +63,7 @@ class SaveLoadGame {
 
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
-        String saveString = json.toJson(saveData);
+        String saveString = json.prettyPrint(saveData);
 
         FileHandle file = Gdx.files.local(fileName + ".json");
         file.writeString(saveString, false);
