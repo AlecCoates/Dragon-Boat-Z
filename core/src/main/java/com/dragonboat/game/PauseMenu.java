@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
  */
 public class PauseMenu extends Window {
     private DragonBoatGame parent;
-    private static Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
     /**
      * Constructor creates the structure of pause menu containing title and save game text button
@@ -42,5 +41,6 @@ public class PauseMenu extends Window {
         super.row().pad(10,0,0,10);
         super.add("Press Esc to resume game");
     }
+    private static Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
 }
