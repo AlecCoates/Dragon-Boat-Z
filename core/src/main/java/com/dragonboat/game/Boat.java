@@ -64,6 +64,7 @@ public class Boat {
             this.yPosition = oldBoat.getY();
             this.xPosition = oldBoat.getX();
             this.penalties = oldBoat.getPenalty();
+            this.durability = oldBoat.getDurability();
             this.width = oldBoat.width;
             this.height = oldBoat.getHeight();
             this.currentSpeed = oldBoat.getCurrentSpeed();
