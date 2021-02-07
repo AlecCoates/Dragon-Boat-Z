@@ -26,26 +26,26 @@ public class GameScreen implements Screen {
     // ENVIRONMENT VARIABLES:
     private final Random rnd;
     private final int MAX_DURABILITY = 40, MAX_TIREDNESS = 100;
-    private DragonBoatGame game = null;
+    protected DragonBoatGame game = null;
 
     // debug booleans
     private boolean debug_speed,debug_positions,debug_norandom,debug_verboseoutput;
 
     // game
-    private final Player player;
-    private final Course course;
-    private final Lane[] lanes;
-    private final ProgressBar progressBar;
-    private final Leaderboard leaderboard;
-    private final Opponent[] opponents;
-    private String[] times;
-    private boolean started = false;
-    private final float penalty = 0.016f;
-    private boolean ispaused = false;
+    protected final Player player;
+    protected final Course course;
+    protected final Lane[] lanes;
+    protected final ProgressBar progressBar;
+    protected final Leaderboard leaderboard;
+    protected final Opponent[] opponents;
+    protected String[] times;
+    protected boolean started = false;
+    protected final float penalty = 0.016f;
+    protected boolean ispaused = false;
 
 
-    private PauseMenu pauseMenu;
-    private Stage stage;
+    protected PauseMenu pauseMenu;
+    protected Stage stage;
 
     // screen
     private final OrthographicCamera camera;
