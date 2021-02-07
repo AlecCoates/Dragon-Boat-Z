@@ -2,30 +2,23 @@ package com.dragonboat.game;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonWriter;
 
 /**
  * Represents a lane on the course.
  */
 public class Lane {
-    public int LEFTBOUNDARY, RIGHTBOUNDARY;
+    private final int LEFTBOUNDARY, RIGHTBOUNDARY;
     protected ArrayList<Obstacle> obstacles;
-    protected int obstacleLimit;
-    protected Lane[] lanes;
-    protected int laneNo = 0;
+    private final int obstacleLimit;
 
     static class LaneSpriteDescriptor {
-        public int LEFTBOUNDARY, RIGHTBOUNDARY;
-        public int obstacleLimit;
-        public ArrayList<Obstacle.ObstacleSpriteDescriptor> obstacles;
-        public int laneNo;
+        private int LEFTBOUNDARY, RIGHTBOUNDARY;
+        private int obstacleLimit;
+        private ArrayList<String> gooses, logs;
 
         //Used for the return from json file
         public LaneSpriteDescriptor (){}
@@ -34,35 +27,19 @@ public class Lane {
             LEFTBOUNDARY = oldLane.getLeftBoundary();
             RIGHTBOUNDARY = oldLane.getRightBoundary();
             obstacleLimit = oldLane.obstacleLimit;
-            obstacles = new ArrayList<>();
-            laneNo = oldLane.laneNo;
-            for (Obstacle obstacle: oldLane.obstacles) {
-                if (obstacle.getName().equals("Goose")) {
-                    Goose goose = (Goose) obstacle;
-                    obstacles.add(new Goose.GooseSpriteDescriptor(goose));
-                } else if (obstacle.getName().equals("Log")) {
-                    Log log = (Log) obstacle;
-                    obstacles.add(new Log.LogSpriteDescriptor(log));
+            gooses = new ArrayList<>();
+            logs = new ArrayList<>();
+
+            for(Obstacle obstacle: oldLane.obstacles){
+                System.out.println(obstacle.getClass());
+                if(obstacle.getName() == "goose") {
+                    System.out.println("goose");
+                    gooses.add(obstacle.saveState());
+                }else{
+                    System.out.println("log");
+                    logs.add(obstacle.saveState());
                 }
             }
-        }
-
-        LaneSpriteDescriptor (JsonValue oldLane){
-            LEFTBOUNDARY = oldLane.get("LEFTBOUNDARY").asInt();
-            RIGHTBOUNDARY = oldLane.get("RIGHTBOUNDARY").asInt();
-            obstacleLimit = oldLane.get("obstacleLimit").asInt();
-            System.out.println("obstacles1");
-            System.out.println(oldLane.get("obstacles").toString());
-            System.out.println("obstacles");
-            /*Array<Object> arrayLoadObstacles = (Array<Object>) oldLane.get("obstacles");
-            for (int i = 0; i < arrayLoadObstacles.size; i++) {
-                String obstacleName = ((Obstacle.ObstacleSpriteDescriptor) arrayLoadObstacles.get(i)).name;
-                if (obstacleName == "Goose") {
-
-                } else if (obstacleName == "Log") {
-
-                }
-            }*/
         }
     }
 
@@ -72,14 +49,29 @@ public class Lane {
      * @param leftBoundary  X-position for the left boundary of the lane.
      * @param rightBoundary X-position for the right boundary of the lane.
      */
-    public Lane(HashMap<String, Texture> textures, int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
+    public Lane(int leftBoundary, int rightBoundary) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = 10;
-        this.lanes = lanes;
-        this.laneNo = laneNo;
 
         obstacles = new ArrayList<>();
+    }
+
+    public Lane(String info){
+        Json json = new Json();
+        LaneSpriteDescriptor disc = json.fromJson(LaneSpriteDescriptor.class,info);
+
+        this.LEFTBOUNDARY = disc.LEFTBOUNDARY;
+        this.RIGHTBOUNDARY = disc.RIGHTBOUNDARY;
+        this.obstacleLimit = disc.obstacleLimit;
+
+        obstacles = new ArrayList<>();
+        for(String goose: disc.gooses){
+            this.obstacles.add(new Obstacle(goose));
+        }
+        for(String log: disc.logs){
+            this.obstacles.add(new Obstacle(log));
+        }
     }
 
     /**
@@ -89,12 +81,19 @@ public class Lane {
      * @param rightBoundary X-position for the right boundary of the lane.
      * @param obstacleLimit Limit for the number of obstacles in the lane.
      */
-    public Lane(HashMap<String, Texture> textures, int leftBoundary, int rightBoundary, int obstacleLimit) {
+    public Lane(int leftBoundary, int rightBoundary, int obstacleLimit) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = obstacleLimit;
 
         obstacles = new ArrayList<>();
+    }
+
+    public String saveState(){
+        LaneSpriteDescriptor disc = new LaneSpriteDescriptor(this);
+        Json json = new Json();
+
+        return json.toJson(disc);
     }
 
     /**
@@ -112,14 +111,14 @@ public class Lane {
      * @param y            Y-position for the obstacle spawn location.
      * @param obstacleType Obstacle type.
      */
-    public void SpawnObstacle(HashMap<String, Texture> textures, int x, int y, String obstacleType) {
+    public void SpawnObstacle(int x, int y, String obstacleType) {
         if (this.obstacles.size() <= this.obstacleLimit) {
             if (obstacleType.equals("Goose")) {
-                Goose goose = new Goose(textures, x, y, this.lanes, this.laneNo);
+                Goose goose = new Goose(x, y, new Texture(Gdx.files.internal("gooseSouthsprite.png")), this);
                 this.obstacles.add(goose);
 
             } else if (obstacleType.equals("Log")) {
-                Log log = new Log(textures, x, y);
+                Log log = new Log(x, y, new Texture(Gdx.files.internal("logBig sprite.png")));
                 this.obstacles.add(log);
 
             }

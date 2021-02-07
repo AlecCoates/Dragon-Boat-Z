@@ -26,7 +26,7 @@ public class Leaderboard {
         this.sortedBoats[0] = player;
         System.arraycopy(opponents, 0, this.sortedBoats, 1, opponents.length);
 
-        this.texture = new Texture(Gdx.files.internal("core/assets/leaderboard nolines.png"));
+        this.texture = new Texture(Gdx.files.internal("leaderboard nolines.png"));
     }
 
     /**

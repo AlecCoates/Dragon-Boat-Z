@@ -57,7 +57,7 @@ public class SaveGameScreen implements Screen {
         /*
         * Creates all required buttons
          */
-        Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
 
         final TextButton save1Button = new TextButton("Save",skin);
         save1Button.addListener(new ChangeListener() {
@@ -71,7 +71,7 @@ public class SaveGameScreen implements Screen {
         save2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile2 = new SaveLoadGame(parent, fileName2, true);
+                SaveLoadGame saveFile1 = new SaveLoadGame(parent, fileName1, true);
                 System.out.println("Saved_2");
             }
         });
@@ -79,7 +79,7 @@ public class SaveGameScreen implements Screen {
         save3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile3 = new SaveLoadGame(parent, fileName3, true);
+                SaveLoadGame saveFile1 = new SaveLoadGame(parent, fileName1, true);
                 System.out.println("Saved_3");
             }
         });
@@ -88,8 +88,9 @@ public class SaveGameScreen implements Screen {
         load1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 SaveLoadGame loadFile1 = new SaveLoadGame(parent, fileName1, false);
-                parent.setScreen(new GameScreen(parent, true));
+                parent.setScreen(new GameScreen(parent));
                 System.out.println("Loaded_1");
             }
         });
@@ -98,7 +99,7 @@ public class SaveGameScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SaveLoadGame loadFile2 = new SaveLoadGame(parent, fileName2, false);
-                parent.setScreen(new GameScreen(parent, true));
+                parent.setScreen(new GameScreen(parent));
                 System.out.println("Loaded_2");
             }
         });
@@ -107,7 +108,7 @@ public class SaveGameScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SaveLoadGame loadFile3 = new SaveLoadGame(parent, fileName3, false);
-                parent.setScreen(new GameScreen(parent, true));
+                parent.setScreen(new GameScreen(parent));
                 System.out.println("Loaded_3");
             }
         });

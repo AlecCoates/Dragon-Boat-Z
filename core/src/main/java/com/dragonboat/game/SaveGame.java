@@ -117,7 +117,7 @@ class SaveLoadGame {
         file.writeString(saveString, false);
     }
 
-    public void loadGame(DragonBoatGame dragonBoatGame, String fileName){
+    public void loadGame(DragonBoatGame dragonBoatGame, String fileName) {
         FileHandle file = Gdx.files.local(fileName + ".json");
         String fileNameContents = file.readString();
         Json json = new Json();
@@ -126,7 +126,7 @@ class SaveLoadGame {
 
         //lanes
         Lane[] newLanes = new Lane[loadData.lanes.size()];
-        for(int k=0;k<loadData.lanes.size();k++){
+        for (int k = 0; k < loadData.lanes.size(); k++) {
             newLanes[k] = new Lane(loadData.lanes.get(k));
         }
 
@@ -136,7 +136,7 @@ class SaveLoadGame {
 
         //opponents
         Opponent[] newOpponents = new Opponent[loadData.opponents.size()];
-        for(int i =0;i<loadData.opponents.size();i++) {
+        for (int i = 0; i < loadData.opponents.size(); i++) {
             newOpponents[i] = new Opponent(loadData.opponents.get(i));
             if (loadData.opponents.size() < 7) {
                 if (i < 2) {
@@ -151,21 +151,21 @@ class SaveLoadGame {
                     newOpponents[i].setLane(newLanes[i + 1]);
                 }
             }
+
+            //progress bar
+            ProgressBar newProgressBar = json.fromJson(ProgressBar.class, loadData.progressBar);
+
+            newProgressBar.setPlayerBoat(newPlayer);
+            newProgressBar.setOpponentBoats(newOpponents);
+
+            //obstacle times
+            ArrayList<Integer>[] newObTimes = new ArrayList[loadData.obstacleTimes.size()];
+            for (int j = 0; j < loadData.obstacleTimes.size(); j++) {
+                newObTimes[j] = loadData.obstacleTimes.get(j);
+            }
+
+            dragonBoatGame.loadSave(loadData.rnd, newLanes, newPlayer, newOpponents, newProgressBar,
+                    newObTimes, loadData.difficulty, loadData.selectedDifficulty, loadData.ended);
         }
-
-        //progress bar
-        ProgressBar newProgressBar = json.fromJson(ProgressBar.class, loadData.progressBar);
-
-        newProgressBar.setPlayerBoat(newPlayer);
-        newProgressBar.setOpponentBoats(newOpponents);
-
-        //obstacle times
-        ArrayList<Integer>[] newObTimes = new ArrayList[loadData.obstacleTimes.size()];
-        for(int j=0;j<loadData.obstacleTimes.size();j++){
-            newObTimes[j] = loadData.obstacleTimes.get(j);
-        }
-
-        dragonBoatGame.loadSave(loadData.rnd, newLanes, newPlayer, newOpponents, newProgressBar,
-                newObTimes, loadData.difficulty, loadData.selectedDifficulty, loadData.ended);
     }
 }

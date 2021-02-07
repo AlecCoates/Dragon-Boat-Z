@@ -11,25 +11,9 @@ import com.badlogic.gdx.graphics.Texture;
  * Represents a goose obstacle on the course.
  */
 public class Goose extends Obstacle {
+
 	public String direction = "South"; // Facing south by default.
-	public Lane[] lanes;
-	public int laneNo;
-
-
-	static class GooseSpriteDescriptor extends ObstacleSpriteDescriptor {
-		public String direction;
-		public int laneNo;
-
-		//Used for the return from json file
-		public GooseSpriteDescriptor(){}
-
-		public GooseSpriteDescriptor(Goose goose) {
-			super((Obstacle) goose);
-			this.direction = goose.direction;
-			this.laneNo = goose.laneNo;
-		}
-	}
-
+	public Lane givenLane;
 
 	/**
 	 * <p>
@@ -42,13 +26,12 @@ public class Goose extends Obstacle {
 	 * 
 	 * @param xPosition X-position.
 	 * @param yPosition Y-position.
-	 * @param lanes     Lanes in the map.
-	 * @param laneNo    Lane number the goose will spawn in.
+	 * @param texture   Texture asset for the goose.
+	 * @param lane      Lane the goose will spawn in.
 	 */
-	public Goose(HashMap<String, Texture> textures, int xPosition, int yPosition, Lane[] lanes, int laneNo) {
-		super(textures, 10, xPosition, yPosition, null, null, "Goose");
-		this.lanes = lanes;
-		this.laneNo = laneNo;
+	public Goose(int xPosition, int yPosition, Texture texture, Lane lane) {
+		super(10, xPosition, yPosition, texture.getWidth(), texture.getHeight(), texture, "goose");
+		this.givenLane = lane;
 	}
 
 	/**
@@ -75,11 +58,11 @@ public class Goose extends Obstacle {
 
 		boolean canGoEast, canGoWest;
 
-		if (this.getX() > this.lanes[this.laneNo].getLeftBoundary() && this.getX() + this.width < this.lanes[this.laneNo].getRightBoundary()) {
+		if (this.getX() > givenLane.getLeftBoundary() && this.getX() + this.width < givenLane.getRightBoundary()) {
 			// Goose is within the lane boundaries.
 			canGoEast = true;
 			canGoWest = true;
-		} else if (this.getX() <= this.lanes[this.laneNo].getLeftBoundary()) {
+		} else if (this.getX() <= givenLane.getLeftBoundary()) {
 			// Goose is on left boundary.
 			canGoEast = true;
 			canGoWest = false;

@@ -1,10 +1,7 @@
 package com.dragonboat.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Json;
-
-import java.util.HashMap;
 
 /**
  * Represents an obstacle on the course.
@@ -20,8 +17,8 @@ public class Obstacle {
 	public Texture texture;
 
 	static class ObstacleSpriteDescriptor {
-		public float yPosition, xPosition;
-		public int damage;
+		protected float yPosition, xPosition;
+		private int damage;
 		public int width, height;
 		public String name;
 
@@ -46,30 +43,34 @@ public class Obstacle {
 	 * @param yPosition Y-position.
 	 * @param width     Width of the obstacle.
 	 * @param height    Height of the obstacle.
-	 * @param name      Name of the obstacle.
+	 * @param texture   Texture asset for the obstacle.
 	 */
-	public Obstacle(HashMap<String, Texture> textures, int damage, int xPosition, int yPosition, Integer width, Integer height, String name) {
+	public Obstacle(int damage, int xPosition, int yPosition, int width, int height, Texture texture, String name) {
 		this.damage = damage;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
+		this.width = width;
+		this.height = height;
+		this.texture = texture;
 		this.name = name;
-		this.texture = textures.get(name);
-		if (width != null) {
-			this.width = width;
-		} else {
-			this.width = this.texture.getWidth();
-		}
-		if (height != null) {
-			this.height = height;
-		} else {
-			this.height = this.texture.getHeight();
-		}
+	}
+	public Obstacle(String info){
+		Json json = new Json();
+		Obstacle.ObstacleSpriteDescriptor disc = json.fromJson(Obstacle.ObstacleSpriteDescriptor.class,info);
+
+		this.damage = disc.damage;
+		this.xPosition = disc.xPosition;
+		this.yPosition = disc.yPosition;
+		this.width = disc.width;
+		this.height = disc.height;
+		this.name = disc.name;
 	}
 
-	public ObstacleSpriteDescriptor saveState() {
+	public String saveState() {
 		ObstacleSpriteDescriptor disc = new ObstacleSpriteDescriptor(this);
-		//return new Json().toJson(disc);
-		return disc;
+		Json json = new Json();
+		System.out.print(json.prettyPrint(disc));
+		return json.toJson(disc);
 	}
 
 	public String getName(){
