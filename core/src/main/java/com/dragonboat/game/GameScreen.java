@@ -25,7 +25,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class GameScreen implements Screen {
     // ENVIRONMENT VARIABLES:
     private final Random rnd;
-    private final int MAX_DURABILITY = 40, MAX_TIREDNESS = 100;
     protected DragonBoatGame game = null;
 
     // debug booleans
@@ -356,12 +355,13 @@ public class GameScreen implements Screen {
         batch.draw(staminaBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset);
         batch.draw(healthBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset);
         batch.draw(staminaBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset, 0, 0,
-                Math.round(staminaBarFull.getWidth() * player.getTiredness() / MAX_TIREDNESS),
+                Math.round(staminaBarFull.getWidth() * player.getTiredness() / Boat.MAX_TIREDNESS),
                 staminaBarFull.getHeight());
         batch.draw(healthBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,
-                Math.round(healthBarFull.getWidth() * player.getDurability() / (float) MAX_DURABILITY),
+                Math.round(healthBarFull.getWidth() * player.getDurability() / (float) Boat.MAX_DURABILITY),
                 healthBarFull.getHeight());
         batch.end();
+        System.out.println(player.getDurability());
 
         if (debug_positions) debug += player.getName() + " pos: (" + player.getX() + "," + player.getY() + ")\n";
         if (debug_speed)
