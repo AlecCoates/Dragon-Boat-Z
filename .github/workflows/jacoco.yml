@@ -4,9 +4,18 @@ name: Jacoco Coverage
 
 on:
   push:
-    branches: [ main ]
+    branches:
+    - main
+    paths-ignore:
+    - 'target/site/jacoco/**'
+    - '.github/badges/**'
+    
   pull_request:
-    branches: [ main ]
+    branches:
+    - main
+    paths-ignore:
+    - 'target/site/jacoco/**'
+    - '.github/badges/**'
 
 jobs:
   coverage:
