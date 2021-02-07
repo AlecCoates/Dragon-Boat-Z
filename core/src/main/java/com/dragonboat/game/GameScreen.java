@@ -361,7 +361,6 @@ public class GameScreen implements Screen {
                 Math.round(healthBarFull.getWidth() * player.getDurability() / (float) Boat.MAX_DURABILITY),
                 healthBarFull.getHeight());
         batch.end();
-        System.out.println(player.getDurability());
 
         if (debug_positions) debug += player.getName() + " pos: (" + player.getX() + "," + player.getY() + ")\n";
         if (debug_speed)

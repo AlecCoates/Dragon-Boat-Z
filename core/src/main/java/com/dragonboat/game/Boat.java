@@ -149,8 +149,12 @@ public class Boat {
      * acceleration, if not, do nothing.
      */
     public void IncreaseSpeed() {
+        float damagedMaxSpeedMultiplier = 1.0f;
+        if (this.durability <= 0) {
+            damagedMaxSpeedMultiplier = 0.5f;
+        }
         if (this.tiredness <= 75) {
-            this.currentSpeed = Math.min(this.currentSpeed + this.ACCELERATION, this.MAXSPEED);
+            this.currentSpeed = Math.min(this.currentSpeed + this.ACCELERATION, this.MAXSPEED * damagedMaxSpeedMultiplier);
         }
     }
 
