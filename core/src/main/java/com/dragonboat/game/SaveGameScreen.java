@@ -101,9 +101,7 @@ public class SaveGameScreen implements Screen {
             });
         } else {
             load1Button.setTouchable(Touchable.disabled);
-            Color color = load1Button.getColor();
-            color.a = 0.5f;
-            load1Button.setColor(color);
+            load1Button.getColor().a = 0.5f;
         }
         final TextButton load2Button = new TextButton("Load",skin);
         if (file2.exists() && !file2.isDirectory()) {
@@ -116,9 +114,7 @@ public class SaveGameScreen implements Screen {
             });
         } else {
             load2Button.setTouchable(Touchable.disabled);
-            Color color = load2Button.getColor();
-            color.a = 0.5f;
-            load2Button.setColor(color);
+            load2Button.getColor().a = 0.5f;
         }
         final TextButton load3Button = new TextButton("Load",skin);
         if (file3.exists() && !file3.isDirectory()) {
@@ -131,9 +127,7 @@ public class SaveGameScreen implements Screen {
             });
         } else {
             load3Button.setTouchable(Touchable.disabled);
-            Color color = load3Button.getColor();
-            color.a = 0.5f;
-            load3Button.setColor(color);
+            load3Button.getColor().a = 0.5f;
         }
 
         final TextButton delete1Button = new TextButton("Delete",skin);
@@ -147,9 +141,7 @@ public class SaveGameScreen implements Screen {
             });
         } else {
             delete1Button.setTouchable(Touchable.disabled);
-            Color color = load1Button.getColor();
-            color.a = 0.5f;
-            delete1Button.setColor(color);
+            delete1Button.getColor().a = 0.5f;
         }
         final TextButton delete2Button = new TextButton("Delete",skin);
         if (file2.exists() && !file2.isDirectory()) {
@@ -162,9 +154,7 @@ public class SaveGameScreen implements Screen {
             });
         } else {
             delete2Button.setTouchable(Touchable.disabled);
-            Color color = load1Button.getColor();
-            color.a = 0.5f;
-            delete2Button.setColor(color);
+            delete2Button.getColor().a = 0.5f;
         }
         final TextButton delete3Button = new TextButton("Delete",skin);
         if (file3.exists() && !file3.isDirectory()) {
@@ -177,9 +167,7 @@ public class SaveGameScreen implements Screen {
             });
         } else {
             delete3Button.setTouchable(Touchable.disabled);
-            Color color = load1Button.getColor();
-            color.a = 0.5f;
-            delete3Button.setColor(color);
+            delete3Button.getColor().a = 0.5f;
         }
 
         final TextButton returnButton = new TextButton("Return",skin);
