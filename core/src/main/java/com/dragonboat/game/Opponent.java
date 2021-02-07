@@ -3,9 +3,6 @@ package com.dragonboat.game;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 /**
  * Represents a opponent boat with AI.
  */

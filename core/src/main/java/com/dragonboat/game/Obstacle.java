@@ -1,8 +1,6 @@
 package com.dragonboat.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Json;
 
 import java.util.HashMap;
 
