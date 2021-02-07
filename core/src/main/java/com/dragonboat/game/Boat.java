@@ -27,7 +27,7 @@ public class Boat {
     protected int laneNo = 0;
     protected Texture[] textureFrames;
     protected int frameCounter = 0;
-    protected long lastFrameTime = 0;
+    protected float lastFrameY = 0;
     public Texture texture;
     protected String name;
     protected char label;
@@ -48,7 +48,7 @@ public class Boat {
         public float currentSpeed, fastestLegTime, tiredness;
         public int laneNo;
         public int frameCounter;
-        public long lastFrameTime;
+        public float lastFrameY;
         public String name;
         public boolean finished;
         public char label;
@@ -76,7 +76,7 @@ public class Boat {
             this.tiredness = oldBoat.tiredness;
             this.laneNo = oldBoat.laneNo;
             this.frameCounter = oldBoat.frameCounter;
-            this.lastFrameTime = oldBoat.lastFrameTime;
+            this.lastFrameY = oldBoat.lastFrameY;
             this.name = oldBoat.getName();
             this.finished = oldBoat.finished();
             this.label = oldBoat.label;

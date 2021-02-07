@@ -248,9 +248,8 @@ public class GameScreen implements Screen {
                 started = true;
             }
 
-            Date date = new Date();
-            if (date.getTime() - player.lastFrameTime > (5.0f - player.currentSpeed) * 35.0f) {
-                player.lastFrameTime = date.getTime();
+            if (player.yPosition - player.lastFrameY > 18.0f) {
+                player.lastFrameY = player.yPosition;
                 player.AdvanceTextureFrame();
             }
 
@@ -287,8 +286,8 @@ public class GameScreen implements Screen {
                 if (Math.round(totalDeltaTime) % 2 == 0) {
                     opponents[i].ai(backgroundOffset);
                 }
-                if (date.getTime() - opponents[i].lastFrameTime > (5.0f - opponents[i].currentSpeed) * 35.0f) {
-                    opponents[i].lastFrameTime = date.getTime();
+                if (opponents[i].yPosition - opponents[i].lastFrameY > 18.0f) {
+                    opponents[i].lastFrameY = opponents[i].yPosition;
                     opponents[i].AdvanceTextureFrame();
                 }
             }
