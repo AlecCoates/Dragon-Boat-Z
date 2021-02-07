@@ -456,7 +456,7 @@ public class GameScreen implements Screen {
          * Check if all boats have passed the finish line, if so, generate the
          * leaderboard.
          */
-        if (progressBar.allFinished(course.getTexture().getHeight()) || (game.difficulty == 4 && player.finished())) {
+        if (progressBar.allFinished(course.getTexture().getHeight())) {
             // Display leaderboard, if on the third leg, display top 3 boats.
             if (game.difficulty < 3) {
                 batch.begin();

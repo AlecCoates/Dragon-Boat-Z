@@ -198,7 +198,9 @@ public class DragonBoatGame extends Game {
 				}
 				b.ResetFastestLegTime();
 			}
+			player.ResetFastestLegTime();
 		}
+		leaderboard = new Leaderboard(player, opponents);
 		progressBar = new ProgressBar(player, opponents);
 		this.gameScreen = new GameScreen(this);
 		this.setScreen(this.gameScreen);
@@ -260,7 +262,7 @@ public class DragonBoatGame extends Game {
 			}
 			if (!playerWon) {
 				batch.begin();
-				font28.draw(batch, "Unlucky, would you like to try again?", 140, 200);
+				font28.draw(batch, "You lose. Better luck next time!", 140, 200);
 				batch.end();
 			}
 		}
