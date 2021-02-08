@@ -67,7 +67,7 @@ public class SaveGameScreen implements Screen {
         save1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile1 = new SaveLoadGame(game, fileName1, true);
+                SaveLoadGame.saveGame(game, fileName1);
                 thisScreen.reload();
             }
         });
@@ -75,7 +75,7 @@ public class SaveGameScreen implements Screen {
         save2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile2 = new SaveLoadGame(game, fileName2, true);
+                SaveLoadGame.saveGame(game, fileName2);
                 thisScreen.reload();
             }
         });
@@ -83,7 +83,7 @@ public class SaveGameScreen implements Screen {
         save3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveLoadGame saveFile3 = new SaveLoadGame(game, fileName3, true);
+                SaveLoadGame.saveGame(game, fileName3);
                 thisScreen.reload();
             }
         });
@@ -93,7 +93,7 @@ public class SaveGameScreen implements Screen {
             load1Button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    SaveLoadGame loadFile1 = new SaveLoadGame(game, fileName1, false);
+                    SaveLoadGame.loadGame(game, fileName1);
                 }
             });
         } else {
@@ -105,7 +105,7 @@ public class SaveGameScreen implements Screen {
             load2Button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    SaveLoadGame loadFile2 = new SaveLoadGame(game, fileName2, false);
+                    SaveLoadGame.loadGame(game, fileName2);
                 }
             });
         } else {
@@ -117,7 +117,7 @@ public class SaveGameScreen implements Screen {
             load3Button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    SaveLoadGame loadFile3 = new SaveLoadGame(game, fileName3, false);
+                    SaveLoadGame.loadGame(game, fileName3);
                 }
             });
         } else {

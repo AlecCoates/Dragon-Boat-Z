@@ -4,26 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 
 import java.util.*;
 
 class SaveLoadGame {
-    private DragonBoatGame dragonBoatGame;
-    private String fileName;
 
-    SaveLoadGame(DragonBoatGame dragonBoatGame, String fileName, Boolean save){
-        if(save){
-            saveGame(dragonBoatGame,fileName);
-        }else{
-            loadGame(dragonBoatGame,fileName);
-        }
+    public static void saveGame(DragonBoatGame dragonBoatGame, String fileName) {
+        saveGameFile(saveGameString(saveGameData(dragonBoatGame)), fileName);
     }
 
-    public void saveGame(DragonBoatGame dragonBoatGame, String fileName){
-        this.fileName = fileName;
-        this.dragonBoatGame = dragonBoatGame;
-
+    public static HashMap<String, Object> saveGameData(DragonBoatGame dragonBoatGame){
         HashMap<String, Object> saveData = new HashMap<>();
 
         saveData.put("rnd", dragonBoatGame.rnd);
@@ -58,29 +50,46 @@ class SaveLoadGame {
         saveData.put("backgroundOffset", dragonBoatGame.gameScreen.backgroundOffset);
         saveData.put("totalDeltaTime", dragonBoatGame.gameScreen.totalDeltaTime);
 
+        return saveData;
+    }
+
+    public static String saveGameString(HashMap<String, Object> saveData) {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
-        String saveString = json.prettyPrint(saveData);
+        return json.prettyPrint(saveData);
+    }
 
+    public static void saveGameFile(String saveString, String fileName) {
         FileHandle file = Gdx.files.local(fileName + ".json");
         file.writeString(saveString, false);
     }
 
-    public void loadGame(DragonBoatGame dragonBoatGame, String fileName){
-        FileHandle file = Gdx.files.local(fileName + ".json");
-        HashMap<String, Object> loadData = new Json().fromJson(HashMap.class, file);
 
+    public static void loadGame(DragonBoatGame dragonBoatGame, String fileName) {
+        loadGameData(loadGameString(loadGameFile(fileName)), dragonBoatGame);
+    }
+
+    public static String loadGameFile(String fileName) {
+        FileHandle file = Gdx.files.local(fileName + ".json");
+        return file.readString();
+    }
+
+    public static HashMap<String, Object> loadGameString(String saveString) {
+        Json json = new Json();
+        return json.fromJson(HashMap.class, saveString);
+    }
+
+    public static void loadGameData(HashMap<String, Object> saveData, DragonBoatGame dragonBoatGame){
         //game seed
-        Random newRnd = (Random) loadData.get("rnd");
-        dragonBoatGame.rnd = newRnd;
+        dragonBoatGame.rnd = (Random) saveData.get("rnd");
 
         //difficulty
-        dragonBoatGame.difficulty = (int) loadData.get("difficulty");
-        dragonBoatGame.selectedDifficulty = (int) loadData.get("selectedDifficulty");
-        dragonBoatGame.ended = (boolean) loadData.get("ended");
+        dragonBoatGame.difficulty = (int) saveData.get("difficulty");
+        dragonBoatGame.selectedDifficulty = (int) saveData.get("selectedDifficulty");
+        dragonBoatGame.ended = (boolean) saveData.get("ended");
 
         //lanes and obstacles
-        Array<Lane.LaneSpriteDescriptor> loadLanes = (Array<Lane.LaneSpriteDescriptor>) loadData.get("lanes");
+        Array<Lane.LaneSpriteDescriptor> loadLanes = (Array<Lane.LaneSpriteDescriptor>) saveData.get("lanes");
         Lane[] lanes = new Lane[loadLanes.size];
         for (int i = 0; i < loadLanes.size; i++) {
             Lane.LaneSpriteDescriptor loadLane = loadLanes.get(i);
@@ -104,7 +113,7 @@ class SaveLoadGame {
         dragonBoatGame.lanes = lanes;
 
         //obstacle times
-        Array loadObstacleTimes = (Array) loadData.get("obstacleTimes");
+        Array loadObstacleTimes = (Array) saveData.get("obstacleTimes");
         ArrayList<Integer>[] obstacleTimes = new ArrayList[loadObstacleTimes.size];
         for (int i = 0; i < loadObstacleTimes.size; i++) {
             Array loadObstacleTime = (Array) loadObstacleTimes.get(i);
@@ -118,7 +127,7 @@ class SaveLoadGame {
         dragonBoatGame.obstacleTimes = obstacleTimes;
 
         //player
-        Boat.BoatSpriteDescriptor loadPlayer = (Boat.BoatSpriteDescriptor) loadData.get("player");
+        Boat.BoatSpriteDescriptor loadPlayer = (Boat.BoatSpriteDescriptor) saveData.get("player");
         Player player = new Player((int) loadPlayer.yPosition, loadPlayer.width, loadPlayer.height, dragonBoatGame.lanes, loadPlayer.laneNo, loadPlayer.name);
         player.xPosition = loadPlayer.xPosition;
         player.penalties = loadPlayer.penalties;
@@ -134,7 +143,7 @@ class SaveLoadGame {
         dragonBoatGame.player = player;
 
         //opponents
-        Array loadOpponents = (Array) loadData.get("opponents");
+        Array loadOpponents = (Array) saveData.get("opponents");
         Opponent[] opponents = new Opponent[loadOpponents.size];
         for (int i = 0; i < loadOpponents.size; i++) {
             Boat.BoatSpriteDescriptor loadOpponent = (Boat.BoatSpriteDescriptor) loadOpponents.get(i);
@@ -155,7 +164,7 @@ class SaveLoadGame {
         dragonBoatGame.opponents = opponents;
 
         //progress bar
-        ProgressBar.ProgressBarSpriteDescriptor loadProgressBar = (ProgressBar.ProgressBarSpriteDescriptor) loadData.get("progressBar");
+        ProgressBar.ProgressBarSpriteDescriptor loadProgressBar = (ProgressBar.ProgressBarSpriteDescriptor) saveData.get("progressBar");
         ProgressBar progressBar = new ProgressBar(player, opponents);
         progressBar.timeSeconds = loadProgressBar.timeSeconds;
         progressBar.playerTime = loadProgressBar.playerTime;
@@ -163,9 +172,9 @@ class SaveLoadGame {
 
         dragonBoatGame.leaderboard = new Leaderboard(player, opponents);
         dragonBoatGame.gameScreen = new GameScreen(dragonBoatGame, true);
-        dragonBoatGame.gameScreen.started = (boolean) loadData.get("started");
-        dragonBoatGame.gameScreen.backgroundOffset = (int) loadData.get("backgroundOffset");
-        dragonBoatGame.gameScreen.totalDeltaTime = (float) loadData.get("totalDeltaTime");
+        dragonBoatGame.gameScreen.started = (boolean) saveData.get("started");
+        dragonBoatGame.gameScreen.backgroundOffset = (int) saveData.get("backgroundOffset");
+        dragonBoatGame.gameScreen.totalDeltaTime = (float) saveData.get("totalDeltaTime");
         dragonBoatGame.setScreen(dragonBoatGame.gameScreen);
     }
 }
