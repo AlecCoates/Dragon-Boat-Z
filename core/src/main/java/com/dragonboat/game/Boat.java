@@ -224,8 +224,8 @@ public class Boat {
      * @return Boolean representing whether the Boat is in the Lane.
      */
     public boolean CheckIfInLane() {
-        return this.xPosition + threshold > this.lanes[this.laneNo].getLeftBoundary()
-                && this.xPosition + this.width - threshold < this.lanes[this.laneNo].getRightBoundary();
+        return this.xPosition + this.width * 0.2f + threshold > this.lanes[this.laneNo].getLeftBoundary()
+            && this.xPosition + this.width * 0.8f - threshold < this.lanes[this.laneNo].getRightBoundary();
     }
 
     /**
