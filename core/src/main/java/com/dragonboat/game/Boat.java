@@ -100,7 +100,7 @@ public class Boat {
         this.height = height;
         this.currentSpeed = 0f;
         this.penalties = 0;
-        this.durability = 50;
+        this.durability = Boat.MAX_DURABILITY;
         this.tiredness = 0f;
         this.lanes = lanes;
         this.laneNo = laneNo;
