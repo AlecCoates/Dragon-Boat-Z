@@ -19,9 +19,9 @@ public class SaveGameScreen implements Screen {
     private DragonBoatGame game;
     private InputProcessor oldInputProcessor;
     private Stage stage;
-    private String fileName1 = "saves/SaveState1";
-    private String fileName2 = "saves/SaveState2";
-    private String fileName3 = "saves/SaveState3";
+    private String fileName1 = "SaveState1";
+    private String fileName2 = "SaveState2";
+    private String fileName3 = "SaveState3";
 
 
     /**

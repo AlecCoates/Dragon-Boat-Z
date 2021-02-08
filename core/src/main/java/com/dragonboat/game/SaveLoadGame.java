@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 
 import java.util.*;
@@ -60,7 +59,7 @@ class SaveLoadGame {
     }
 
     public static void saveGameFile(String saveString, String fileName) {
-        FileHandle file = Gdx.files.local(fileName + ".json");
+        FileHandle file = Gdx.files.local("saves/" + fileName + ".json");
         file.writeString(saveString, false);
     }
 
@@ -70,7 +69,7 @@ class SaveLoadGame {
     }
 
     public static String loadGameFile(String fileName) {
-        FileHandle file = Gdx.files.local(fileName + ".json");
+        FileHandle file = Gdx.files.local("saves/" + fileName + ".json");
         return file.readString();
     }
 
