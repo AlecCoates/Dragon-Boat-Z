@@ -105,6 +105,7 @@ public class Boat {
         this.lanes = lanes;
         this.laneNo = laneNo;
         this.fastestLegTime = 0;
+        this.lastFrameY = 0;
         this.textureFrames = new Texture[4];
         this.frameCounter = 0;
         this.name = name;
@@ -144,6 +145,10 @@ public class Boat {
     public void MoveForward() {
         this.yPosition += this.currentSpeed;
         this.currentSpeed *= 0.9992f;
+        if (this.yPosition - this.lastFrameY > 15.0f) {
+            this.lastFrameY = this.yPosition;
+            this.AdvanceTextureFrame();
+        }
     }
 
     /**
@@ -282,6 +287,8 @@ public class Boat {
         this.durability = 50;
         this.tiredness = 0f;
         this.finished = false;
+        this.frameCounter = 0;
+        this.lastFrameY = 0;
     }
 
     /**

@@ -248,11 +248,6 @@ public class GameScreen implements Screen {
                 started = true;
             }
 
-            if (player.yPosition - player.lastFrameY > 18.0f) {
-                player.lastFrameY = player.yPosition;
-                player.AdvanceTextureFrame();
-            }
-
             /*
             * Move obstacles
              */
@@ -285,10 +280,6 @@ public class GameScreen implements Screen {
                 opponents[i].CheckCollisions(backgroundOffset);
                 if (Math.round(totalDeltaTime) % 2 == 0) {
                     opponents[i].ai(backgroundOffset);
-                }
-                if (opponents[i].yPosition - opponents[i].lastFrameY > 18.0f) {
-                    opponents[i].lastFrameY = opponents[i].yPosition;
-                    opponents[i].AdvanceTextureFrame();
                 }
             }
 
