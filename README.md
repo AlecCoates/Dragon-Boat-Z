@@ -244,11 +244,15 @@ focused on. This was to ensure a successful completion of the entire project.
 
 ## Weekly Snapshots
 
+<summary><strong> Week 1 </strong></summary>
+
+<img src="docs/sprints/w1m1.PNG">
+
 ### Project Gantt Chart
 
 <img src="docs/gantt chart/ganttchart2.PNG">
 
-### Sprint Dropdowns
+
 
 
 ## Testing
