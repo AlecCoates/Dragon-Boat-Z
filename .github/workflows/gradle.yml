@@ -34,10 +34,10 @@ jobs:
       run: chmod +x gradlew
 
     - name: Run unit tests
-      run: ./gradlew gradlew test --tests com.dragonboat.game.*UnitTest
+      run: ./gradlew test --tests com.dragonboat.game.*UnitTest
       
     - name: Run integration tests
-      run: ./gradlew gradlew test --tests com.dragonboat.game.*IntegrationTest --fail-fast
+      run: ./gradlew test --tests com.dragonboat.game.*IntegrationTest --fail-fast
 
     - name: Finally, run skipping tests
       run: ./gradlew build -x test
