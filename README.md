@@ -76,7 +76,7 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 # Assessment 1 Content
 <details><summary></summary>
 
-### Deliverables
+## Deliverables
 
 * <a href="docs/deliverables/Req1.pdf">Requirements</a>
 * <a href="docs/deliverables/Arch1.pdf">Architecture</a>
@@ -84,21 +84,21 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 * <a href="docs/deliverables/Risk1.pdf">Risk Assessment and Mitigation</a>
 * <a href="docs/deliverables/Impl1.pdf">Implementation</a>
 
-### Executables
+## Executables
 
 * <a href="releases/download/v1.0/DragonBoat.jar">Dragon Boat Z Game</a>
 
-### Javadocs
+## Javadocs
 
 * <a href="docs/javadoc/index.html">Javadocs HTML Export</a>
 
-### Weekly Snapshots
+## Weekly Snapshots
 
-#### Project Gantt Chart
+### Project Gantt Chart
 
 <img src="docs/gantt chart/gantt chart.png">
 
-#### Sprint Dropdowns
+### Sprint Dropdowns
 
 <details>
 <summary><strong> Sprint 1 - 08/10/2020 </strong></summary>
@@ -227,10 +227,10 @@ focused on. This was to ensure a successful completion of the entire project.
 # Assessment 2 Content
 <details open><summary></summary>
   
-### Deliverables
+## Deliverables
 * <a href="docs/deliverables/Req2.pdf">Requirements</a>
 
-### Testing
+## Testing
 <details><summary>Test Designs</summary>
 
 * <a href="docs/tests/Test Designs/Unit Tests.pdf">Unit Tests</a>
@@ -238,6 +238,7 @@ focused on. This was to ensure a successful completion of the entire project.
 * <a href="docs/tests/Test Designs/System Tests.pdf">System Tests</a>
 
 </details>
+
 <details><summary>Test Results</summary>
   <div style="text-indent:50px;">
   <details><summary>Inherited Code</summary>
@@ -262,6 +263,7 @@ focused on. This was to ensure a successful completion of the entire project.
   </details>
   </div>
 </details>
+
 <details><summary>Coverage Details</summary>
 
 * <a href="docs/tests/Coverage Details/Coverage Report/index.html">Coverage Report</a>
