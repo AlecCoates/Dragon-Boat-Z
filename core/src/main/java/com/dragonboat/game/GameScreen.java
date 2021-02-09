@@ -204,8 +204,7 @@ public class GameScreen implements Screen {
         * Checks whether Escape key is pressed,bringing up pause menu
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            pauseMenu.setVisible(!pauseMenu.isVisible());
-            ispaused = !ispaused;
+            togglePause();
         }
 
         if (!ispaused) {
@@ -537,14 +536,19 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
     }
 
+    public void togglePause() {
+        pauseMenu.setVisible(!pauseMenu.isVisible());
+        ispaused = !ispaused;
+    }
+
     @Override
     public void pause() {
-
+        if (!ispaused) togglePause();
     }
 
     @Override
     public void resume() {
-
+        if (ispaused) togglePause();
     }
 
     @Override
