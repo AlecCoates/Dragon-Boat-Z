@@ -29,7 +29,6 @@ public class BoatUnitTest {
 
     @Test
     public void testSteerLeft() {
-        assertEquals(1,2);
         //Test steering right-side of left bank
         lanes = new Lane[]{new Lane(0,20,10)};
         Boat testBoat = new Boat(15, 5, 15, lanes, 0, "A");
@@ -306,13 +305,21 @@ public class BoatUnitTest {
         testBoat.xPosition = -10;
         assertFalse(testBoat.CheckIfInLane());
 
-        //Test on left edge
+        //Test over left edge
         lanes = new Lane[]{new Lane(0,20,10)};
         testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100, 5, 10, 7);
         testBoat.threshold = 1;
         testBoat.xPosition = -2;
         assertFalse(testBoat.CheckIfInLane());
+
+        //Test on left edge
+        lanes = new Lane[]{new Lane(0,20,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
+        testBoat.setStats(100, 5, 10, 7);
+        testBoat.threshold = 1;
+        testBoat.xPosition = -1;
+        assertTrue(testBoat.CheckIfInLane());
 
         //Test in lane
         lanes = new Lane[]{new Lane(0,20,10)};
@@ -323,6 +330,14 @@ public class BoatUnitTest {
         assertTrue(testBoat.CheckIfInLane());
 
         //Test on right edge
+        lanes = new Lane[]{new Lane(0,20,10)};
+        testBoat = new Boat(15, 5, 15, lanes, 0, "A");
+        testBoat.setStats(100, 5, 10, 7);
+        testBoat.threshold = 1;
+        testBoat.xPosition = 16;
+        assertTrue(testBoat.CheckIfInLane());
+
+        //Test over right edge
         lanes = new Lane[]{new Lane(0,20,10)};
         testBoat = new Boat(15, 5, 15, lanes, 0, "A");
         testBoat.setStats(100, 5, 10, 7);
