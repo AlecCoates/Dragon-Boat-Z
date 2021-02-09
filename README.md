@@ -1,9 +1,9 @@
-Status: ![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gradle%20Build/badge.svg?branch=main)
-
-Instuctions: ![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)
-
-Branches: ![Branch Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoBranchesTested.svg)
-
+[![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gradle%20Build/badge.svg?branch=main)](https://github.com/AlecCoates/Dragon-Boat-Z/actions?query=workflow%3A%22Gradle+Build%22) 
+[![CodeQL](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/CodeQL/badge.svg)](https://github.com/AlecCoates/Dragon-Boat-Z/actions?query=workflow%3ACodeQL) 
+[![Branch Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoBranchesTested.svg)](https://aleccoates.github.io/Dragon-Boat-Z/docs/tests/Coverage%20Details/Coverage%20Report/index.html) 
+[![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)](https://aleccoates.github.io/Dragon-Boat-Z/docs/tests/Coverage%20Details/Coverage%20Report/index.html) 
+[![Pull Requests](https://img.shields.io/github/issues-pr/AlecCoates/Dragon-Boat-Z)](https://github.com/AlecCoates/Dragon-Boat-Z/pulls) 
+[![Website aleccoates.github.io/Dragon-Boat-Z](https://img.shields.io/website-up-down-green-red/https/aleccoates.github.io/Dragon-Boat-Z.svg)](https://aleccoates.github.io/Dragon-Boat-Z/)
 
 # Contents
 <details open><summary></summary>
@@ -229,6 +229,42 @@ focused on. This was to ensure a successful completion of the entire project.
   
 ## Deliverables
 * <a href="docs/deliverables/Req2.pdf">Requirements</a>
+* <a href="docs/deliverables/Arch2.pdf">Architecture</a>
+* <a href="docs/deliverables/Plan2.pdf">Method Selection and Planning</a>
+* <a href="docs/deliverables/Risk2.pdf">Risk Assessment and Mitigation</a>
+* <a href="docs/deliverables/Impl2.pdf">Implementation</a>
+
+## Executables
+
+* <a href="releases/download/v1.0/DragonBoat.jar">Dragon Boat Z Game</a>
+
+## Javadocs
+
+* <a href="docs/javadoc/index.html">Javadocs HTML Export</a>
+
+## Weekly Snapshots
+
+<summary><strong> Week 1 </strong></summary>
+
+<img src="docs/sprints/w1m1.PNG">
+<img src="docs/sprints/w1m2.PNG">
+
+<summary><strong> Week 2 </strong></summary>
+
+<img src="docs/sprints/w2m1.PNG">
+<img src="docs/sprints/w2m2.PNG">
+
+<summary><strong> Week 3 </strong></summary>
+
+<img src="docs/sprints/w3m1.PNG">
+
+
+### Project Gantt Chart
+
+<img src="docs/gantt chart/ganttchart2.PNG">
+
+
+
 
 ## Testing
 <details><summary>Test Designs</summary>
