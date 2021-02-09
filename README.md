@@ -235,6 +235,23 @@ focused on. This was to ensure a successful completion of the entire project.
 * <a href="docs/deliverables/Risk2.pdf">Risk Assessment and Mitigation</a>
 * <a href="docs/deliverables/Impl2.pdf">Implementation</a>
 
+## Executables
+
+* <a href="releases/download/v1.0/DragonBoat.jar">Dragon Boat Z Game</a>
+
+## Javadocs
+
+* <a href="docs/javadoc/index.html">Javadocs HTML Export</a>
+
+## Weekly Snapshots
+
+### Project Gantt Chart
+
+<img src="docs/gantt chart/gantt chart.png">
+
+### Sprint Dropdowns
+
+
 ## Testing
 <details><summary>Test Designs</summary>
 
