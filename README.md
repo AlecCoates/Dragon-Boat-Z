@@ -247,7 +247,7 @@ focused on. This was to ensure a successful completion of the entire project.
 
 ### Project Gantt Chart
 
-<img src="docs/gantt chart/ganttchart2.png">
+<img src="docs/gantt chart/ganttchart2.PNG">
 
 ### Sprint Dropdowns
 
