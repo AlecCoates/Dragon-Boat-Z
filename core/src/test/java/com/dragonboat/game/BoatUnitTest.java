@@ -29,6 +29,7 @@ public class BoatUnitTest {
 
     @Test
     public void testSteerLeft() {
+        assertEquals(1,2);
         //Test steering right-side of left bank
         lanes = new Lane[]{new Lane(0,20,10)};
         Boat testBoat = new Boat(15, 5, 15, lanes, 0, "A");
