@@ -21,49 +21,49 @@
         <ExternalSystemReattachDebugProcess/>
         <DebugAllEnabled/>
     </config>
-    <suite duration="17" locationUrl="java:suite://com.dragonboat.game.BoatTest" name="com.dragonboat.game.BoatTest" status="passed">
-        <test duration="4" locationUrl="java:test://com.dragonboat.game.BoatTest.testIncreaseTiredness" name="testIncreaseTiredness" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testMoveForward" name="testMoveForward" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testReset" name="testReset" status="passed"/>
-        <test duration="13" locationUrl="java:test://com.dragonboat.game.BoatTest.testCheckCollisions" name="testCheckCollisions" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testDecreaseTiredness" name="testDecreaseTiredness" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testGetProgress" name="testGetProgress" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testResetFastestLegTime" name="testResetFastestLegTime" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testCheckIfInLane" name="testCheckIfInLane" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testIncreaseSpeed" name="testIncreaseSpeed" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testApplyDamage" name="testApplyDamage" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testDecreaseSpeed" name="testDecreaseSpeed" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testSteerRight" name="testSteerRight" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testSteerLeft" name="testSteerLeft" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testUpdateFastestTime" name="testUpdateFastestTime" status="passed"/>
+    <suite duration="17" locationUrl="java:suite://com.dragonboat.game.BoatUnitTest" name="com.dragonboat.game.BoatUnitTest" status="passed">
+        <test duration="4" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testIncreaseTiredness" name="testIncreaseTiredness" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testMoveForward" name="testMoveForward" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testReset" name="testReset" status="passed"/>
+        <test duration="13" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testCheckCollisions" name="testCheckCollisions" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testDecreaseTiredness" name="testDecreaseTiredness" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testGetProgress" name="testGetProgress" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testResetFastestLegTime" name="testResetFastestLegTime" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testCheckIfInLane" name="testCheckIfInLane" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testIncreaseSpeed" name="testIncreaseSpeed" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testApplyDamage" name="testApplyDamage" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testDecreaseSpeed" name="testDecreaseSpeed" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testSteerRight" name="testSteerRight" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testSteerLeft" name="testSteerLeft" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testUpdateFastestTime" name="testUpdateFastestTime" status="passed"/>
     </suite>
-    <suite duration="3" locationUrl="java:suite://com.dragonboat.game.GooseTest" name="com.dragonboat.game.GooseTest" status="passed">
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseTest.testChangeDirection" name="testChangeDirection" status="passed"/>
-        <test duration="2" locationUrl="java:test://com.dragonboat.game.GooseTest.testMove" name="testMove" status="passed"/>
+    <suite duration="3" locationUrl="java:suite://com.dragonboat.game.GooseUnitTest" name="com.dragonboat.game.GooseUnitTest" status="passed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseUnitTest.testChangeDirection" name="testChangeDirection" status="passed"/>
+        <test duration="2" locationUrl="java:test://com.dragonboat.game.GooseUnitTest.testMove" name="testMove" status="passed"/>
     </suite>
-    <suite duration="8" locationUrl="java:suite://com.dragonboat.game.LaneTest" name="com.dragonboat.game.LaneTest" status="passed">
-        <test duration="7" locationUrl="java:test://com.dragonboat.game.LaneTest.testSpawnObstacle" name="testSpawnObstacle" status="passed">
+    <suite duration="8" locationUrl="java:suite://com.dragonboat.game.LaneUnitTest" name="com.dragonboat.game.LaneUnitTest" status="passed">
+        <test duration="7" locationUrl="java:test://com.dragonboat.game.LaneUnitTest.testSpawnObstacle" name="testSpawnObstacle" status="passed">
             <output type="stdout">Obstacle limit reached.&#13;
 Obstacle limit reached.&#13;
 Obstacle limit reached.&#13;
 Obstacle limit reached.&#13;
 </output>
         </test>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.LaneTest.testRemoveObstacle" name="testRemoveObstacle" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.LaneUnitTest.testRemoveObstacle" name="testRemoveObstacle" status="passed"/>
     </suite>
-    <suite duration="5" locationUrl="java:suite://com.dragonboat.game.LeaderboardTest" name="com.dragonboat.game.LeaderboardTest" status="passed">
-        <test duration="5" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetTimes" name="testGetTimes" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetFinalists" name="testGetFinalists" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetPodium" name="testGetPodium" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testUpdateOrder" name="testUpdateOrder" status="passed"/>
+    <suite duration="5" locationUrl="java:suite://com.dragonboat.game.LeaderboardUnitTest" name="com.dragonboat.game.LeaderboardUnitTest" status="passed">
+        <test duration="5" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testGetTimes" name="testGetTimes" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testGetFinalists" name="testGetFinalists" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testGetPodium" name="testGetPodium" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testUpdateOrder" name="testUpdateOrder" status="passed"/>
     </suite>
-    <suite duration="1" locationUrl="java:suite://com.dragonboat.game.ObstacleTest" name="com.dragonboat.game.ObstacleTest" status="passed">
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.ObstacleTest.testMove" name="testMove" status="passed"/>
+    <suite duration="1" locationUrl="java:suite://com.dragonboat.game.ObstacleUnitTest" name="com.dragonboat.game.ObstacleUnitTest" status="passed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.ObstacleUnitTest.testMove" name="testMove" status="passed"/>
     </suite>
-    <suite duration="1" locationUrl="java:suite://com.dragonboat.game.ProgressBarTest" name="com.dragonboat.game.ProgressBarTest" status="passed">
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testAllFinished" name="testAllFinished" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testGetProgress" name="testGetProgress" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testIncrementTimer" name="testIncrementTimer" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testStartTimer" name="testStartTimer" status="passed"/>
+    <suite duration="1" locationUrl="java:suite://com.dragonboat.game.ProgressBarUnitTest" name="com.dragonboat.game.ProgressBarUnitTest" status="passed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testAllFinished" name="testAllFinished" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testGetProgress" name="testGetProgress" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testIncrementTimer" name="testIncrementTimer" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testStartTimer" name="testStartTimer" status="passed"/>
     </suite>
 </testrun>

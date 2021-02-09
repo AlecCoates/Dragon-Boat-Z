@@ -11,7 +11,7 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
-public class LaneTest {
+public class LaneUnitTest {
 
     private HashMap<String, Texture> textures;
     private Lane[] lanes;

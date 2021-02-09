@@ -9,7 +9,7 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
-public class SaveLoadGameTest {
+public class SaveLoadGameUnitTest {
 
     @Test
     public void testSaveGameString() {

@@ -22,11 +22,11 @@
         <ExternalSystemReattachDebugProcess/>
         <DebugAllEnabled/>
     </config>
-    <suite duration="27" locationUrl="java:suite://com.dragonboat.game.BoatTest" name="com.dragonboat.game.BoatTest" status="failed">
-        <test duration="4" locationUrl="java:test://com.dragonboat.game.BoatTest.testIncreaseTiredness" name="testIncreaseTiredness" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testMoveForward" name="testMoveForward" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testReset" name="testReset" status="passed"/>
-        <test duration="14" locationUrl="java:test://com.dragonboat.game.BoatTest.testCheckCollisions" name="testCheckCollisions" status="failed">
+    <suite duration="27" locationUrl="java:suite://com.dragonboat.game.BoatUnitTest" name="com.dragonboat.game.BoatUnitTest" status="failed">
+        <test duration="4" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testIncreaseTiredness" name="testIncreaseTiredness" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testMoveForward" name="testMoveForward" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testReset" name="testReset" status="passed"/>
+        <test duration="14" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testCheckCollisions" name="testCheckCollisions" status="failed">
             <output type="stderr">expected:&amp;lt;0&amp;gt; but was:&amp;lt;1&amp;gt;
 </output>
             <output type="stdout">Expected :
@@ -42,7 +42,7 @@ java.lang.AssertionError: expected:&amp;lt;0&amp;gt; but was:&amp;lt;1&amp;gt;&#
 	at org.junit.Assert.failNotEquals(Assert.java:835)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:647)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:633)&#13;
-	at com.dragonboat.game.BoatTest.testCheckCollisions(BoatTest.java:234)&#13;
+	at com.dragonboat.game.BoatUnitTest.testCheckCollisions(BoatTest.java:234)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -60,14 +60,14 @@ java.lang.AssertionError: expected:&amp;lt;0&amp;gt; but was:&amp;lt;1&amp;gt;&#
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)&#13;
 </output>
         </test>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testDecreaseTiredness" name="testDecreaseTiredness" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testGetProgress" name="testGetProgress" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testResetFastestLegTime" name="testResetFastestLegTime" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testCheckIfInLane" name="testCheckIfInLane" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testIncreaseSpeed" name="testIncreaseSpeed" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testApplyDamage" name="testApplyDamage" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatTest.testDecreaseSpeed" name="testDecreaseSpeed" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testSteerRight" name="testSteerRight" status="failed">
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testDecreaseTiredness" name="testDecreaseTiredness" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testGetProgress" name="testGetProgress" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testResetFastestLegTime" name="testResetFastestLegTime" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testCheckIfInLane" name="testCheckIfInLane" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testIncreaseSpeed" name="testIncreaseSpeed" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testApplyDamage" name="testApplyDamage" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testDecreaseSpeed" name="testDecreaseSpeed" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testSteerRight" name="testSteerRight" status="failed">
             <output type="stderr">expected:&amp;lt;-45.0&amp;gt; but was:&amp;lt;-10.0&amp;gt;
 </output>
             <output type="stdout">Expected :
@@ -83,7 +83,7 @@ java.lang.AssertionError: expected:&amp;lt;-45.0&amp;gt; but was:&amp;lt;-10.0&a
 	at org.junit.Assert.failNotEquals(Assert.java:835)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:555)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:685)&#13;
-	at com.dragonboat.game.BoatTest.testSteerRight(BoatTest.java:61)&#13;
+	at com.dragonboat.game.BoatUnitTest.testSteerRight(BoatTest.java:61)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -101,7 +101,7 @@ java.lang.AssertionError: expected:&amp;lt;-45.0&amp;gt; but was:&amp;lt;-10.0&a
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)&#13;
 </output>
         </test>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testSteerLeft" name="testSteerLeft" status="failed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testSteerLeft" name="testSteerLeft" status="failed">
             <output type="stderr">expected:&amp;lt;40.0&amp;gt; but was:&amp;lt;5.0&amp;gt;
 </output>
             <output type="stdout">Expected :
@@ -117,7 +117,7 @@ java.lang.AssertionError: expected:&amp;lt;40.0&amp;gt; but was:&amp;lt;5.0&amp;
 	at org.junit.Assert.failNotEquals(Assert.java:835)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:555)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:685)&#13;
-	at com.dragonboat.game.BoatTest.testSteerLeft(BoatTest.java:31)&#13;
+	at com.dragonboat.game.BoatUnitTest.testSteerLeft(BoatTest.java:31)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -135,10 +135,10 @@ java.lang.AssertionError: expected:&amp;lt;40.0&amp;gt; but was:&amp;lt;5.0&amp;
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)&#13;
 </output>
         </test>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatTest.testUpdateFastestTime" name="testUpdateFastestTime" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.BoatUnitTest.testUpdateFastestTime" name="testUpdateFastestTime" status="passed"/>
     </suite>
-    <suite duration="8" locationUrl="java:suite://com.dragonboat.game.LaneTest" name="com.dragonboat.game.LaneTest" status="failed">
-        <test duration="6" locationUrl="java:test://com.dragonboat.game.LaneTest.testSpawnObstacle" name="testSpawnObstacle" status="failed">
+    <suite duration="8" locationUrl="java:suite://com.dragonboat.game.LaneUnitTest" name="com.dragonboat.game.LaneUnitTest" status="failed">
+        <test duration="6" locationUrl="java:test://com.dragonboat.game.LaneUnitTest.testSpawnObstacle" name="testSpawnObstacle" status="failed">
             <output type="stdout">Obstacle limit reached.&#13;
 Obstacle limit reached.&#13;
 Obstacle limit reached.&#13;
@@ -158,7 +158,7 @@ java.lang.AssertionError: expected:&amp;lt;10.0&amp;gt; but was:&amp;lt;11.0&amp
 	at org.junit.Assert.failNotEquals(Assert.java:835)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:555)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:685)&#13;
-	at com.dragonboat.game.LaneTest.testSpawnObstacle(LaneTest.java:45)&#13;
+	at com.dragonboat.game.LaneUnitTest.testSpawnObstacle(LaneTest.java:45)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -176,11 +176,11 @@ java.lang.AssertionError: expected:&amp;lt;10.0&amp;gt; but was:&amp;lt;11.0&amp
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)&#13;
 </output>
         </test>
-        <test duration="2" locationUrl="java:test://com.dragonboat.game.LaneTest.testRemoveObstacle" name="testRemoveObstacle" status="passed"/>
+        <test duration="2" locationUrl="java:test://com.dragonboat.game.LaneUnitTest.testRemoveObstacle" name="testRemoveObstacle" status="passed"/>
     </suite>
-    <suite duration="6" locationUrl="java:suite://com.dragonboat.game.LeaderboardTest" name="com.dragonboat.game.LeaderboardTest" status="failed">
-        <test duration="4" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetTimes" name="testGetTimes" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetFinalists" name="testGetFinalists" status="failed">
+    <suite duration="6" locationUrl="java:suite://com.dragonboat.game.LeaderboardUnitTest" name="com.dragonboat.game.LeaderboardUnitTest" status="failed">
+        <test duration="4" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testGetTimes" name="testGetTimes" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testGetFinalists" name="testGetFinalists" status="failed">
             <output type="stderr">arrays first differed at element [0]; expected:&amp;lt;com.dragonboat.game.Opponent@453cb38&amp;gt; but was:&amp;lt;com.dragonboat.game.Player@4485e384&amp;gt;
 </output>
             <output type="stdout">Expected :
@@ -197,7 +197,7 @@ arrays first differed at element [0]; expected:&amp;lt;com.dragonboat.game.Oppon
 	at org.junit.Assert.internalArrayEquals(Assert.java:534)&#13;
 	at org.junit.Assert.assertArrayEquals(Assert.java:285)&#13;
 	at org.junit.Assert.assertArrayEquals(Assert.java:300)&#13;
-	at com.dragonboat.game.LeaderboardTest.testGetFinalists(LeaderboardTest.java:52)&#13;
+	at com.dragonboat.game.LeaderboardUnitTest.testGetFinalists(LeaderboardTest.java:52)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -223,7 +223,7 @@ Caused by: java.lang.AssertionError: expected:&amp;lt;com.dragonboat.game.Oppone
 	... 20 more&#13;
 </output>
         </test>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testGetPodium" name="testGetPodium" status="failed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testGetPodium" name="testGetPodium" status="failed">
             <output type="stderr">arrays first differed at element [0]; expected:&amp;lt;com.dragonboat.game.Opponent@6b1d5a7b&amp;gt; but was:&amp;lt;com.dragonboat.game.Player@718d462b&amp;gt;
 </output>
             <output type="stdout">Expected :
@@ -240,7 +240,7 @@ arrays first differed at element [0]; expected:&amp;lt;com.dragonboat.game.Oppon
 	at org.junit.Assert.internalArrayEquals(Assert.java:534)&#13;
 	at org.junit.Assert.assertArrayEquals(Assert.java:285)&#13;
 	at org.junit.Assert.assertArrayEquals(Assert.java:300)&#13;
-	at com.dragonboat.game.LeaderboardTest.testGetPodium(LeaderboardTest.java:65)&#13;
+	at com.dragonboat.game.LeaderboardUnitTest.testGetPodium(LeaderboardTest.java:65)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -266,11 +266,11 @@ Caused by: java.lang.AssertionError: expected:&amp;lt;com.dragonboat.game.Oppone
 	... 20 more&#13;
 </output>
         </test>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.LeaderboardTest.testUpdateOrder" name="testUpdateOrder" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.LeaderboardUnitTest.testUpdateOrder" name="testUpdateOrder" status="passed"/>
     </suite>
-    <suite duration="2" locationUrl="java:suite://com.dragonboat.game.GooseTest" name="com.dragonboat.game.GooseTest" status="failed">
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseTest.testChangeDirection" name="testChangeDirection" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseTest.testMove" name="testMove" status="failed">
+    <suite duration="2" locationUrl="java:suite://com.dragonboat.game.GooseUnitTest" name="com.dragonboat.game.GooseUnitTest" status="failed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseUnitTest.testChangeDirection" name="testChangeDirection" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.GooseUnitTest.testMove" name="testMove" status="failed">
             <output type="stderr">expected:&amp;lt;10.0&amp;gt; but was:&amp;lt;8.0&amp;gt;
 </output>
             <output type="stdout">Expected :
@@ -286,7 +286,7 @@ java.lang.AssertionError: expected:&amp;lt;10.0&amp;gt; but was:&amp;lt;8.0&amp;
 	at org.junit.Assert.failNotEquals(Assert.java:835)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:577)&#13;
 	at org.junit.Assert.assertEquals(Assert.java:701)&#13;
-	at com.dragonboat.game.GooseTest.testMove(GooseTest.java:48)&#13;
+	at com.dragonboat.game.GooseUnitTest.testMove(GooseTest.java:48)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
@@ -305,13 +305,13 @@ java.lang.AssertionError: expected:&amp;lt;10.0&amp;gt; but was:&amp;lt;8.0&amp;
 </output>
         </test>
     </suite>
-    <suite duration="0" locationUrl="java:suite://com.dragonboat.game.ObstacleTest" name="com.dragonboat.game.ObstacleTest" status="passed">
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.ObstacleTest.testMove" name="testMove" status="passed"/>
+    <suite duration="0" locationUrl="java:suite://com.dragonboat.game.ObstacleUnitTest" name="com.dragonboat.game.ObstacleUnitTest" status="passed">
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.ObstacleUnitTest.testMove" name="testMove" status="passed"/>
     </suite>
-    <suite duration="2" locationUrl="java:suite://com.dragonboat.game.ProgressBarTest" name="com.dragonboat.game.ProgressBarTest" status="passed">
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testAllFinished" name="testAllFinished" status="passed"/>
-        <test duration="1" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testGetProgress" name="testGetProgress" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testIncrementTimer" name="testIncrementTimer" status="passed"/>
-        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarTest.testStartTimer" name="testStartTimer" status="passed"/>
+    <suite duration="2" locationUrl="java:suite://com.dragonboat.game.ProgressBarUnitTest" name="com.dragonboat.game.ProgressBarUnitTest" status="passed">
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testAllFinished" name="testAllFinished" status="passed"/>
+        <test duration="1" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testGetProgress" name="testGetProgress" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testIncrementTimer" name="testIncrementTimer" status="passed"/>
+        <test duration="0" locationUrl="java:test://com.dragonboat.game.ProgressBarUnitTest.testStartTimer" name="testStartTimer" status="passed"/>
     </suite>
 </testrun>

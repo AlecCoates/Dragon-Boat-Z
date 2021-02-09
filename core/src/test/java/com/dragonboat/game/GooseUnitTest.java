@@ -10,7 +10,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
-public class GooseTest {
+public class GooseUnitTest {
 
     private HashMap<String, Texture> textures;
     private Lane[] lanes;
