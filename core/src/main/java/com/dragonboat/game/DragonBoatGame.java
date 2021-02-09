@@ -91,7 +91,7 @@ public class DragonBoatGame extends Game {
 		 */
 		for (int x = 0; x < lanes.length; x++) {
 			obstacleTimes[x] = new ArrayList<>();
-			lanes[x] = new Lane(spriteTextures, (x * w / lanes.length) + 40, (((x + 1) * w) / lanes.length) + 40, lanes, x);
+			lanes[x] = new Lane((x * w / lanes.length) + 40, (((x + 1) * w) / lanes.length) + 40, lanes, x);
 			int maxY = (courseTexture.getHeight() - (5 * noOfObstacles)) / noOfObstacles;
 			for (int y = 0; y < noOfObstacles; y++) {
 				obstacleTimes[x].add(rnd.nextInt(maxY - 5) + 5 + maxY * y);

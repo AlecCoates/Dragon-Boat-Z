@@ -29,7 +29,7 @@ public class ObstacleTest {
 
     @Test
     public void testMove() {
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Obstacle testObstacle = new Obstacle(textures,5, 10, 30, 5, 8, "Test");
         testObstacle.Move(10, 20);
         assertEquals(30 - 10, testObstacle.yPosition, 0.0002);

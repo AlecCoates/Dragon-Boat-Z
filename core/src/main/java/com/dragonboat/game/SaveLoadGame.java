@@ -74,8 +74,7 @@ class SaveLoadGame {
     }
 
     public static HashMap<String, Object> loadGameString(String saveString) {
-        Json json = new Json();
-        return json.fromJson(HashMap.class, saveString);
+        return new Json().fromJson(HashMap.class, saveString);
     }
 
     public static void loadGameData(HashMap<String, Object> saveData, DragonBoatGame dragonBoatGame){
@@ -92,7 +91,7 @@ class SaveLoadGame {
         Lane[] lanes = new Lane[loadLanes.size];
         for (int i = 0; i < loadLanes.size; i++) {
             Lane.LaneSpriteDescriptor loadLane = loadLanes.get(i);
-            Lane lane = new Lane(dragonBoatGame.spriteTextures, loadLane.LEFTBOUNDARY, loadLane.RIGHTBOUNDARY, dragonBoatGame.lanes, loadLane.laneNo);
+            Lane lane = new Lane(loadLane.LEFTBOUNDARY, loadLane.RIGHTBOUNDARY, dragonBoatGame.lanes, loadLane.laneNo);
             lane.obstacleLimit = loadLane.obstacleLimit;
             ArrayList<Obstacle.ObstacleSpriteDescriptor> loadObstacles = loadLane.obstacles;
             ArrayList<Obstacle> obstacles = new ArrayList<>();

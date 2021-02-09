@@ -44,9 +44,9 @@ public class Lane {
         LaneSpriteDescriptor (Lane oldLane){
             LEFTBOUNDARY = oldLane.getLeftBoundary();
             RIGHTBOUNDARY = oldLane.getRightBoundary();
+            laneNo = oldLane.laneNo;
             obstacleLimit = oldLane.obstacleLimit;
             obstacles = new ArrayList<>();
-            laneNo = oldLane.laneNo;
             for (Obstacle obstacle: oldLane.obstacles) {
                 if (obstacle.getName().equals("Goose")) {
                     Goose goose = (Goose) obstacle;
@@ -66,7 +66,7 @@ public class Lane {
      * @param leftBoundary  X-position for the left boundary of the lane.
      * @param rightBoundary X-position for the right boundary of the lane.
      */
-    public Lane(HashMap<String, Texture> textures, int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
+    public Lane(int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = 10;
@@ -83,7 +83,7 @@ public class Lane {
      * @param rightBoundary X-position for the right boundary of the lane.
      * @param obstacleLimit Limit for the number of obstacles in the lane.
      */
-    public Lane(HashMap<String, Texture> textures, int leftBoundary, int rightBoundary, int obstacleLimit) {
+    public Lane(int leftBoundary, int rightBoundary, int obstacleLimit) {
         this.LEFTBOUNDARY = leftBoundary;
         this.RIGHTBOUNDARY = rightBoundary;
         this.obstacleLimit = obstacleLimit;

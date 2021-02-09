@@ -30,21 +30,21 @@ public class GooseTest {
     @Test
     public void testChangeDirection() {
         //Test facing South
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Goose testGoose = new Goose(textures, 0, 0, lanes, 0);
         testGoose.direction = "South";
         testGoose.changeDirection();
         assertTrue("East".equals(testGoose.direction) || "West".equals(testGoose.direction));
 
         //Test facing East
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 0, 0, lanes, 0);
         testGoose.direction = "East";
         testGoose.changeDirection();
         assertEquals("South", testGoose.direction);
 
         //Test facing West
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 0, 0, lanes, 0);
         testGoose.direction = "West";
         testGoose.changeDirection();
@@ -54,7 +54,7 @@ public class GooseTest {
     @Test
     public void testMove() {
         //Test facing South Within Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Goose testGoose = new Goose(textures, 8, 30, lanes, 0);
         testGoose.direction = "South";
         testGoose.Move(2f, 20);
@@ -62,7 +62,7 @@ public class GooseTest {
         assertEquals(8, testGoose.xPosition, 0.0002f);
 
         //Test facing East Within Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 8, 30, lanes, 0);
         testGoose.direction = "East";
         testGoose.Move(2f, 20);
@@ -70,7 +70,7 @@ public class GooseTest {
         assertEquals(8 + 2, testGoose.xPosition, 0.0002f);
 
         //Test facing West Within Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 8, 30, lanes, 0);
         testGoose.direction = "West";
         testGoose.Move(2f, 20);
@@ -78,7 +78,7 @@ public class GooseTest {
         assertEquals(8 - 2, testGoose.xPosition, 0.0002f);
 
         //Test facing South Left Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, -1, 30, lanes, 0);
         testGoose.direction = "South";
         testGoose.Move(2f, 20);
@@ -86,7 +86,7 @@ public class GooseTest {
         assertEquals(-1, testGoose.xPosition, 0.0002f);
 
         //Test facing East Left Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, -1, 30, lanes, 0);
         testGoose.direction = "East";
         testGoose.Move(2f, 20);
@@ -94,7 +94,7 @@ public class GooseTest {
         assertEquals(-1 + 2, testGoose.xPosition, 0.0002f);
 
         //Test facing West Left Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, -1, 30, lanes, 0);
         testGoose.direction = "West";
         testGoose.Move(2f, 20);
@@ -102,7 +102,7 @@ public class GooseTest {
         assertEquals(-1, testGoose.xPosition, 0.0002f);
 
         //Test facing South Right Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 21, 30, lanes, 0);
         testGoose.direction = "South";
         testGoose.Move(2f, 20);
@@ -110,7 +110,7 @@ public class GooseTest {
         assertEquals(21, testGoose.xPosition, 0.0002f);
 
         //Test facing East Right Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 21, 30, lanes, 0);
         testGoose.direction = "East";
         testGoose.Move(2f, 20);
@@ -118,7 +118,7 @@ public class GooseTest {
         assertEquals(21, testGoose.xPosition, 0.0002f);
 
         //Test facing West Right Boundary
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testGoose = new Goose(textures, 21, 30, lanes, 0);
         testGoose.direction = "West";
         testGoose.Move(2f, 20);

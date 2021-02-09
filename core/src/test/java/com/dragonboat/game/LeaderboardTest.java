@@ -30,13 +30,13 @@ public class LeaderboardTest {
 
     @Test
     public void testUpdateOrder() {
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            dynamicLanes[i] = new Lane(i * 20,(i+1) * 20, 10);
             testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i;
         }
@@ -51,13 +51,13 @@ public class LeaderboardTest {
 
     @Test
     public void testGetTimes() {
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            dynamicLanes[i] = new Lane(i * 20,(i+1) * 20, 10);
             testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i + 0.79222f;
         }
@@ -67,13 +67,13 @@ public class LeaderboardTest {
 
     @Test
     public void testGetFinalists() {
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            dynamicLanes[i] = new Lane(i * 20,(i+1) * 20, 10);
             testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i + 0.79222f;
         }
@@ -83,13 +83,13 @@ public class LeaderboardTest {
 
     @Test
     public void testGetPodium() {
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Player testPlayer = new Player(0,5,10, lanes, 0, "A");
         testPlayer.fastestLegTime = 26.5f;
         Opponent[] testOpponents = new Opponent[6];
         dynamicLanes = new Lane[testOpponents.length];
         for (int i = 0; i < testOpponents.length; i++) {
-            dynamicLanes[i] = new Lane(textures, i * 20,(i+1) * 20, 10);
+            dynamicLanes[i] = new Lane(i * 20,(i+1) * 20, 10);
             testOpponents[i] = new Opponent(0,5,10, dynamicLanes, i, Character.toString((char) (66 + i)));
             testOpponents[i].fastestLegTime = testOpponents.length - i + 0.79222f;
         }

@@ -31,7 +31,7 @@ public class LaneTest {
     @Test
     public void testSpawnObstacle() {
         //Test Spawn Less Than Limit
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Lane testLane = lanes[0];
         for (int i = 0; i < 3; i++) {
             testLane.SpawnObstacle(textures, 0, 0, "Log");
@@ -42,7 +42,7 @@ public class LaneTest {
         assertEquals(8, testLane.obstacles.size(), 0.0002);
 
         //Test Spawn Exactly Limit
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testLane = lanes[0];
         for (int i = 0; i < 4; i++) {
             testLane.SpawnObstacle(textures, 0, 0, "Log");
@@ -53,7 +53,7 @@ public class LaneTest {
         assertEquals(10, testLane.obstacles.size(), 0.0002);
 
         //Test Spawn More Than Limit
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testLane = lanes[0];
         for (int i = 0; i < 8; i++) {
             testLane.SpawnObstacle(textures, 0, 0, "Log");
@@ -67,14 +67,14 @@ public class LaneTest {
     @Test
     public void testRemoveObstacle() {
         //Test Remove From Empty
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         Lane testLane = lanes[0];
         testLane.obstacles = new ArrayList<>();
         testLane.RemoveObstacle(new Obstacle(textures, 5, 10, 30, 5, 8, "Test"));
         assertEquals(0, testLane.obstacles.size(), 0.0002);
 
         //Test Remove From Full
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testLane = lanes[0];
         Obstacle testObstacle = new Obstacle(textures, 5, 10, 30, 5, 8, "Test");
         testLane.obstacles.add(testObstacle);
@@ -85,7 +85,7 @@ public class LaneTest {
         assertEquals(9, testLane.obstacles.size(), 0.0002);
 
         //Test Remove From Above Full
-        lanes = new Lane[]{new Lane(textures, 0,20,10)};
+        lanes = new Lane[]{new Lane(0,20,10)};
         testLane = lanes[0];
         testObstacle = new Obstacle(textures, 5, 10, 30, 5, 8, "Test");
         testLane.obstacles.add(testObstacle);
