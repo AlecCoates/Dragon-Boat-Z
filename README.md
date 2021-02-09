@@ -1,5 +1,8 @@
-![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gradle%20Build/badge.svg?branch=main)
-![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)
+Status: ![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gradle%20Build/badge.svg?branch=main)
+
+Instuctions: ![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)
+
+Branches: ![Branch Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoBranchesTested.svg)
 
 
 # Contents
