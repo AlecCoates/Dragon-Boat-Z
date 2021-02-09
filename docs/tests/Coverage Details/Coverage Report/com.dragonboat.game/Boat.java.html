@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Boat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">Boat.java</span></div><h1>Boat.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import java.util.ArrayList;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
+/**
+ * Represents a Boat, controlled by either a Player or Opponent.
+ * 
+ * @see Player
+ * @see Opponent
+ */
+public class Boat {
+    /*
+     * Direct representation based off the UML diagram
+     * https://drive.google.com/file/d/15O95umnJIoApnsj8I9ejEtMxrDGYJWAC/view?usp=sharing
+     */
+
+    protected int ROBUSTNESS;
+    protected float ACCELERATION, MANEUVERABILITY, MAXSPEED;
+    protected int durability;
+    protected float yPosition, xPosition, penalties;
+    protected int width, height;
+    protected float currentSpeed, fastestLegTime, tiredness;
+    protected Lane[] lanes;
+<span class="fc" id="L27">    protected int laneNo = 0;</span>
+    protected Texture[] textureFrames;
+<span class="fc" id="L29">    protected int frameCounter = 0;</span>
+<span class="fc" id="L30">    protected float lastFrameY = 0;</span>
+    public Texture texture;
+    protected String name;
+    protected char label;
+    protected boolean finished;
+<span class="fc" id="L35">    protected int threshold = 5;</span>
+
+<span class="fc" id="L37">    public static int bankWidth = 40;</span>
+<span class="fc" id="L38">    public static int MAX_DURABILITY = 50;</span>
+<span class="fc" id="L39">    public static float MAX_TIREDNESS = 100;</span>
+
+    /**
+     * Represents a savable/loadable boat.
+     */
+    static class BoatSpriteDescriptor {
+        public int durability;
+        public float yPosition, xPosition, penalties;
+        public int width, height;
+        public float currentSpeed, fastestLegTime, tiredness;
+        public int laneNo;
+        public int frameCounter;
+        public float lastFrameY;
+        public String name;
+        public boolean finished;
+        public char label;
+
+        /**
+         * Json requires an empty constructor to regenerate the class from a save file
+         */
+<span class="fc" id="L59">        public BoatSpriteDescriptor(){}</span>
+
+        /**
+         * Creates a json friendly instance of the obstacle
+         *
+         * @param oldBoat The boat data that needs to be converted to be stored properly
+         */
+<span class="nc" id="L66">        public BoatSpriteDescriptor(Boat oldBoat) {</span>
+<span class="nc" id="L67">            this.durability = oldBoat.getDurability();</span>
+<span class="nc" id="L68">            this.yPosition = oldBoat.getY();</span>
+<span class="nc" id="L69">            this.xPosition = oldBoat.getX();</span>
+<span class="nc" id="L70">            this.penalties = oldBoat.getPenalty();</span>
+<span class="nc" id="L71">            this.durability = oldBoat.getDurability();</span>
+<span class="nc" id="L72">            this.width = oldBoat.width;</span>
+<span class="nc" id="L73">            this.height = oldBoat.getHeight();</span>
+<span class="nc" id="L74">            this.currentSpeed = oldBoat.getCurrentSpeed();</span>
+<span class="nc" id="L75">            this.fastestLegTime = oldBoat.getFastestTime();</span>
+<span class="nc" id="L76">            this.tiredness = oldBoat.tiredness;</span>
+<span class="nc" id="L77">            this.laneNo = oldBoat.laneNo;</span>
+<span class="nc" id="L78">            this.frameCounter = oldBoat.frameCounter;</span>
+<span class="nc" id="L79">            this.lastFrameY = oldBoat.lastFrameY;</span>
+<span class="nc" id="L80">            this.name = oldBoat.getName();</span>
+<span class="nc" id="L81">            this.finished = oldBoat.finished();</span>
+<span class="nc" id="L82">            this.label = oldBoat.label;</span>
+<span class="nc" id="L83">        }</span>
+    }
+
+    /**
+     * Creates an instance of the player boat.
+     *
+     * @param yPosition Y-position of the boat.
+     * @param width     Width of the boat.
+     * @param height    Height of the boat.
+     * @param lanes     Lanes for the boat.
+     * @param laneNo    Lane number for the boat.
+     * @param name      Name of the boat.
+     */
+<span class="fc" id="L96">    public Boat(float yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {</span>
+<span class="fc" id="L97">        this.xPosition = lanes[laneNo].getRightBoundary() - (lanes[laneNo].getRightBoundary() - lanes[laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;</span>
+<span class="fc" id="L98">        this.yPosition = yPosition;</span>
+<span class="fc" id="L99">        this.width = width;</span>
+<span class="fc" id="L100">        this.height = height;</span>
+<span class="fc" id="L101">        this.currentSpeed = 0f;</span>
+<span class="fc" id="L102">        this.penalties = 0;</span>
+<span class="fc" id="L103">        this.durability = Boat.MAX_DURABILITY;</span>
+<span class="fc" id="L104">        this.tiredness = 0f;</span>
+<span class="fc" id="L105">        this.lanes = lanes;</span>
+<span class="fc" id="L106">        this.laneNo = laneNo;</span>
+<span class="fc" id="L107">        this.fastestLegTime = 0;</span>
+<span class="fc" id="L108">        this.lastFrameY = 0;</span>
+<span class="fc" id="L109">        this.textureFrames = new Texture[4];</span>
+<span class="fc" id="L110">        this.frameCounter = 0;</span>
+<span class="fc" id="L111">        this.name = name;</span>
+<span class="fc" id="L112">        this.threshold = 5;</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Decreases the x-position of the boat respective to the boat's maneuverability
+     * and speed, and decreases the speed by 3%.
+     */
+    public void SteerLeft() {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (this.xPosition &gt; bankWidth) {</span>
+<span class="fc" id="L121">            this.xPosition = Math.max(this.xPosition - this.MANEUVERABILITY * this.currentSpeed, bankWidth);</span>
+<span class="fc" id="L122">            this.currentSpeed *= 0.985f;</span>
+        } else {
+<span class="fc" id="L124">            this.xPosition = bankWidth;</span>
+        }
+<span class="fc" id="L126">    }</span>
+
+    /**
+     * Increases the x-position of the boat respective to the boat's maneuverability
+     * and speed, and decreases the speed by 3%.
+     */
+    public void SteerRight() {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (this.xPosition + this.width &lt; Gdx.graphics.getWidth() - bankWidth) {</span>
+<span class="fc" id="L134">            this.xPosition = Math.min(this.xPosition + this.MANEUVERABILITY * this.currentSpeed, Gdx.graphics.getWidth() - bankWidth - this.width);</span>
+<span class="fc" id="L135">            this.currentSpeed *= 0.985f;</span>
+        } else {
+<span class="fc" id="L137">            this.xPosition = Gdx.graphics.getWidth() - bankWidth - this.width;</span>
+        }
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Increases the y-position of the boat respective to the boat's speed, and
+     * decreases the speed by 0.08%.
+     */
+    public void MoveForward() {
+<span class="fc" id="L146">        this.yPosition += this.currentSpeed;</span>
+<span class="fc" id="L147">        this.currentSpeed *= 0.9992f;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (this.yPosition - this.lastFrameY &gt; 15.0f) {</span>
+<span class="fc" id="L149">            this.lastFrameY = this.yPosition;</span>
+<span class="fc" id="L150">            this.AdvanceTextureFrame();</span>
+        }
+<span class="fc" id="L152">    }</span>
+
+    /**
+     * If the boat has enough stamina, increase the speed of the boat by the boat's
+     * acceleration, if not, do nothing.
+     */
+    public void IncreaseSpeed() {
+<span class="fc" id="L159">        float damagedMaxSpeedMultiplier = 1.0f;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (this.durability &lt;= 0) {</span>
+<span class="nc" id="L161">            damagedMaxSpeedMultiplier = 0.5f;</span>
+        }
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (this.tiredness &lt;= 75) {</span>
+<span class="fc" id="L164">            this.currentSpeed = Math.min(this.currentSpeed + this.ACCELERATION, this.MAXSPEED * damagedMaxSpeedMultiplier);</span>
+        }
+<span class="fc" id="L166">    }</span>
+
+    /**
+     * Decreases the speed of the boat by 0.015 if the resulting speed is greater
+     * than 0.
+     */
+    public void DecreaseSpeed() {
+        /*
+         * Very basic deceleration function, acting as water friction. could be updated
+         * using functions from
+         * https://denysalmaral.com/2019/05/boat-sim-notes-1-water-friction.html to be
+         * more realistic.
+         */
+<span class="fc" id="L179">        this.currentSpeed = Math.max(this.currentSpeed - 0.015f, 0);</span>
+<span class="fc" id="L180">    }</span>
+
+    /**
+     * Checks each obstacle in the Lane for a collision.
+     * 
+     * @param backgroundOffset How far up the course the player is.
+     * @return Boolean representing if a collision occurs.
+     */
+    public boolean CheckCollisions(int backgroundOffset) {
+<span class="fc" id="L189">        boolean hitObstacle = false;</span>
+        // Iterate through obstacles.
+<span class="fc" id="L191">        ArrayList&lt;Obstacle&gt; obstacles = this.lanes[this.laneNo].obstacles;</span>
+<span class="fc" id="L192">        ArrayList&lt;Obstacle&gt; obstaclesToRemove = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        for (Obstacle o : obstacles) {</span>
+<span class="fc bfc" id="L194" title="All 4 branches covered.">            if (o.getX() + o.width &gt; this.xPosition + threshold &amp;&amp; o.getX() &lt; this.xPosition + this.width - threshold) {</span>
+<span class="pc bpc" id="L195" title="2 of 4 branches missed.">                if (o.getY() + o.height + backgroundOffset &gt; this.yPosition + threshold &amp;&amp; o.getY() + backgroundOffset &lt; this.yPosition + this.height - threshold) {</span>
+<span class="fc" id="L196">                    this.ApplyDamage(o.getDamage());</span>
+<span class="fc" id="L197">                    obstaclesToRemove.add(o);</span>
+<span class="fc" id="L198">                    hitObstacle = true;</span>
+                }
+            }
+<span class="fc" id="L201">        }</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        for (Obstacle obstacleToRemove : obstaclesToRemove) {</span>
+<span class="fc" id="L203">            this.lanes[this.laneNo].RemoveObstacle(obstacleToRemove);</span>
+<span class="fc" id="L204">        }</span>
+<span class="fc" id="L205">        return hitObstacle;</span>
+    }
+
+    /**
+     * Decreases the durability of the boat by the obstacle damage divided by the
+     * boat's robustness.
+     * 
+     * @param obstacleDamage Amount of damage an Obstacle inflicts on the boat.
+     * @return Boolean representing whether the durability of the boat is below 0.
+     */
+    public boolean ApplyDamage(int obstacleDamage) {
+<span class="fc" id="L216">        this.durability -= obstacleDamage / this.ROBUSTNESS;</span>
+<span class="fc" id="L217">        this.currentSpeed *= 0.9f;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        return this.durability &lt;= 0;</span>
+    }
+
+    /**
+     * Checks if the boat is between the left boundary and the right boundary of the Lane.
+     * 
+     * @return Boolean representing whether the Boat is in the Lane.
+     */
+    public boolean CheckIfInLane() {
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        return this.xPosition + threshold &gt;= this.lanes[this.laneNo].getLeftBoundary()</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">            &amp;&amp; this.xPosition + this.width - threshold &lt;= this.lanes[this.laneNo].getRightBoundary();</span>
+    }
+
+    /**
+     * Updates the boat's fastest time.
+     * 
+     * @param elapsedTime Time it took the boat to finish the current race.
+     */
+    public void UpdateFastestTime(float elapsedTime) {
+<span class="pc bpc" id="L237" title="1 of 4 branches missed.">        if (this.fastestLegTime &gt; elapsedTime + this.penalties || this.fastestLegTime == 0) {</span>
+<span class="fc" id="L238">            this.fastestLegTime = elapsedTime + this.penalties;</span>
+        }
+<span class="fc" id="L240">    }</span>
+
+    /**
+     * Increases the tiredness of the boat by 0.75 if the tiredness is less than
+     * 100.
+     */
+    public void IncreaseTiredness() {
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        this.tiredness += this.tiredness &gt;= 100 ? 0 : 0.75f;</span>
+<span class="fc" id="L248">    }</span>
+
+    /**
+     * Decreases the tiredness of the boat by 1 if the tiredness is greater than 0.
+     */
+    public void DecreaseTiredness() {
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        this.tiredness -= this.tiredness &lt;= 0 ? 0 : 1f;</span>
+<span class="fc" id="L255">    }</span>
+
+    /**
+     * Keeps track of which frame of the animation the boat's texture is on, and
+     * sets the texture accordingly.
+     */
+    public void AdvanceTextureFrame() {
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">        this.frameCounter = this.frameCounter == this.textureFrames.length - 1 ? 0 : this.frameCounter + 1;</span>
+<span class="fc" id="L263">        this.setTexture(this.textureFrames[this.frameCounter]);</span>
+<span class="fc" id="L264">    }</span>
+
+    /**
+     * Generates all frames for animating the boat.
+     * 
+     * @param boatName Boat name, used to get correct asset.
+     */
+    public void GenerateTextureFrames(char boatName) {
+<span class="nc" id="L272">        Texture[] frames = new Texture[4];</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">        for (int i = 1; i &lt;= frames.length; i++) {</span>
+<span class="nc" id="L274">            frames[i - 1] = new Texture(Gdx.files.internal(&quot;core/assets/boat&quot; + boatName + &quot; sprite&quot; + i + &quot;.png&quot;));</span>
+        }
+<span class="nc" id="L276">        this.setTextureFrames(frames);</span>
+<span class="nc" id="L277">    }</span>
+
+    /**
+     * Resets necessary stats for the next race.
+     */
+    public void Reset() {
+<span class="fc" id="L283">        this.xPosition = lanes[this.laneNo].getRightBoundary() - (lanes[this.laneNo].getRightBoundary() - lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;</span>
+<span class="fc" id="L284">        this.yPosition = 0;</span>
+<span class="fc" id="L285">        this.currentSpeed = 0f;</span>
+<span class="fc" id="L286">        this.penalties = 0f;</span>
+<span class="fc" id="L287">        this.durability = 50;</span>
+<span class="fc" id="L288">        this.tiredness = 0f;</span>
+<span class="fc" id="L289">        this.finished = false;</span>
+<span class="fc" id="L290">        this.frameCounter = 0;</span>
+<span class="fc" id="L291">        this.lastFrameY = 0;</span>
+<span class="fc" id="L292">    }</span>
+
+    /**
+     * Resets the boat's fastest leg time.
+     */
+    public void ResetFastestLegTime() {
+<span class="fc" id="L298">        this.fastestLegTime = 0f;</span>
+<span class="fc" id="L299">    }</span>
+
+    // getters and setters
+
+    /**
+     * 
+     * @param t Texture to use.
+     */
+    public void setTexture(Texture t) {
+<span class="fc" id="L308">        this.texture = t;</span>
+<span class="fc" id="L309">    }</span>
+
+    /**
+     * 
+     * @param frames Texture frames for animation.
+     */
+    public void setTextureFrames(Texture[] frames) {
+<span class="nc" id="L316">        this.textureFrames = frames;</span>
+<span class="nc" id="L317">    }</span>
+
+    /**
+     * 
+     * @return Float representing fastest race/leg time.
+     */
+    public float getFastestTime() {
+<span class="fc" id="L324">        return this.fastestLegTime;</span>
+    }
+
+    /**
+     * 
+     * @return Int representing x-position of boat.
+     */
+    public int getX() {
+<span class="nc" id="L332">        return Math.round(this.xPosition);</span>
+    }
+
+    /**
+     * 
+     * @return Int representing y-position of boat.
+     */
+    public int getY() {
+<span class="nc" id="L340">        return Math.round(this.yPosition);</span>
+    }
+
+    /**
+     * 
+     * @return Int representing the y coordinate range of the boat (length).
+     */
+    public int getHeight() {
+<span class="nc" id="L348">        return this.height;</span>
+    }
+
+    /**
+     * 
+     * @return String representing name of the boat.
+     */
+    public String getName() {
+<span class="fc" id="L356">        return this.name;</span>
+    }
+
+    /**
+     * 
+     * @return Boolean representing if the boat has finished the current race.
+     */
+    public boolean finished() {
+<span class="fc" id="L364">        return this.finished;</span>
+    }
+
+    /**
+     * 
+     * @param f Boolean representing if the boat has finished the race.
+     */
+    public void setFinished(boolean f) {
+<span class="nc" id="L372">        this.finished = f;</span>
+<span class="nc" id="L373">    }</span>
+
+    /**
+     * 
+     * @return Float representing the current speed of the boat.
+     */
+    public float getCurrentSpeed() {
+<span class="nc" id="L380">        return this.currentSpeed;</span>
+    }
+
+    /**
+     * 
+     * @param finishY Y-position of the finish line.
+     * @return Float representing the progress of the boat from 0 to 1.
+     */
+    public float getProgress(int finishY) {
+<span class="fc" id="L389">        return Math.min((this.yPosition) / finishY, 1f);</span>
+    }
+
+    /**
+     * Implicitly sets the stats of the boat, given each attribute.
+     * 
+     * @param maxspeed        Top speed the boat can reach.
+     * @param robustness      How resilient to obstacle damage the boat is.
+     * @param acceleration    How much the speed increases each frame.
+     * @param maneuverability How easily the boat can move left or right.
+     */
+    public void setStats(float maxspeed, int robustness, float acceleration, float maneuverability) {
+<span class="fc" id="L401">        this.MAXSPEED = maxspeed;</span>
+<span class="fc" id="L402">        this.ROBUSTNESS = robustness;</span>
+<span class="fc" id="L403">        this.ACCELERATION = acceleration;</span>
+<span class="fc" id="L404">        this.MANEUVERABILITY = maneuverability;</span>
+<span class="fc" id="L405">    }</span>
+
+    /**
+     * Interpolates predetermined stats from a boat label, and sets the stats based
+     * on those.
+     * 
+     * @param boatLabel A character between A-G representing a specific boat.
+     */
+    public void setStats(char boatLabel) {
+<span class="nc" id="L414">        float[] maxspeeds = { 2.5f, 2.0f, 2.5f, 2.5f, 2.0f, 3.5f, 2.5f };</span>
+<span class="nc" id="L415">        int[] robustnesses = { 2, 4, 1, 4, 8, 3, 5 };</span>
+<span class="nc" id="L416">        float[] accelerations = { 0.09375f, 0.03125f, 0.125f, 0.06254f, 0.046875f, 0.021875f, 0.03125f };</span>
+<span class="nc" id="L417">        float[] maneuverabilities = { 0.375f, 1.0f, 0.375f, 0.5f, 0.25f, 0.125f, 0.625f };</span>
+
+<span class="nc" id="L419">        int boatNo = boatLabel - 65;</span>
+
+<span class="nc" id="L421">        this.setStats(maxspeeds[boatNo], robustnesses[boatNo], accelerations[boatNo], maneuverabilities[boatNo]);</span>
+<span class="nc" id="L422">    }</span>
+
+    /**
+     * 
+     * @return Float representing the maneuverability of the boat.
+     */
+    public float getManeuverability() {
+<span class="nc" id="L429">        return this.MANEUVERABILITY;</span>
+    }
+
+    /**
+     * 
+     * @return Float representing the acceleration of the boat.
+     */
+    public float getAcceleration() {
+<span class="nc" id="L437">        return this.ACCELERATION;</span>
+    }
+
+    /**
+     * 
+     * @return Int representing the robustness of the boat.
+     */
+    public int getRobustness() {
+<span class="nc" id="L445">        return this.ROBUSTNESS;</span>
+    }
+
+    /**
+     * 
+     * @return Int representing the durability of the boat.
+     */
+    public int getDurability() {
+<span class="nc" id="L453">        return this.durability;</span>
+    }
+
+    /**
+     * 
+     * @return Int representing the maximum speed of the boat.
+     */
+    public float getMaxSpeed() {
+<span class="nc" id="L461">        return this.MAXSPEED;</span>
+    }
+
+    /**
+     * 
+     * @return Float representing the tiredness of the boat crew.
+     */
+    public float getTiredness() {
+<span class="nc" id="L469">        return this.tiredness;</span>
+    }
+
+    /**
+     * 
+     * @return Float representing the time penalty incurred for the current race.
+     */
+    public float getPenalty() {
+<span class="nc" id="L477">        return this.penalties;</span>
+    }
+
+    /**
+     * 
+     * @param penalty Float to add to the boat's penalty total for the current race.
+     */
+    public void applyPenalty(float penalty) {
+<span class="nc" id="L485">        this.penalties += penalty;</span>
+<span class="nc" id="L486">    }</span>
+
+    /**
+     * 
+     * @param lanes Lanes object for the boat.
+     */
+    public void setLane(Lane[] lanes, int laneNo) {
+<span class="nc" id="L493">        this.lanes = lanes;</span>
+<span class="nc" id="L494">        this.laneNo = laneNo;</span>
+<span class="nc" id="L495">        this.xPosition = this.lanes[this.laneNo].getRightBoundary() - (this.lanes[this.laneNo].getRightBoundary() - this.lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;</span>
+<span class="nc" id="L496">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Assigns the selected boat template to the boat.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * This includes stats and texture.
+     * &lt;/p&gt;
+     *
+     * @param boatNo Number of the boat template selected.
+     */
+    public void ChooseBoat(int boatNo) {
+<span class="nc" id="L509">        ChooseBoat((char) (65 + boatNo));</span>
+<span class="nc" id="L510">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Assigns the selected boat template to the boat.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * This includes stats and texture.
+     * &lt;/p&gt;
+     *
+     * @param boatChar Character of the boat template selected.
+     */
+    public void ChooseBoat(char boatChar) {
+<span class="nc" id="L523">        this.label = boatChar;</span>
+<span class="nc" id="L524">        this.setTexture(new Texture(Gdx.files.internal(&quot;core/assets/boat&quot; + label + &quot; sprite1.png&quot;)));</span>
+<span class="nc" id="L525">        this.GenerateTextureFrames(label);</span>
+<span class="nc" id="L526">        this.setStats(label);</span>
+<span class="nc" id="L527">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

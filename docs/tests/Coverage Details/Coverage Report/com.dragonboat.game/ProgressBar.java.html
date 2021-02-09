@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProgressBar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">ProgressBar.java</span></div><h1>ProgressBar.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
+/**
+ * Represents a progress bar.
+ */
+public class ProgressBar {
+
+	public transient Texture texture, playerIcon, opponentIcon;
+
+	protected transient Player playerBoat;
+	protected transient Opponent[] opponentBoats;
+<span class="fc" id="L15">	protected float timeSeconds = 0;</span>
+<span class="fc" id="L16">	protected float playerTime = 0;</span>
+
+	/**
+	 * Represents a savable/loadable ProgressBar.
+	 */
+	static class ProgressBarSpriteDescriptor {
+		public float timeSeconds;
+		public float playerTime;
+
+		/**
+		 * Json requires an empty constructor to regenerate the class from a save file
+		 */
+<span class="fc" id="L28">		public ProgressBarSpriteDescriptor(){}</span>
+
+		/**
+		 * Creates a json friendly instance of the obstacle
+		 *
+		 * @param oldProgressBar The ProgressBar data that needs to be converted to be stored properly
+		 */
+<span class="nc" id="L35">		public ProgressBarSpriteDescriptor(ProgressBar oldProgressBar) {</span>
+<span class="nc" id="L36">			this.timeSeconds = oldProgressBar.timeSeconds;</span>
+<span class="nc" id="L37">			this.playerTime = oldProgressBar.playerTime;</span>
+<span class="nc" id="L38">		}</span>
+	}
+
+	/**
+	 * Creates a progress bar that tracks the player and opponent boats progress
+	 * along the course.
+	 * 
+	 * @param player    The player's boat.
+	 * @param opponents Array of opponent boats.
+	 */
+	public ProgressBar(Player player, Opponent[] opponents) {
+<span class="nc" id="L49">		this(player, opponents, false);</span>
+<span class="nc" id="L50">	}</span>
+
+	/**
+	 * Creates a progress bar that tracks the player and opponent boats progress
+	 * along the course.
+	 *
+	 * @param player    The player's boat.
+	 * @param opponents Array of opponent boats.
+	 * @param noTexture Debug parameter to stop LibGDX loading texture assets.
+	 */
+<span class="fc" id="L60">	public ProgressBar(Player player, Opponent[] opponents, boolean noTexture) {</span>
+<span class="fc" id="L61">		this.playerBoat = player;</span>
+<span class="fc" id="L62">		this.opponentBoats = opponents;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (!noTexture) {</span>
+<span class="nc" id="L64">			this.texture = new Texture(Gdx.files.internal(&quot;core/assets/top bar sprite.png&quot;));</span>
+<span class="nc" id="L65">			this.playerIcon = new Texture(Gdx.files.internal(&quot;core/assets/progress icon player.png&quot;));</span>
+<span class="nc" id="L66">			this.opponentIcon = new Texture(Gdx.files.internal(&quot;core/assets/progress icon enemy.png&quot;));</span>
+		}
+<span class="fc" id="L68">	}</span>
+
+	public ProgressBar saveState(){
+<span class="nc" id="L71">		return this;</span>
+	}
+
+	public void setOpponentBoats(Opponent[] opponentBoats){
+<span class="nc" id="L75">		this.opponentBoats = opponentBoats;</span>
+<span class="nc" id="L76">	}</span>
+
+	public void setPlayerBoat(Player player){
+<span class="nc" id="L79">		this.playerBoat = player;</span>
+<span class="nc" id="L80">	}</span>
+
+	/**
+	 * Resets the timer to zero.
+	 */
+	public void StartTimer() {
+<span class="fc" id="L86">		this.timeSeconds = 0f;</span>
+<span class="fc" id="L87">		this.playerTime = 0f;</span>
+<span class="fc" id="L88">	}</span>
+
+	/**
+	 * Increments the timer by the time passed.
+	 * 
+	 * @param timePassed The time delta from the last frame.
+	 */
+	public void IncrementTimer(float timePassed) {
+<span class="fc" id="L96">		this.timeSeconds += timePassed;</span>
+		// Check player is still racing.
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (!this.playerBoat.finished()) {</span>
+<span class="fc" id="L99">			this.playerTime = this.timeSeconds;</span>
+		}
+<span class="fc" id="L101">	}</span>
+
+	// getters and setters
+
+	/**
+	 * Returns true if all boats have finished.
+	 * 
+	 * @param finishY Y-position of the finish line.
+	 * @return Boolean representing if all boats have finished the course.
+	 */
+	public boolean allFinished(int finishY) {
+<span class="fc" id="L112">		float[] progress = this.getProgress(finishY);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (float v : progress) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (v != 1) {</span>
+<span class="fc" id="L115">				return false;</span>
+			}
+		}
+<span class="fc" id="L118">		return true;</span>
+	}
+
+	/**
+	 * Gets the progress of all boats.
+	 * 
+	 * @param finishY Y-position of the finish line.
+	 * @return Array of floats representing the percentage of the course covered by
+	 *         each boat. First index stores player's progress.
+	 */
+	public float[] getProgress(int finishY) {
+<span class="fc" id="L129">		float[] out = new float[opponentBoats.length + 1];</span>
+<span class="fc" id="L130">		out[0] = playerBoat.getProgress(finishY);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (int i = 0; i &lt; opponentBoats.length; i++) {</span>
+<span class="fc" id="L132">			out[i + 1] = opponentBoats[i].getProgress(finishY);</span>
+		}
+
+<span class="fc" id="L135">		return out;</span>
+	}
+
+	/**
+	 * Gets the time elapsed for the player in the current race.
+	 * 
+	 * @return Returns a float representing the player's current race time.
+	 */
+	public float getPlayerTime() {
+<span class="nc" id="L144">		return this.playerTime;</span>
+	}
+
+	/**
+	 * Gets the time elapsed for the player in the current race and total penalty
+	 * time.
+	 * 
+	 * @return String representing player time &quot;:&quot; penalty time.
+	 */
+	public String getPlayerTimeString() {
+<span class="nc" id="L154">		return (float) Math.round(this.playerTime * 10) / 10 + &quot; + &quot;</span>
+<span class="nc" id="L155">				+ (float) Math.round(this.playerBoat.getPenalty() * 10) / 10;</span>
+	}
+
+	/**
+	 * Gets the time passed for the current race.
+	 * 
+	 * @return Returns a float representing the current race time.
+	 */
+	public float getTime() {
+<span class="nc" id="L164">		return this.timeSeconds;</span>
+	}
+
+	/**
+	 * Gets the progress bar texture.
+	 * 
+	 * @return A Texture representing the sprite.
+	 */
+	public Texture getTexture() {
+<span class="nc" id="L173">		return texture;</span>
+	}
+
+	/**
+	 * Gets the player icon texture.
+	 * 
+	 * @return A Texture representing the sprite.
+	 */
+	public Texture getPlayerIcon() {
+<span class="nc" id="L182">		return playerIcon;</span>
+	}
+
+	/**
+	 * Gets the opponent icon texture.
+	 * 
+	 * @return A Texture representing the sprite.
+	 */
+	public Texture getOpponentIcon() {
+<span class="nc" id="L191">		return opponentIcon;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

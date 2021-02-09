@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameScreen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">GameScreen.java</span></div><h1>GameScreen.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+/**
+ * Main Game Screen class for Dragon Boat Game. This is the main game loop,
+ * handling all the game logic and rendering.
+ */
+public class GameScreen implements Screen {
+    // ENVIRONMENT VARIABLES:
+    private final Random rnd;
+<span class="nc" id="L27">    protected DragonBoatGame game = null;</span>
+
+    // debug booleans
+    private boolean debug_speed,debug_positions,debug_norandom,debug_verboseoutput;
+
+    // game
+    protected final Player player;
+    protected final Course course;
+    protected final Lane[] lanes;
+    protected final ProgressBar progressBar;
+    protected final Leaderboard leaderboard;
+    protected final Opponent[] opponents;
+    protected String[] times;
+<span class="nc" id="L40">    protected boolean started = false;</span>
+<span class="nc" id="L41">    protected final float penalty = 0.016f;</span>
+<span class="nc" id="L42">    protected boolean ispaused = false;</span>
+
+
+    protected PauseMenu pauseMenu;
+    protected Stage stage;
+
+    // screen
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+
+    // graphics
+    private final SpriteBatch batch;
+    private final Texture background;
+    private final Texture healthBarFull;
+    private final Texture healthBarEmpty;
+    private final Texture staminaBarFull;
+    private final Texture staminaBarEmpty;
+    private final FreeTypeFontGenerator generator;
+    private final FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private final BitmapFont font18,font28,font44;
+<span class="nc" id="L62">    private final Skin skin = new Skin(Gdx.files.internal(&quot;core/assets/pixthulhu/skin/pixthulhu-ui.json&quot;));</span>
+
+    // timing
+<span class="nc" id="L65">    protected int backgroundOffset = 0;</span>
+<span class="nc" id="L66">    protected float totalDeltaTime = 0;</span>
+
+    // global parameters
+<span class="nc" id="L69">    private final int WIDTH = 1080, HEIGHT = 720;</span>
+
+    /**
+     * Sets up everything needed for a race to take place.
+     *
+     * @param game Represents the initial state of DragonBoatGame.
+     */
+    public GameScreen(DragonBoatGame game) {
+<span class="nc" id="L77">        this(game, false);</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * Sets up everything needed for a race to take place.
+     * 
+     * @param game Represents the initial state of DragonBoatGame.
+     * @param loaded Represents whether the game has been loaded from a save or not.
+     */
+<span class="nc" id="L86">    public GameScreen(DragonBoatGame game, boolean loaded) {</span>
+        /*
+         * Grab game objects from DragonBoatGame.
+         */
+<span class="nc" id="L90">        debug_speed = game.debug_speed;</span>
+<span class="nc" id="L91">        debug_positions = game.debug_positions;</span>
+<span class="nc" id="L92">        debug_norandom = game.debug_norandom;</span>
+<span class="nc" id="L93">        debug_verboseoutput = game.debug_verboseoutput;</span>
+
+        /*
+        * creates stage on which pause menu will act upon when called
+         */
+<span class="nc" id="L98">        stage = new Stage();</span>
+<span class="nc" id="L99">        Gdx.input.setInputProcessor(stage);</span>
+
+        /*
+        * creates pause menu
+         */
+<span class="nc" id="L104">        pauseMenu = new PauseMenu(game);</span>
+<span class="nc" id="L105">        pauseMenu.setSize(600,450);</span>
+<span class="nc" id="L106">        pauseMenu.setModal(true);</span>
+<span class="nc" id="L107">        pauseMenu.setVisible(false);</span>
+<span class="nc" id="L108">        pauseMenu.setMovable(false);</span>
+<span class="nc" id="L109">        pauseMenu.setPosition(Gdx.graphics.getWidth()/2 - pauseMenu.getWidth()/2,Gdx.graphics.getHeight()/2 - pauseMenu.getHeight()/2);</span>
+
+<span class="nc" id="L111">        stage.addActor(pauseMenu);</span>
+
+<span class="nc" id="L113">        this.game = game;</span>
+<span class="nc" id="L114">        this.player = this.game.player;</span>
+<span class="nc" id="L115">        this.course = this.game.course;</span>
+<span class="nc" id="L116">        this.lanes = this.game.lanes;</span>
+<span class="nc" id="L117">        this.progressBar = this.game.progressBar;</span>
+<span class="nc" id="L118">        this.opponents = this.game.opponents;</span>
+<span class="nc" id="L119">        this.rnd = this.game.rnd;</span>
+
+<span class="nc" id="L121">        ArrayList&lt;Integer&gt; possibleBoats = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        if (!loaded) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            for (int i = 0; i &lt; lanes.length; i++) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                if (i != game.playerChoice) {</span>
+<span class="nc" id="L125">                    possibleBoats.add(i);</span>
+                }
+            }
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            for (Opponent o : opponents) {</span>
+<span class="nc" id="L129">                int choice = o.SetRandomBoat(possibleBoats);</span>
+<span class="nc" id="L130">                possibleBoats.remove(choice);</span>
+            }
+        }
+<span class="nc" id="L133">        leaderboard = this.game.leaderboard;</span>
+
+        // setup view
+<span class="nc" id="L136">        camera = new OrthographicCamera();</span>
+<span class="nc" id="L137">        viewport = new StretchViewport(WIDTH, HEIGHT, camera);</span>
+
+        // texture setting
+<span class="nc" id="L140">        background = course.getTexture();</span>
+<span class="nc" id="L141">        batch = new SpriteBatch();</span>
+<span class="nc" id="L142">        generator = game.generator;</span>
+<span class="nc" id="L143">        parameter = game.parameter;</span>
+<span class="nc" id="L144">        parameter.size = 18;</span>
+<span class="nc" id="L145">        font18 = generator.generateFont(parameter);</span>
+<span class="nc" id="L146">        parameter.size = 28;</span>
+<span class="nc" id="L147">        font28 = generator.generateFont(parameter);</span>
+<span class="nc" id="L148">        parameter.size = 44;</span>
+<span class="nc" id="L149">        font44 = generator.generateFont(parameter);</span>
+<span class="nc" id="L150">        staminaBarFull = new Texture(Gdx.files.internal(&quot;core/assets/bar stamina yellow.png&quot;));</span>
+<span class="nc" id="L151">        staminaBarEmpty = new Texture(Gdx.files.internal(&quot;core/assets/bar stamina grey.png&quot;));</span>
+<span class="nc" id="L152">        healthBarFull = new Texture(Gdx.files.internal(&quot;core/assets/bar health yellow.png&quot;));</span>
+<span class="nc" id="L153">        healthBarEmpty = new Texture(Gdx.files.internal(&quot;core/assets/bar health grey.png&quot;));</span>
+<span class="nc" id="L154">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Rendering function for the game loop, handling all game logic and displaying
+     * graphics.
+     * &lt;/p&gt;
+     *
+     * &lt;p&gt;
+     * GAME LOOP
+     * &lt;/p&gt;
+     *
+     * &lt;p&gt;
+     * - Spawns any Obstacles that need spawning.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Update Player and Opponent positions.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Check for collisions with Obstacles.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Display Background and Obstacles
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Update Obstacle positions.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Display Player, Player UI and Opponents.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Display Progress Bar and checks which boats have finished.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Display Player timer.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * - Checks if all boats have finished, and displays a Leaderboard if so.
+     * &lt;/p&gt;
+     *
+     * @param deltaTime Time passed since render function was last run.
+     */
+    @Override
+    public void render(float deltaTime) {
+<span class="nc" id="L198">        String debug = &quot;&quot;;</span>
+
+<span class="nc" id="L200">        Gdx.gl.glClearColor(0, 0, 0, 1);</span>
+<span class="nc" id="L201">        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</span>
+
+        /*
+        * Checks whether Escape key is pressed,bringing up pause menu
+         */
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {</span>
+<span class="nc" id="L207">            togglePause();</span>
+        }
+
+<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (!ispaused) {</span>
+            /*
+             * If the game has started, start incrementing time.
+             */
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            totalDeltaTime += started ? deltaTime : 0;</span>
+            /*
+             * Check whether obstacles need to be spawned, and spawns them if so. Breaks
+             * instantly if the game hasn't started, if the player has finished, or if there
+             * are no more obstacles to be spawned.
+             *
+             * - IMPORTANT -
+             * It should be noted that the obstacles currently use a
+             * coordinate system relative to the screen, as they are always spawned at
+             * HEIGHT + 40 (y = 760). This means all collision checking methods need to be
+             * passed backgroundOffset to translate the object's y position.
+             */
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            for (int i = 0; i &lt; course.getNoLanes(); i++) {</span>
+<span class="nc bnc" id="L227" title="All 6 branches missed.">                if (!started || player.finished() || this.game.obstacleTimes[i].size() == 0)</span>
+<span class="nc" id="L228">                    break;</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">                if (this.game.obstacleTimes[i].get(0) - player.getY() + player.getHeight() &lt; 1) {</span>
+<span class="nc" id="L230">                    String[] obstacleTypes = {&quot;Goose&quot;, &quot;Log&quot;};</span>
+                    // spawn an obstacle in lane i.
+<span class="nc" id="L232">                    int xCoord = lanes[i].getLeftBoundary()</span>
+<span class="nc" id="L233">                            + rnd.nextInt(lanes[i].getRightBoundary() - lanes[i].getLeftBoundary() - 15);</span>
+<span class="nc" id="L234">                    lanes[i].SpawnObstacle(game.spriteTextures, xCoord, HEIGHT + 40, obstacleTypes[rnd.nextInt(obstacleTypes.length)]);</span>
+                    // make sure obstacle is only spawned once.
+<span class="nc" id="L236">                    this.game.obstacleTimes[i].remove(0);</span>
+                }
+            }
+
+            /*
+             * Move player. Advance animation frame.
+             */
+<span class="nc" id="L243">            player.GetInput();</span>
+<span class="nc" id="L244">            player.MoveForward();</span>
+<span class="nc bnc" id="L245" title="All 4 branches missed.">            if (player.getCurrentSpeed() &gt; 0 &amp;&amp; !started) {</span>
+                // detect start of game (might change this to a countdown)
+<span class="nc" id="L247">                started = true;</span>
+            }
+
+            /*
+            * Move obstacles
+             */
+<span class="nc bnc" id="L253" title="All 2 branches missed.">            for (Lane lane : lanes) {</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">                if (!started)</span>
+<span class="nc" id="L255">                    break;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">                for (int j = 0; j &lt; lane.obstacles.size(); j++) {</span>
+<span class="nc" id="L257">                    Obstacle o = lane.obstacles.get(j);</span>
+                    // If the background hasn't started moving yet, or if the player has reached the
+                    // top of the course, move obstacle at set speed.
+                    // Else add the player speed to the obstacle speed.
+<span class="nc" id="L261">                    o.Move((0.4f * game.selectedDifficulty) + (backgroundOffset &gt; 0</span>
+<span class="nc bnc" id="L262" title="All 4 branches missed.">                                    &amp;&amp; player.getY() + HEIGHT / 2 + player.getHeight() / 2 &lt; course.getTexture().getHeight()</span>
+<span class="nc" id="L263">                                    ? player.getCurrentSpeed()</span>
+<span class="nc" id="L264">                                    : 0),</span>
+                            backgroundOffset);
+<span class="nc bnc" id="L266" title="All 2 branches missed.">                    if (o.getY() &lt; -o.getHeight()) {</span>
+<span class="nc" id="L267">                        lane.RemoveObstacle(o);</span>
+                    }
+                }
+            }
+
+            /*
+             * Move opponents. Advance animation frame.
+             */
+<span class="nc bnc" id="L275" title="All 2 branches missed.">            for (int i = 0; i &lt; opponents.length; i++) {</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">                if (!started)</span>
+<span class="nc" id="L277">                    break;</span>
+<span class="nc" id="L278">                opponents[i].MoveForward();</span>
+<span class="nc" id="L279">                opponents[i].CheckCollisions(backgroundOffset);</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">                if (Math.round(totalDeltaTime) % 2 == 0) {</span>
+<span class="nc" id="L281">                    opponents[i].ai(backgroundOffset);</span>
+                }
+            }
+
+            /*
+             * Increase the background offset so the player is centered.
+             */
+<span class="nc bnc" id="L288" title="All 2 branches missed.">            if (player.getY() + HEIGHT / 2 + player.getHeight() / 2 &gt; course.getTexture().getHeight()) {</span>
+                // Stop increasing the background offset when the player reaches the end of the
+                // course.
+<span class="nc bnc" id="L291" title="All 2 branches missed.">            } else if (player.getY() + player.getHeight() / 2 &gt; HEIGHT / 2) {</span>
+                // Start increasing the background offset when the player is above half the
+                // window height.
+<span class="nc" id="L294">                backgroundOffset = player.getY() + player.getHeight() / 2 - HEIGHT / 2;</span>
+            }
+
+<span class="nc" id="L297">            player.CheckCollisions(backgroundOffset);</span>
+
+            /*
+             * Check player boat is in their lane, if not apply penalties.
+             */
+<span class="nc bnc" id="L302" title="All 4 branches missed.">            if (!player.CheckIfInLane() &amp;&amp; !player.finished()) {</span>
+<span class="nc" id="L303">                player.applyPenalty(penalty);</span>
+<span class="nc" id="L304">                font28.setColor(Color.RED);</span>
+<span class="nc" id="L305">                batch.begin();</span>
+<span class="nc" id="L306">                font28.draw(batch, &quot;Warning! Penalty applied for leaving lane&quot;, 240, 100);</span>
+<span class="nc" id="L307">                batch.end();</span>
+<span class="nc" id="L308">                font28.setColor(Color.WHITE);</span>
+            }
+            /*
+             * Check opponent boats are in their lanes, if not apply penalties.
+             */
+<span class="nc bnc" id="L313" title="All 2 branches missed.">            for (Opponent opponent : opponents) {</span>
+<span class="nc bnc" id="L314" title="All 4 branches missed.">                if (!opponent.CheckIfInLane() &amp;&amp; !opponent.finished()) {</span>
+<span class="nc" id="L315">                    opponent.applyPenalty(penalty);</span>
+                }
+            }
+
+        } else {
+<span class="nc" id="L320">            deltaTime = 0;</span>
+        }
+
+        /*
+         * Display background.
+         */
+<span class="nc" id="L326">        batch.begin();</span>
+<span class="nc" id="L327">        batch.draw(background, 0, 0, 0, background.getHeight() - HEIGHT - backgroundOffset, WIDTH, HEIGHT);</span>
+<span class="nc" id="L328">        batch.end();</span>
+
+        /*
+         * Display obstacles
+         */
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        for (Lane lane : lanes) {</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">            if (!started)</span>
+<span class="nc" id="L335">                break;</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">            for (int j = 0; j &lt; lane.obstacles.size(); j++) {</span>
+<span class="nc" id="L337">                Obstacle o = lane.obstacles.get(j);</span>
+<span class="nc" id="L338">                batch.begin();</span>
+<span class="nc" id="L339">                batch.draw(o.getTexture(), o.getX(), o.getY());</span>
+<span class="nc" id="L340">                batch.end();</span>
+            }
+        }
+
+        /*
+         * Display player and player UI.
+         */
+<span class="nc" id="L347">        batch.begin();</span>
+<span class="nc" id="L348">        batch.draw(player.texture, player.getX(), player.getY() - backgroundOffset);</span>
+<span class="nc" id="L349">        batch.draw(staminaBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset);</span>
+<span class="nc" id="L350">        batch.draw(healthBarEmpty, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset);</span>
+<span class="nc" id="L351">        batch.draw(staminaBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 20 - backgroundOffset, 0, 0,</span>
+<span class="nc" id="L352">                Math.round(staminaBarFull.getWidth() * player.getTiredness() / Boat.MAX_TIREDNESS),</span>
+<span class="nc" id="L353">                staminaBarFull.getHeight());</span>
+<span class="nc" id="L354">        batch.draw(healthBarFull, player.lanes[player.laneNo].getLeftBoundary(), player.getY() - 40 - backgroundOffset, 0, 0,</span>
+<span class="nc" id="L355">                Math.round(healthBarFull.getWidth() * player.getDurability() / (float) Boat.MAX_DURABILITY),</span>
+<span class="nc" id="L356">                healthBarFull.getHeight());</span>
+<span class="nc" id="L357">        batch.end();</span>
+
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        if (debug_positions) debug += player.getName() + &quot; pos: (&quot; + player.getX() + &quot;,&quot; + player.getY() + &quot;)\n&quot;;</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        if (debug_speed)</span>
+<span class="nc" id="L361">            debug += player.getName() + &quot; speed: &quot; + player.getCurrentSpeed() + &quot; / &quot; + player.getMaxSpeed() + &quot;\n\n&quot;;</span>
+
+        /*
+         * Display opponents.
+         */
+<span class="nc bnc" id="L366" title="All 2 branches missed.">        for (Opponent o : opponents) {</span>
+<span class="nc" id="L367">            batch.begin();</span>
+<span class="nc" id="L368">            batch.draw(o.texture, o.getX(), o.getY() - backgroundOffset);</span>
+<span class="nc" id="L369">            batch.end();</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">            if (debug_positions) debug += o.getName() + &quot; pos: (&quot; + o.getX() + &quot;,&quot; + o.getY() + &quot;)\n&quot;;</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">            if (debug_speed)</span>
+<span class="nc" id="L372">                debug += o.getName() + &quot; speed: &quot; + o.getCurrentSpeed() + &quot; / &quot; + o.getMaxSpeed() + &quot;\n\n&quot;;</span>
+        }
+
+        /*
+         * Display progress bar.
+         */
+<span class="nc" id="L378">        batch.begin();</span>
+<span class="nc" id="L379">        batch.draw(progressBar.getTexture(), WIDTH - progressBar.getTexture().getWidth() - 60,</span>
+<span class="nc" id="L380">                HEIGHT - progressBar.getTexture().getHeight() - 20);</span>
+<span class="nc" id="L381">        batch.end();</span>
+
+        /*
+         * Get progress for each boat. Draw player and opponent icons on progress bar
+         * with x coordinates respective to their progress.
+         */
+<span class="nc" id="L387">        float[] progress = progressBar.getProgress(course.getTexture().getHeight());</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">        for (int i = 1; i &lt; progress.length; i++) {</span>
+<span class="nc" id="L389">            batch.begin();</span>
+<span class="nc" id="L390">            batch.draw(progressBar.getOpponentIcon(),</span>
+<span class="nc" id="L391">                    WIDTH - progressBar.getTexture().getWidth() - 50</span>
+<span class="nc" id="L392">                            + progress[i] * (progressBar.getTexture().getWidth() - 214),</span>
+<span class="nc" id="L393">                    HEIGHT - progressBar.getTexture().getHeight() / 2.0f - 10);</span>
+<span class="nc" id="L394">            batch.end();</span>
+        }
+
+<span class="nc" id="L397">        batch.begin();</span>
+<span class="nc" id="L398">        batch.draw(progressBar.getPlayerIcon(),</span>
+<span class="nc" id="L399">                WIDTH - progressBar.getTexture().getWidth() - 50</span>
+<span class="nc" id="L400">                        + progress[0] * (progressBar.getTexture().getWidth() - 214),</span>
+<span class="nc" id="L401">                HEIGHT - progressBar.getTexture().getHeight() / 2.0f - 10);</span>
+<span class="nc" id="L402">        batch.end();</span>
+
+        /*
+         * Display player time.
+         */
+<span class="nc" id="L407">        progressBar.IncrementTimer(deltaTime);</span>
+<span class="nc" id="L408">        batch.begin();</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">        font28.draw(batch, started ? progressBar.getPlayerTimeString() : &quot;&quot;, WIDTH - 230, HEIGHT - 40);</span>
+<span class="nc" id="L410">        batch.end();</span>
+
+        /*
+         * Check if player and each opponent has finished, and update their finished
+         * booleans respectively.
+         */
+<span class="nc bnc" id="L416" title="All 4 branches missed.">        if (progress[0] == 1 &amp;&amp; !player.finished()) {</span>
+<span class="nc" id="L417">            player.setFinished(true);</span>
+<span class="nc" id="L418">            player.UpdateFastestTime(progressBar.getPlayerTime());</span>
+        }
+<span class="nc bnc" id="L420" title="All 2 branches missed.">        for (int i = 0; i &lt; opponents.length; i++) {</span>
+<span class="nc bnc" id="L421" title="All 4 branches missed.">            if (progress[i + 1] == 1 &amp;&amp; !opponents[i].finished()) {</span>
+<span class="nc" id="L422">                opponents[i].setFinished(true);</span>
+<span class="nc" id="L423">                opponents[i].UpdateFastestTime(progressBar.getTime());</span>
+            }
+        }
+
+        /*
+         * Display debug stats.
+         */
+<span class="nc bnc" id="L430" title="All 4 branches missed.">        if (debug_positions || debug_speed) {</span>
+<span class="nc" id="L431">            batch.begin();</span>
+<span class="nc" id="L432">            font18.draw(batch, debug, 5, HEIGHT - 60);</span>
+<span class="nc" id="L433">            batch.end();</span>
+        }
+
+<span class="nc bnc" id="L436" title="All 2 branches missed.">        if (debug_verboseoutput) {</span>
+<span class="nc" id="L437">            System.out.println(&quot;-----------------------&quot;);</span>
+<span class="nc" id="L438">            System.out.println(&quot;Total time: &quot; + totalDeltaTime + &quot;\nDelta time: &quot; + deltaTime);</span>
+<span class="nc" id="L439">            System.out.println(&quot;-----------------------&quot;);</span>
+<span class="nc" id="L440">            System.out.println(&quot; -- Variables --\n&quot;</span>
+                    + &quot;backgroundOffset: &quot; + backgroundOffset);
+<span class="nc bnc" id="L442" title="All 2 branches missed.">            for (int i = 0; i &lt; lanes.length; i++) {</span>
+<span class="nc" id="L443">                System.out.println(&quot;Lane &quot; + i + &quot; obstacles: &quot; + lanes[i].obstacles.size());</span>
+            }
+<span class="nc" id="L445">            System.out.println(&quot;\n\n\n&quot;);</span>
+        }
+
+        /*
+         * Check if all boats have passed the finish line, if so, generate the
+         * leaderboard.
+         */
+<span class="nc bnc" id="L452" title="All 2 branches missed.">        if (progressBar.allFinished(course.getTexture().getHeight())) {</span>
+            // Display leaderboard, if on the third leg, display top 3 boats.
+<span class="nc bnc" id="L454" title="All 2 branches missed.">            if (game.difficulty &lt; 3) {</span>
+<span class="nc" id="L455">                batch.begin();</span>
+<span class="nc" id="L456">                batch.draw(leaderboard.getTexture(), WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 2.0f,</span>
+<span class="nc" id="L457">                        HEIGHT / 2.0f - leaderboard.getTexture().getHeight() / 2.0f);</span>
+<span class="nc" id="L458">                batch.end();</span>
+<span class="nc" id="L459">                this.times = leaderboard.getTimes(opponents.length + 1);</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">                for (int i = 0; i &lt; opponents.length + 1; i++) {</span>
+<span class="nc" id="L461">                    batch.begin();</span>
+<span class="nc" id="L462">                    font44.draw(batch, this.times[i], WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 3.0f,</span>
+                            620 - (75 * i));
+<span class="nc" id="L464">                    batch.end();</span>
+                }
+<span class="nc" id="L466">                batch.begin();</span>
+<span class="nc" id="L467">                font28.draw(batch, &quot;Click anywhere to progress to next leg.&quot;, 200, 40);</span>
+<span class="nc" id="L468">                batch.end();</span>
+                /*
+                 * Defines how to handle keyboard and mouse inputs.
+                 */
+<span class="nc" id="L472">                Gdx.input.setInputProcessor(new InputAdapter() {</span>
+                    @Override
+                    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+<span class="nc" id="L475">                        game.advanceLeg();</span>
+<span class="nc" id="L476">                        return super.touchUp(screenX, screenY, pointer, button);</span>
+                    }
+                });
+<span class="nc bnc" id="L479" title="All 2 branches missed.">            } else if (game.difficulty == 3) {</span>
+<span class="nc" id="L480">                batch.begin();</span>
+<span class="nc" id="L481">                batch.draw(leaderboard.getTexture(), WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 2.0f,</span>
+<span class="nc" id="L482">                        HEIGHT / 2.0f - leaderboard.getTexture().getHeight() / 2.0f);</span>
+<span class="nc" id="L483">                batch.end();</span>
+<span class="nc" id="L484">                this.times = leaderboard.getTimes(opponents.length + 1);</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">                for (int i = 0; i &lt; opponents.length + 1; i++) {</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">                    if (i &lt; 3)</span>
+<span class="nc" id="L487">                        font44.setColor(Color.GOLD);</span>
+                    else
+<span class="nc" id="L489">                        font44.setColor(Color.WHITE);</span>
+
+<span class="nc" id="L491">                    batch.begin();</span>
+<span class="nc" id="L492">                    font44.draw(batch, this.times[i], WIDTH / 2.0f - leaderboard.getTexture().getWidth() / 3.0f,</span>
+                            620 - (75 * i));
+<span class="nc" id="L494">                    batch.end();</span>
+                }
+<span class="nc bnc" id="L496" title="All 4 branches missed.">                if (this.times[0].startsWith(&quot;Player&quot;) || this.times[1].startsWith(&quot;Player&quot;)</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">                        || this.times[2].startsWith(&quot;Player&quot;)) {</span>
+<span class="nc" id="L498">                    batch.begin();</span>
+<span class="nc" id="L499">                    font28.draw(batch, &quot;Click anywhere to progress to the final!&quot;, 200, 40);</span>
+<span class="nc" id="L500">                    batch.end();</span>
+                    /*
+                     * Defines how to handle keyboard and mouse inputs.
+                     */
+<span class="nc" id="L504">                    Gdx.input.setInputProcessor(new InputAdapter() {</span>
+                        @Override
+                        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+<span class="nc" id="L507">                            game.advanceLeg();</span>
+<span class="nc" id="L508">                            return super.touchUp(screenX, screenY, pointer, button);</span>
+                        }
+                    });
+                } else {
+<span class="nc" id="L512">                    game.endGame();</span>
+                }
+            } else {
+<span class="nc" id="L515">                game.endGame();</span>
+            }
+        }
+
+
+        /*
+        * tells stage to act and draw itself
+         */
+<span class="nc" id="L523">        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1/30f));</span>
+<span class="nc" id="L524">        stage.draw();</span>
+<span class="nc" id="L525">    }</span>
+
+    /**
+     * Resizes the game screen.
+     * 
+     * @param width  Width of the screen.
+     * @param height Height of the screen.
+     */
+    @Override
+    public void resize(int width, int height) {
+<span class="nc" id="L535">        viewport.update(width, height, true);</span>
+<span class="nc" id="L536">        batch.setProjectionMatrix(camera.combined);</span>
+<span class="nc" id="L537">    }</span>
+
+    public void togglePause() {
+<span class="nc bnc" id="L540" title="All 2 branches missed.">        pauseMenu.setVisible(!pauseMenu.isVisible());</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">        ispaused = !ispaused;</span>
+<span class="nc" id="L542">    }</span>
+
+    @Override
+    public void pause() {
+<span class="nc bnc" id="L546" title="All 2 branches missed.">        if (!ispaused) togglePause();</span>
+<span class="nc" id="L547">    }</span>
+
+    @Override
+    public void resume() {
+<span class="nc bnc" id="L551" title="All 2 branches missed.">        if (ispaused) togglePause();</span>
+<span class="nc" id="L552">    }</span>
+
+    @Override
+    public void hide() {
+
+<span class="nc" id="L557">    }</span>
+
+    /**
+     * Disposes of the screen when it is no longer needed.
+     */
+    @Override
+    public void dispose() {
+<span class="nc" id="L564">        batch.dispose();</span>
+<span class="nc" id="L565">        stage.dispose();</span>
+<span class="nc" id="L566">        background.dispose();</span>
+<span class="nc" id="L567">        player.texture.dispose();</span>
+<span class="nc bnc" id="L568" title="All 2 branches missed.">        for (Lane lane : lanes) {</span>
+<span class="nc bnc" id="L569" title="All 2 branches missed.">            for (int j = 0; j &lt; lane.obstacles.size(); j++) {</span>
+<span class="nc" id="L570">                lane.obstacles.get(j).getTexture().dispose();</span>
+            }
+        }
+<span class="nc" id="L573">        progressBar.getTexture().dispose();</span>
+<span class="nc" id="L574">        progressBar.getOpponentIcon().dispose();</span>
+<span class="nc" id="L575">        progressBar.getPlayerIcon().dispose();</span>
+<span class="nc" id="L576">        staminaBarFull.dispose();</span>
+<span class="nc" id="L577">        staminaBarEmpty.dispose();</span>
+<span class="nc" id="L578">        healthBarEmpty.dispose();</span>
+<span class="nc" id="L579">        healthBarFull.dispose();</span>
+<span class="nc" id="L580">        generator.dispose();</span>
+<span class="nc" id="L581">        font28.dispose();</span>
+<span class="nc" id="L582">        font44.dispose();</span>
+<span class="nc" id="L583">        leaderboard.getTexture().dispose();</span>
+
+<span class="nc" id="L585">    }</span>
+
+    @Override
+    public void show() {
+
+<span class="nc" id="L590">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

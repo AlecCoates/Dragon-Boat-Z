@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lane.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">Lane.java</span></div><h1>Lane.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.badlogic.gdx.graphics.Texture;
+
+/**
+ * Represents a lane on the course.
+ */
+public class Lane {
+    public int LEFTBOUNDARY, RIGHTBOUNDARY;
+    protected ArrayList&lt;Obstacle&gt; obstacles;
+    protected int obstacleLimit;
+    protected Lane[] lanes;
+<span class="pc" id="L16">    protected int laneNo = 0;</span>
+
+    /**
+     * Represents a savable/loadable lane.
+     *
+     * @see Obstacle.ObstacleSpriteDescriptor
+     */
+    static class LaneSpriteDescriptor {
+        public int LEFTBOUNDARY, RIGHTBOUNDARY;
+        public int obstacleLimit;
+        public ArrayList&lt;Obstacle.ObstacleSpriteDescriptor&gt; obstacles;
+        public int laneNo;
+
+        /**
+         * Json requires an empty constructor to regenerate the class from a save file
+         */
+<span class="fc" id="L32">        public LaneSpriteDescriptor (){}</span>
+
+        /**
+         * &lt;P&gt;
+         *     Creates a json friendly instance of the lane
+         * &lt;/P&gt;
+         * &lt;p&gt;
+         *     Uses goose and log sprite descriptors
+         * &lt;/p&gt;
+         *
+         * @param oldLane The obstacle data that needs to be converted to be stored properly
+         */
+<span class="nc" id="L44">        LaneSpriteDescriptor (Lane oldLane){</span>
+<span class="nc" id="L45">            LEFTBOUNDARY = oldLane.getLeftBoundary();</span>
+<span class="nc" id="L46">            RIGHTBOUNDARY = oldLane.getRightBoundary();</span>
+<span class="nc" id="L47">            laneNo = oldLane.laneNo;</span>
+<span class="nc" id="L48">            obstacleLimit = oldLane.obstacleLimit;</span>
+<span class="nc" id="L49">            obstacles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            for (Obstacle obstacle: oldLane.obstacles) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                if (obstacle.getName().equals(&quot;Goose&quot;)) {</span>
+<span class="nc" id="L52">                    Goose goose = (Goose) obstacle;</span>
+<span class="nc" id="L53">                    obstacles.add(new Goose.GooseSpriteDescriptor(goose));</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                } else if (obstacle.getName().equals(&quot;Log&quot;)) {</span>
+<span class="nc" id="L55">                    Log log = (Log) obstacle;</span>
+<span class="nc" id="L56">                    obstacles.add(new Log.LogSpriteDescriptor(log));</span>
+                }
+<span class="nc" id="L58">            }</span>
+<span class="nc" id="L59">        }</span>
+
+    }
+
+    /**
+     * Creates a lane instance.
+     * 
+     * @param leftBoundary  X-position for the left boundary of the lane.
+     * @param rightBoundary X-position for the right boundary of the lane.
+     */
+<span class="nc" id="L69">    public Lane(int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {</span>
+<span class="nc" id="L70">        this.LEFTBOUNDARY = leftBoundary;</span>
+<span class="nc" id="L71">        this.RIGHTBOUNDARY = rightBoundary;</span>
+<span class="nc" id="L72">        this.obstacleLimit = 10;</span>
+<span class="nc" id="L73">        this.lanes = lanes;</span>
+<span class="nc" id="L74">        this.laneNo = laneNo;</span>
+
+<span class="nc" id="L76">        obstacles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L77">    }</span>
+
+    /**
+     * Creates a lane instance.
+     * 
+     * @param leftBoundary  X-position for the left boundary of the lane.
+     * @param rightBoundary X-position for the right boundary of the lane.
+     * @param obstacleLimit Limit for the number of obstacles in the lane.
+     */
+<span class="fc" id="L86">    public Lane(int leftBoundary, int rightBoundary, int obstacleLimit) {</span>
+<span class="fc" id="L87">        this.LEFTBOUNDARY = leftBoundary;</span>
+<span class="fc" id="L88">        this.RIGHTBOUNDARY = rightBoundary;</span>
+<span class="fc" id="L89">        this.obstacleLimit = obstacleLimit;</span>
+
+<span class="fc" id="L91">        obstacles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Spawns obstacle in the lane.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * Spawns specified obstacle in the lane. Checks that the obstacle limit hasn't
+     * been reached, if not checks the obstacle type for Goose or Log and
+     * instantiates it as the corresponding obstacle, with the correct texture. Then
+     * adds it to the Lane's obstacle list.
+     * &lt;/p&gt;
+     * 
+     * @param x            X-position for the obstacle spawn location.
+     * @param y            Y-position for the obstacle spawn location.
+     * @param obstacleType Obstacle type.
+     */
+    public void SpawnObstacle(HashMap&lt;String, Texture&gt; textures, int x, int y, String obstacleType) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (this.obstacles.size() &lt; this.obstacleLimit) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (obstacleType.equals(&quot;Goose&quot;)) {</span>
+<span class="fc" id="L112">                Goose goose = new Goose(textures, x, y, this.lanes, this.laneNo);</span>
+<span class="fc" id="L113">                this.obstacles.add(goose);</span>
+
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">            } else if (obstacleType.equals(&quot;Log&quot;)) {</span>
+<span class="fc" id="L116">                Log log = new Log(textures, x, y);</span>
+<span class="fc" id="L117">                this.obstacles.add(log);</span>
+
+<span class="fc" id="L119">            }</span>
+        } else {
+<span class="fc" id="L121">            System.out.println(&quot;Obstacle limit reached.&quot;);</span>
+        }
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Removes obstacle from obstacle list.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * Obstacle should be removed upon collision with boat or leaving the course.
+     * area.
+     * &lt;/p&gt;
+     * 
+     * @param obstacle Obstacle to be removed.
+     */
+    public void RemoveObstacle(Obstacle obstacle) {
+<span class="fc" id="L137">        this.obstacles.remove(obstacle);</span>
+<span class="fc" id="L138">    }</span>
+
+    // getters and setters
+
+    /**
+     * 
+     * @return Int representing the x-position of the lane's left boundary.
+     */
+    public int getLeftBoundary() {
+<span class="fc" id="L147">        return this.LEFTBOUNDARY;</span>
+    }
+
+    /**
+     * 
+     * @return Int representing the x-position of the lane's right boundary.
+     */
+    public int getRightBoundary() {
+<span class="fc" id="L155">        return this.RIGHTBOUNDARY;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

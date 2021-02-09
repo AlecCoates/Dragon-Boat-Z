@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DifficultyScreen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">DifficultyScreen.java</span></div><h1>DifficultyScreen.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+/**
+ * Difficulty Screen class for Dragon Boat Game. This is the select screen for difficulty.
+ * Once difficulty clicked game will proceed to menu screen where to select a boat.
+ * Selected difficulty chosen as integer and alters amount of obstacles and speed of them in GameScreen
+ *
+ * @see MenuScreen
+ */
+public class DifficultyScreen implements Screen {
+    private DragonBoatGame parent;
+    private Stage stage;
+    private Label titleLabel;
+
+    /**
+     * Creates a difficulty screen using textbuttons tht once pressed proceed
+     *
+     * @param Game represents the initial state of DragonBoatGame
+     */
+<span class="nc" id="L30">    public DifficultyScreen(DragonBoatGame Game){</span>
+<span class="nc" id="L31">        parent = Game;</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Creates a difficulty screen using TextButtons that once pressed proceed to set difficulty and
+     * proceed to boat select screen of menu screen
+     */
+    @Override
+    public void show() {
+        /*
+        * Creates stage for buttons to display and act upon
+         */
+<span class="nc" id="L43">        stage = new Stage(new ScreenViewport());</span>
+
+<span class="nc" id="L45">        stage.clear();</span>
+
+<span class="nc" id="L47">        Gdx.input.setInputProcessor(stage);</span>
+
+<span class="nc" id="L49">        Table table = new Table();</span>
+<span class="nc" id="L50">        table.setFillParent(true);</span>
+<span class="nc" id="L51">        stage.addActor(table);</span>
+
+        /*
+        * Creates buttons to add
+         */
+
+<span class="nc" id="L57">        Skin skin = new Skin(Gdx.files.internal(&quot;core/assets/pixthulhu/skin/pixthulhu-ui.json&quot;));</span>
+
+<span class="nc" id="L59">        final TextButton easyButton = new TextButton(&quot;EASY&quot;,skin);</span>
+<span class="nc" id="L60">        easyButton.addListener(new ChangeListener() {</span>
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+<span class="nc" id="L63">                parent.selectedDifficulty = 1;</span>
+<span class="nc" id="L64">                parent.setScreen(new MenuScreen(parent));</span>
+<span class="nc" id="L65">            }</span>
+        });
+<span class="nc" id="L67">        final TextButton mediumButton = new TextButton(&quot;MEDIUM&quot;,skin);</span>
+<span class="nc" id="L68">        mediumButton.addListener(new ChangeListener() {</span>
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+<span class="nc" id="L71">                parent.selectedDifficulty = 2;</span>
+<span class="nc" id="L72">                parent.setScreen(new MenuScreen(parent));</span>
+<span class="nc" id="L73">            }</span>
+        });
+<span class="nc" id="L75">        final TextButton hardButton = new TextButton(&quot;HARD&quot;,skin);</span>
+<span class="nc" id="L76">        hardButton.addListener(new ChangeListener() {</span>
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+<span class="nc" id="L79">                parent.selectedDifficulty = 3;</span>
+<span class="nc" id="L80">                parent.setScreen(new MenuScreen(parent));</span>
+<span class="nc" id="L81">            }</span>
+        });
+
+
+<span class="nc" id="L85">        titleLabel = new Label(&quot;Difficulty Selection&quot;,skin);</span>
+
+
+
+        /*
+        * Adds all appropriate labels and buttons to table
+         */
+<span class="nc" id="L92">        table.add(titleLabel).colspan(2);</span>
+<span class="nc" id="L93">        table.row().pad(10,0,0,10);</span>
+<span class="nc" id="L94">        table.add(easyButton);</span>
+<span class="nc" id="L95">        table.row().pad(10,0,0,10);</span>
+<span class="nc" id="L96">        table.add(mediumButton);</span>
+<span class="nc" id="L97">        table.row().pad(10,0,0,10);</span>
+<span class="nc" id="L98">        table.add(hardButton);</span>
+<span class="nc" id="L99">        table.row().pad(10,0,0,10);</span>
+<span class="nc" id="L100">    }</span>
+
+    /**
+     * Rendering function for the difficulty screen
+     *
+     * @param delta acts as time
+     */
+    @Override
+    public void render(float delta) {
+        //Clears screen, allowing next items to be drawn
+<span class="nc" id="L110">        Gdx.gl.glClearColor(0f,0f,0f,1);</span>
+<span class="nc" id="L111">        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</span>
+
+        //tells stage to act and draw itself
+<span class="nc" id="L114">        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1/30f));</span>
+<span class="nc" id="L115">        stage.draw();</span>
+<span class="nc" id="L116">    }</span>
+
+    @Override
+    public void resize(int width, int height) {
+        //informs stage screen size has changed, viewport should be recalculated
+<span class="nc" id="L121">        stage.getViewport().update(width,height,true);</span>
+<span class="nc" id="L122">    }</span>
+
+    @Override
+    public void pause() {
+
+<span class="nc" id="L127">    }</span>
+
+    @Override
+    public void resume() {
+
+<span class="nc" id="L132">    }</span>
+
+    @Override
+    public void hide() {
+
+<span class="nc" id="L137">    }</span>
+
+    @Override
+    public void dispose() {
+<span class="nc" id="L141">        stage.dispose();</span>
+<span class="nc" id="L142">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

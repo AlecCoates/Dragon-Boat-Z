@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Leaderboard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">Leaderboard.java</span></div><h1>Leaderboard.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Comparator;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
+/**
+ * Represents a leaderboard for after each race.
+ */
+public class Leaderboard {
+    protected Boat[] sortedBoats;
+    static protected Comparator&lt;Boat&gt; ascRaceTime;
+    protected Texture texture;
+
+    /**
+     * Creates a leaderboard with an array of all boats.
+     * 
+     * @param player    Player object.
+     * @param opponents Array of opponent boats.
+     */
+    public Leaderboard(Player player, Opponent[] opponents) {
+<span class="nc" id="L25">        this(player, opponents, false);</span>
+<span class="nc" id="L26">    }</span>
+
+    /**
+     * Creates a leaderboard with an array of all boats.
+     *
+     * @param player    Player object.
+     * @param opponents Array of opponent boats.
+     * @param noTexture Debug parameter to stop LibGDX loading texture assets.
+     */
+<span class="fc" id="L35">    public Leaderboard(Player player, Opponent[] opponents, boolean noTexture) {</span>
+<span class="fc" id="L36">        this.sortedBoats = new Boat[opponents.length + 1];</span>
+<span class="fc" id="L37">        this.sortedBoats[0] = player;</span>
+<span class="fc" id="L38">        System.arraycopy(opponents, 0, this.sortedBoats, 1, opponents.length);</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (!noTexture) {</span>
+<span class="nc" id="L40">            this.texture = new Texture(Gdx.files.internal(&quot;core/assets/leaderboard nolines.png&quot;));</span>
+        }
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Sorts the array of boats by fastest race time, increasing.
+     */
+    public void UpdateOrder() {
+<span class="fc" id="L48">        Arrays.sort(this.sortedBoats, ascRaceTime);</span>
+<span class="fc" id="L49">    }</span>
+
+    static {
+        //Defines the comparator used to compare fastest times of boats.
+<span class="fc" id="L53">        ascRaceTime = new Comparator&lt;Boat&gt;() {</span>
+            @Override
+            public int compare(Boat boat1, Boat boat2) {
+<span class="fc" id="L56">                return Float.compare(boat1.getFastestTime(), boat2.getFastestTime());</span>
+            }
+        };
+<span class="fc" id="L59">    }</span>
+
+    // getters and setters
+
+    /**
+     * Gets the names of the boats and their fastest times, in order of fastest
+     * time.
+     * 
+     * @param places Number of boats to get.
+     * @return Array representing boats.
+     */
+    public String[] getTimes(int places) {
+<span class="fc" id="L71">        this.UpdateOrder();</span>
+<span class="fc" id="L72">        String[] out = new String[places];</span>
+<span class="fc" id="L73">        DecimalFormat df = new DecimalFormat(&quot;###.##&quot;);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (int i = 0; i &lt; places; i++) {</span>
+<span class="fc" id="L75">            out[i] = sortedBoats[i].getName() + &quot;: &quot; + df.format(sortedBoats[i].getFastestTime());</span>
+        }
+
+<span class="fc" id="L78">        return out;</span>
+    }
+
+    /**
+     * Gets the leaderboard texture.
+     * 
+     * @return A Texture representing the sprite.
+     */
+    public Texture getTexture() {
+<span class="nc" id="L87">        return this.texture;</span>
+    }
+
+    /**
+     * Gets top boats, in order of fastest race time.
+     * 
+     * @param places Number of boats to get.
+     * @return Array representing the boats.
+     */
+    public Boat[] getFinalists(int places) {
+<span class="fc" id="L97">        this.UpdateOrder();</span>
+<span class="fc" id="L98">        Boat[] finalists = new Boat[places];</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (places &gt;= 0) System.arraycopy(sortedBoats, 0, finalists, 0, places);</span>
+
+<span class="fc" id="L101">        return finalists;</span>
+    }
+
+    /**
+     * Gets the top 3 boats, in order of fastest times.
+     * 
+     * @return Array representing boats.
+     */
+    public Boat[] getPodium() {
+<span class="fc" id="L110">        return getFinalists(3);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

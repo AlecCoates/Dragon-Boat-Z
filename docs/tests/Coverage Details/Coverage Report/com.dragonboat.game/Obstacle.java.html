@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Obstacle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">Obstacle.java</span></div><h1>Obstacle.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.graphics.Texture;
+
+import java.util.HashMap;
+
+/**
+ * Represents an obstacle on the course.
+ * 
+ * @see Log
+ * @see Goose
+ */
+public class Obstacle {
+	private String name;
+	protected float yPosition, xPosition;
+	protected int damage;
+	public int width, height;
+	public Texture texture;
+
+	/**
+	 * Represents a savable/loadable obstacle.
+	 *
+	 * @see Goose.GooseSpriteDescriptor
+	 * @see Log.LogSpriteDescriptor
+	 */
+	static class ObstacleSpriteDescriptor {
+		public float yPosition, xPosition;
+		public int damage;
+		public int width, height;
+		public String name;
+
+		/**
+		 * Json requires an empty constructor to regenerate the class from a save file
+		 */
+<span class="fc" id="L35">		public ObstacleSpriteDescriptor(){}</span>
+
+		/**
+		 * Creates a json friendly instance of the obstacle
+		 *
+		 * @param oldObstacle The obstacle data that needs to be converted to be stored properly
+		 */
+<span class="nc" id="L42">		public ObstacleSpriteDescriptor(Obstacle oldObstacle) {</span>
+<span class="nc" id="L43">			this.damage = oldObstacle.getDamage();</span>
+<span class="nc" id="L44">			this.xPosition = oldObstacle.getX();</span>
+<span class="nc" id="L45">			this.yPosition = oldObstacle.getY();</span>
+<span class="nc" id="L46">			this.width = oldObstacle.width;</span>
+<span class="nc" id="L47">			this.height = oldObstacle.getHeight();</span>
+<span class="nc" id="L48">			this.name = oldObstacle.name;</span>
+<span class="nc" id="L49">		}</span>
+	}
+
+	/**
+	 * Creates an obstacle instance.
+	 * 
+	 * @param damage    Damage the obstacle can inflict on a boat.
+	 * @param xPosition X-position.
+	 * @param yPosition Y-position.
+	 * @param width     Width of the obstacle.
+	 * @param height    Height of the obstacle.
+	 * @param name      Name of the obstacle.
+	 */
+<span class="fc" id="L62">	public Obstacle(HashMap&lt;String, Texture&gt; textures, int damage, int xPosition, int yPosition, Integer width, Integer height, String name) {</span>
+<span class="fc" id="L63">		this.damage = damage;</span>
+<span class="fc" id="L64">		this.xPosition = xPosition;</span>
+<span class="fc" id="L65">		this.yPosition = yPosition;</span>
+<span class="fc" id="L66">		this.name = name;</span>
+<span class="fc" id="L67">		this.texture = textures.get(name);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (width != null) {</span>
+<span class="fc" id="L69">			this.width = width;</span>
+		} else {
+<span class="fc" id="L71">			this.width = this.texture.getWidth();</span>
+		}
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (height != null) {</span>
+<span class="fc" id="L74">			this.height = height;</span>
+		} else {
+<span class="fc" id="L76">			this.height = this.texture.getHeight();</span>
+		}
+<span class="fc" id="L78">	}</span>
+
+	public ObstacleSpriteDescriptor saveState() {
+<span class="nc" id="L81">		ObstacleSpriteDescriptor disc = new ObstacleSpriteDescriptor(this);</span>
+		//return new Json().toJson(disc);
+<span class="nc" id="L83">		return disc;</span>
+	}
+
+	public String getName(){
+<span class="nc" id="L87">		return this.name;</span>
+	}
+
+	/**
+	 * Moves the obstacle.
+	 * 
+	 * @param moveVal          Distance to move the object by.
+	 * @param backgroundOffset Offset from screen to course coordinates.
+	 */
+	public void Move(float moveVal, int backgroundOffset) {
+<span class="fc" id="L97">		this.setY(this.getY() - moveVal);</span>
+<span class="fc" id="L98">	}</span>
+
+	// getters and setters
+
+	/**
+	 * 
+	 * @return Int representing damage the obstacle inflicts upon collision.
+	 */
+	public int getDamage() {
+<span class="fc" id="L107">		return this.damage;</span>
+	}
+
+	/**
+	 * 
+	 * @return Float representing the x-position.
+	 */
+	public float getX() {
+<span class="fc" id="L115">		return this.xPosition;</span>
+	}
+
+	/**
+	 * 
+	 * @return Float representing the y-position.
+	 */
+	public float getY() {
+<span class="fc" id="L123">		return this.yPosition;</span>
+	}
+
+	/**
+	 * 
+	 * @param yPosition Y-position.
+	 */
+	public void setY(float yPosition) {
+<span class="fc" id="L131">		this.yPosition = yPosition;</span>
+<span class="fc" id="L132">	}</span>
+
+	/**
+	 * 
+	 * @param xPosition X-position.
+	 */
+	public void setX(float xPosition) {
+<span class="fc" id="L139">		this.xPosition = xPosition;</span>
+<span class="fc" id="L140">	}</span>
+
+	/**
+	 * 
+	 * @return Texture asset for obstacle.
+	 */
+	public Texture getTexture() {
+<span class="nc" id="L147">		return this.texture;</span>
+	}
+
+	/**
+	 * 
+	 * @return Int representing the height of the obstacle.
+	 */
+	public int getHeight() {
+<span class="nc" id="L155">		return this.height;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

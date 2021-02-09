@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
+/**
+ * Represents the player's boat.
+ */
+public class Player extends Boat {
+
+    /**
+     * Creates an instance of the player boat.
+     * 
+     * @param yPosition Y-position of the boat.
+     * @param width     Width of the boat.
+     * @param height    Height of the boat.
+     * @param lanes     Lanes for the boat.
+     * @param laneNo    Lane number for the boat.
+     * @param name      Name of the boat.
+     */
+    public Player(int yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {
+<span class="fc" id="L22">        super(yPosition, width, height, lanes, laneNo, name);</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Moves the player based on key pressed (W, A, S, D).
+     */
+    public void GetInput() {
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (Gdx.input.isKeyPressed(Input.Keys.W)) {</span>
+<span class="nc" id="L30">            this.IncreaseSpeed();</span>
+<span class="nc" id="L31">            this.IncreaseTiredness();</span>
+        } else
+<span class="nc" id="L33">            this.DecreaseTiredness();</span>
+
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (Gdx.input.isKeyPressed(Input.Keys.S)) {</span>
+            // Call method associated
+<span class="nc" id="L37">            this.DecreaseSpeed();</span>
+        }
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (Gdx.input.isKeyPressed(Input.Keys.A)) {</span>
+            // Call method associated
+<span class="nc" id="L41">            this.SteerLeft();</span>
+        }
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (Gdx.input.isKeyPressed(Input.Keys.D)) {</span>
+            // Call method associated
+<span class="nc" id="L45">            this.SteerRight();</span>
+        }
+<span class="nc" id="L47">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

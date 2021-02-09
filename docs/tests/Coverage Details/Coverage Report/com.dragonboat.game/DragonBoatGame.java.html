@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DragonBoatGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">DragonBoatGame.java</span></div><h1>DragonBoatGame.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Random;
+
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
+/**
+ * &lt;p&gt;
+ * Game Class for Dragon Boat Game.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Initialises all the objects necessary for the game, starts music, creates
+ * Lanes, randomises Obstacle spawns, initialises blank Player and Opponents,
+ * initialises a Progress Bar and Leaderboard, and instantiates a Difficulty selection screen.
+ * &lt;/p&gt;
+ * 
+ * @see DifficultyScreen
+ */
+<span class="nc" id="L31">public class DragonBoatGame extends Game {</span>
+
+	// debug booleans
+<span class="nc" id="L34">	protected boolean debug_speed = false;</span>
+<span class="nc" id="L35">	protected boolean debug_positions = false;</span>
+<span class="nc" id="L36">	protected boolean debug_norandom = false;</span>
+<span class="nc" id="L37">	protected boolean debug_verboseoutput = false;</span>
+
+	protected Random rnd;
+	protected DifficultyScreen difficultyScreen;
+	protected GameScreen gameScreen;
+	private Stage stage;
+	public Lane[] lanes;
+	public Player player;
+	public Course course;
+	public Opponent[] opponents;
+	public ProgressBar progressBar;
+	public Leaderboard leaderboard;
+	public ArrayList&lt;Integer&gt;[] obstacleTimes;
+	public int noOfObstacles;
+	public int playerChoice;
+<span class="nc" id="L52">	public int difficulty = 1;</span>
+<span class="nc" id="L53">	public int selectedDifficulty = 1;</span>
+	public Music music;
+<span class="nc" id="L55">	public boolean ended = false;</span>
+	public FreeTypeFontGenerator generator;
+	public FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+	public HashMap&lt;String, Texture&gt; spriteTextures;
+	private SpriteBatch batch;
+	private BitmapFont font28;
+	private Texture courseTexture;
+
+	/**
+	 * Sets up the game with settings and instantiation of objects.
+	 */
+	@Override
+	public void create() {
+<span class="nc" id="L68">		int w = Gdx.graphics.getWidth() - (Boat.bankWidth * 2);</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if(debug_norandom) rnd = new Random(1);</span>
+<span class="nc" id="L71">		else rnd = new Random();</span>
+
+<span class="nc" id="L73">		music = Gdx.audio.newMusic(Gdx.files.internal(&quot;core/assets/cantgobackwards.mp3&quot;));</span>
+<span class="nc" id="L74">		music.setLooping(true);</span>
+<span class="nc" id="L75">		music.setVolume(0.0f);</span>
+<span class="nc" id="L76">		music.play();</span>
+
+<span class="nc" id="L78">		courseTexture = new Texture(Gdx.files.internal(&quot;core/assets/background sprite.png&quot;));</span>
+<span class="nc" id="L79">		lanes = new Lane[7];</span>
+<span class="nc" id="L80">		noOfObstacles = 4 * (selectedDifficulty * difficulty);</span>
+<span class="nc" id="L81">		obstacleTimes = new ArrayList[lanes.length];</span>
+
+<span class="nc" id="L83">		spriteTextures = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L84">		spriteTextures.put(&quot;Goose&quot;, new Texture(Gdx.files.internal(&quot;core/assets/gooseSouth Sprite.png&quot;)));</span>
+<span class="nc" id="L85">		spriteTextures.put(&quot;Log&quot;, new Texture(Gdx.files.internal(&quot;core/assets/logBig sprite.png&quot;)));</span>
+
+
+		/*
+		 * Instantiate each lane, and allocate obstacles by creating a random sequence
+		 * of Y values for obstacles to spawn at for each lane.
+		 */
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (int x = 0; x &lt; lanes.length; x++) {</span>
+<span class="nc" id="L93">			obstacleTimes[x] = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L94">			lanes[x] = new Lane((x * w / lanes.length) + 40, (((x + 1) * w) / lanes.length) + 40, lanes, x);</span>
+<span class="nc" id="L95">			int maxY = (courseTexture.getHeight() - (5 * noOfObstacles)) / noOfObstacles;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			for (int y = 0; y &lt; noOfObstacles; y++) {</span>
+<span class="nc" id="L97">				obstacleTimes[x].add(rnd.nextInt(maxY - 5) + 5 + maxY * y);</span>
+			}
+<span class="nc" id="L99">			Collections.sort(obstacleTimes[x]);</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if(debug_verboseoutput) {</span>
+<span class="nc" id="L102">				System.out.println(&quot;Lane &quot; + x + &quot; obstacles to spawn: &quot;);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">				for(Integer i : obstacleTimes[x]) {</span>
+<span class="nc" id="L104">					System.out.print(i + &quot;, &quot;);</span>
+<span class="nc" id="L105">				}</span>
+<span class="nc" id="L106">				System.out.println();</span>
+			}
+		}
+
+		// Instantiate the course and player and opponent boats.
+<span class="nc" id="L111">		course = new Course(courseTexture, lanes);</span>
+<span class="nc" id="L112">		player = new Player(0, 56, 182, lanes, 3, &quot;Player&quot;);</span>
+
+<span class="nc" id="L114">		opponents = new Opponent[6];</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (int i = 0; i &lt; opponents.length; i++) {</span>
+			/*
+			 * Ensure player is in the middle lane by skipping over lane 4.
+			 */
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			int lane = i &gt;= 3 ? i + 1 : i;</span>
+<span class="nc" id="L120">			opponents[i] = new Opponent(0, 56, 182, lanes, lane, &quot;Opponent&quot; + (i + 1));</span>
+		}
+
+		// Instantiate the progress bar and leaderboard.
+<span class="nc" id="L124">		progressBar = new ProgressBar(player, opponents);</span>
+<span class="nc" id="L125">		leaderboard = new Leaderboard(player, opponents);</span>
+		// Set up font.
+<span class="nc" id="L127">		generator = new FreeTypeFontGenerator(Gdx.files.internal(&quot;core/assets/8bitOperatorPlus-Regular.ttf&quot;));</span>
+<span class="nc" id="L128">		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();</span>
+<span class="nc" id="L129">		parameter.size = 28;</span>
+<span class="nc" id="L130">		font28 = generator.generateFont(parameter);</span>
+
+<span class="nc" id="L132">		batch = new SpriteBatch();</span>
+
+		// Display the menu screen.
+		//menuScreen = new MenuScreen(this);
+		//setScreen(menuScreen);
+
+<span class="nc" id="L138">		difficultyScreen = new DifficultyScreen(this);</span>
+<span class="nc" id="L139">		setScreen(difficultyScreen);</span>
+<span class="nc" id="L140">	}</span>
+
+	public SpriteBatch getBatch(){
+<span class="nc" id="L143">		return batch;</span>
+	}
+
+	/**
+	 * Changes the screen to a new GameScreen and resets necessary attributes.
+	 */
+	public void advanceLeg() {
+		/*
+		 * Increase difficulty and set up next leg.
+		 */
+<span class="nc" id="L153">		difficulty += 1;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if(debug_norandom) rnd = new Random(1);</span>
+<span class="nc" id="L155">		else rnd = new Random();</span>
+
+<span class="nc" id="L157">		noOfObstacles = 4 * (selectedDifficulty * difficulty);</span>
+<span class="nc" id="L158">		obstacleTimes = new ArrayList[lanes.length];</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (int x = 0; x &lt; lanes.length; x++) {</span>
+<span class="nc" id="L160">			lanes[x].obstacles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L161">			obstacleTimes[x] = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L162">			int maxY = (courseTexture.getHeight() - (5 * noOfObstacles))/noOfObstacles;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			for(int y = 0; y &lt; noOfObstacles; y++) {</span>
+<span class="nc" id="L164">				obstacleTimes[x].add(rnd.nextInt(maxY - 5) + 5 + maxY * y);</span>
+			}
+<span class="nc" id="L166">			Collections.sort(obstacleTimes[x]);</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if(debug_verboseoutput) {</span>
+<span class="nc" id="L169">				System.out.println(&quot;Lane &quot; + x + &quot; obstacles to spawn: &quot;);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">				for(Integer i : obstacleTimes[x]) {</span>
+<span class="nc" id="L171">					System.out.print(i + &quot;, &quot;);</span>
+<span class="nc" id="L172">				}</span>
+<span class="nc" id="L173">				System.out.println();</span>
+			}
+		}
+
+<span class="nc" id="L177">		player.Reset();</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (Opponent o : opponents) {</span>
+<span class="nc" id="L179">			o.Reset();</span>
+		}
+
+		/*
+		 * Set up final leg.
+		 */
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (difficulty == 4) {</span>
+<span class="nc" id="L186">			Boat[] finalists = leaderboard.getPodium();</span>
+<span class="nc" id="L187">			opponents = new Opponent[2];</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			for (Boat b : finalists) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">				if (b.getName().startsWith(&quot;Opponent&quot;)) {</span>
+					// set opponents lanes so that only the middle 3 lanes are used.
+<span class="nc bnc" id="L191" title="All 2 branches missed.">					if (opponents[0] == null) {</span>
+<span class="nc" id="L192">						opponents[0] = (Opponent) b;</span>
+<span class="nc" id="L193">						b.setLane(lanes, 2);</span>
+					} else {
+<span class="nc" id="L195">						opponents[1] = (Opponent) b;</span>
+<span class="nc" id="L196">						b.setLane(lanes, 4);</span>
+					}
+				}
+<span class="nc" id="L199">				b.ResetFastestLegTime();</span>
+			}
+<span class="nc" id="L201">			player.ResetFastestLegTime();</span>
+		}
+<span class="nc" id="L203">		leaderboard = new Leaderboard(player, opponents);</span>
+<span class="nc" id="L204">		progressBar = new ProgressBar(player, opponents);</span>
+<span class="nc" id="L205">		this.gameScreen = new GameScreen(this);</span>
+<span class="nc" id="L206">		this.setScreen(this.gameScreen);</span>
+<span class="nc" id="L207">	}</span>
+
+	@Override
+	public void render() {
+<span class="nc" id="L211">		final DragonBoatGame game = this;</span>
+		/*
+		 * If the game hasn't ended, just call the current screen render function.
+		 */
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (!this.ended)</span>
+<span class="nc" id="L216">			super.render();</span>
+		else {
+			/*
+			 * Else, display an end screen and appropriate text and images.
+			 */
+<span class="nc" id="L221">			Gdx.gl.glClearColor(0, 0, 0, 1);</span>
+<span class="nc" id="L222">			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</span>
+<span class="nc" id="L223">			boolean playerWon = false;</span>
+<span class="nc" id="L224">			batch.begin();</span>
+<span class="nc" id="L225">			batch.draw(new Texture(Gdx.files.internal(&quot;core/assets/end screen.png&quot;)), 0, 0);</span>
+<span class="nc" id="L226">			batch.end();</span>
+<span class="nc" id="L227">			Boat[] podium = leaderboard.getPodium();</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			for (int i = 0; i &lt; podium.length; i++) {</span>
+				/*
+				 * If the player is in the top 3 boats, display the player's boat and
+				 * appropriate medal.
+				 */
+<span class="nc bnc" id="L233" title="All 2 branches missed.">				if (podium[i].getName().startsWith(&quot;Player&quot;)) {</span>
+<span class="nc" id="L234">					playerWon = true;</span>
+<span class="nc" id="L235">					batch.begin();</span>
+<span class="nc" id="L236">					batch.draw(player.texture, Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() / 3.0f);</span>
+<span class="nc" id="L237">					batch.end();</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">					switch (i) {</span>
+						case 0:
+<span class="nc" id="L240">							batch.begin();</span>
+<span class="nc" id="L241">							batch.draw(new Texture(Gdx.files.internal(&quot;core/assets/medal gold.png&quot;)), Gdx.graphics.getWidth() / 3.0f,</span>
+<span class="nc" id="L242">									Gdx.graphics.getHeight() / 3.0f);</span>
+<span class="nc" id="L243">							batch.end();</span>
+<span class="nc" id="L244">							break;</span>
+						case 1:
+<span class="nc" id="L246">							batch.begin();</span>
+<span class="nc" id="L247">							batch.draw(new Texture(Gdx.files.internal(&quot;core/assets/medal silver.png&quot;)), Gdx.graphics.getWidth() / 3.0f,</span>
+<span class="nc" id="L248">									Gdx.graphics.getHeight() / 3.0f);</span>
+<span class="nc" id="L249">							batch.end();</span>
+<span class="nc" id="L250">							break;</span>
+						case 2:
+<span class="nc" id="L252">							batch.begin();</span>
+<span class="nc" id="L253">							batch.draw(new Texture(Gdx.files.internal(&quot;core/assets/medal bronze.png&quot;)), Gdx.graphics.getWidth() / 3.0f,</span>
+<span class="nc" id="L254">									Gdx.graphics.getHeight() / 3.0f);</span>
+<span class="nc" id="L255">							batch.end();</span>
+							break;
+					}
+<span class="nc" id="L258">					batch.begin();</span>
+<span class="nc" id="L259">					font28.draw(batch, &quot;Congratulations! You reached Super Saiyan!&quot;, 140, 140);</span>
+<span class="nc" id="L260">					batch.end();</span>
+				}
+			}
+<span class="nc bnc" id="L263" title="All 2 branches missed.">			if (!playerWon) {</span>
+<span class="nc" id="L264">				batch.begin();</span>
+<span class="nc" id="L265">				font28.draw(batch, &quot;You lose. Better luck next time!&quot;, 140, 200);</span>
+<span class="nc" id="L266">				batch.end();</span>
+			}
+		}
+<span class="nc" id="L269">	}</span>
+
+	public void endGame() {
+<span class="nc" id="L272">		this.ended = true;</span>
+<span class="nc" id="L273">	}</span>
+
+	public void startGame() {
+<span class="nc" id="L276">		this.setScreen(new MenuScreen(this));</span>
+<span class="nc" id="L277">		this.ended = false;</span>
+<span class="nc" id="L278">	}</span>
+
+	/**
+	 * Resizes the game screen.
+	 *
+	 * @param width  Width of the screen.
+	 * @param height Height of the screen.
+	 */
+	@Override
+	public void resize(int width, int height) {
+<span class="nc" id="L288">		this.getScreen().resize(width, height);</span>
+<span class="nc" id="L289">	}</span>
+
+	/**
+	 * Disposes of the current screen when it's no longer needed.
+	 */
+	@Override
+	public void dispose() {
+<span class="nc" id="L296">		this.getScreen().dispose();</span>
+<span class="nc" id="L297">		batch.dispose();</span>
+<span class="nc" id="L298">		font28.dispose();</span>
+
+<span class="nc" id="L300">	}</span>
+
+	public void loadSave(Random newRnd, Lane[] newLanes,
+						 Player newPlayer, Opponent[] newOpponents, ProgressBar newProgressBar,
+						 ArrayList&lt;Integer&gt;[] obstacleTimes,
+						 int difficulty, int selectedDifficulty, boolean ended) {
+<span class="nc" id="L306">		this.rnd = rnd;</span>
+<span class="nc" id="L307">		this.lanes = newLanes;</span>
+<span class="nc" id="L308">		this.player = newPlayer;</span>
+<span class="nc" id="L309">		this.opponents = newOpponents;</span>
+<span class="nc" id="L310">		this.progressBar = newProgressBar;</span>
+<span class="nc" id="L311">		this.obstacleTimes = obstacleTimes;</span>
+<span class="nc" id="L312">		this.difficulty = difficulty;</span>
+<span class="nc" id="L313">		this.selectedDifficulty = selectedDifficulty;</span>
+<span class="nc" id="L314">		this.ended = ended;</span>
+<span class="nc" id="L315">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

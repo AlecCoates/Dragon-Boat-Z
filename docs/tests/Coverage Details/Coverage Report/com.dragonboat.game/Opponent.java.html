@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Opponent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">Opponent.java</span></div><h1>Opponent.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ * Represents a opponent boat with AI.
+ */
+public class Opponent extends Boat {
+
+<span class="fc" id="L11">    public String steering = &quot;None&quot;;</span>
+    private ArrayList&lt;Obstacle&gt; sortedIncomingObstacles;
+
+    /**
+     * Creates an instance of the player boat.
+     *
+     * @param yPosition Y-position of the boat.
+     * @param width     Width of the boat.
+     * @param height    Height of the boat.
+     * @param lanes     Lanes for the boat.
+     * @param laneNo    Lane number for the boat.
+     * @param name      Name of the boat.
+     */
+    public Opponent(int yPosition, int width, int height, Lane[] lanes, int laneNo, String name) {
+<span class="fc" id="L25">        super(yPosition, width, height, lanes, laneNo, name);</span>
+<span class="fc" id="L26">        sortedIncomingObstacles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Controls the AI behaviour of the boat.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * Changes the movement path of the boat.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * AI new path selection:
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * 1) If not in lane, go back to lane.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * 2) If obstacle ahead, avoid the obstacle. If dead ahead, slow down.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * 3) If nothing, speed up.
+     * &lt;/p&gt;
+     * 
+     * @param backgroundOffset Background offset
+     */
+    public void ai(int backgroundOffset) {
+
+<span class="nc" id="L53">        int leftSide = Math.round(xPosition);</span>
+<span class="nc" id="L54">        int rightSide = Math.round(xPosition + width);</span>
+
+<span class="nc" id="L56">        int arbitrary = 50;</span>
+<span class="nc" id="L57">        int fov = Math.round(arbitrary * this.getManeuverability()); // Determine a good field of view for the Opponents</span>
+                                                                     // to start reacting to incoming obstacles.
+<span class="nc" id="L59">        int visionDistance = Math.round(yPosition + height) + fov;</span>
+
+<span class="nc" id="L61">        ArrayList&lt;Obstacle&gt; allIncomingObstacles = this.lanes[this.laneNo].obstacles;</span>
+
+<span class="nc" id="L63">        boolean noNewPath = true; // Set to false whenever the Opponent has decided on a new path.</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (this.steering.equals(&quot;Left&quot;)) {</span>
+<span class="nc" id="L66">            this.SteerLeft();</span>
+<span class="nc" id="L67">            this.steering = &quot;None&quot;;</span>
+<span class="nc" id="L68">            noNewPath = false;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        } else if (this.steering.equals(&quot;Right&quot;)) {</span>
+<span class="nc" id="L70">            this.SteerRight();</span>
+<span class="nc" id="L71">            this.steering = &quot;None&quot;;</span>
+<span class="nc" id="L72">            noNewPath = false;</span>
+        }
+
+        /*
+         * 1) If not in lane, go back to lane.
+         */
+<span class="nc bnc" id="L78" title="All 4 branches missed.">        if (!this.CheckIfInLane() || !noNewPath) {</span>
+            // Commence route back into lane.
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            if (leftSide - this.lanes[this.laneNo].getLeftBoundary() &lt;= 0) {</span>
+                // Will only be negative if the boat is further left than the left boundary of the lane.
+<span class="nc" id="L82">                this.SteerRight();</span>
+<span class="nc" id="L83">                this.steering = &quot;Right&quot;;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            } else if (rightSide - this.lanes[this.laneNo].getRightBoundary() &gt;= 0) {</span>
+                // Will only be positive if the boat is further right than the right boundary of the lane.
+<span class="nc" id="L86">                this.SteerLeft();</span>
+<span class="nc" id="L87">                this.steering = &quot;Left&quot;;</span>
+            }
+<span class="nc" id="L89">            noNewPath = false;</span>
+        }
+
+        /*
+         * 2) If obstacle ahead, avoid the obstacle. If dead ahead, slow down.
+         */
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (noNewPath) { // If still no new path, if there is one, skip all this code for speed's sake.</span>
+
+            // Insertion sort Obstacles in incomingObstacles from lowest to highest
+            // y-position (proximity to the Boat, even).
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            for (Obstacle obs : allIncomingObstacles) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                if (obs.getY() + obs.height + backgroundOffset &gt; this.getY()) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                    if (sortedIncomingObstacles.size() == 0) {</span>
+<span class="nc" id="L102">                        sortedIncomingObstacles.add(obs);</span>
+                    } else {
+<span class="nc" id="L104">                        boolean inserted = false;</span>
+<span class="nc" id="L105">                        int index = 0;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                        while (!inserted) {</span>
+                            Obstacle thisObstacle;
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                            if (index &lt; sortedIncomingObstacles.size()) {</span>
+<span class="nc" id="L109">                                thisObstacle = sortedIncomingObstacles.get(index);</span>
+                                // If not reached end of sortedIncomingObstacles.
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                                if (thisObstacle.getY() &gt; obs.getY()) {</span>
+                                    // Keep looking for place to insert.
+<span class="nc" id="L113">                                    index += 1;</span>
+                                } else {
+                                    // Found place to insert!
+<span class="nc" id="L116">                                    sortedIncomingObstacles.add(index, obs);</span>
+<span class="nc" id="L117">                                    inserted = true;</span>
+                                }
+                            } else {
+                                // End of ArrayList reached.
+<span class="nc" id="L121">                                sortedIncomingObstacles.add(obs);</span>
+<span class="nc" id="L122">                                inserted = true;</span>
+                            }
+                        }
+                    }
+                }
+<span class="nc" id="L127">            }</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            for (Obstacle obs : sortedIncomingObstacles) {</span>
+
+<span class="nc bnc" id="L131" title="All 4 branches missed.">                if (obs.getY() + backgroundOffset &lt;= visionDistance &amp;&amp; obs.getY() + backgroundOffset &gt; this.yPosition) {</span>
+                    // The obstacle is visible from the boat.
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                    if (obs.getX() + obs.width &lt; leftSide) {</span>
+                        // The obstacle is far left of the boat.
+
+<span class="nc bnc" id="L136" title="All 4 branches missed.">                        if ((obs.getClass() == Goose.class) &amp;&amp; ((Goose) obs).direction.equals(&quot;East&quot;)) {</span>
+<span class="nc" id="L137">                            this.SteerRight();</span>
+<span class="nc" id="L138">                            this.steering = &quot;Right&quot;;</span>
+                        }
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                    } else if (obs.getX() &gt; rightSide) {</span>
+                        /*
+                         * The obstacle is far right of the boat.
+                         * 
+                         * Do nothing? A moving Obstacle (Goose) might currently be far right but
+                         * heading left on a collision course. Maybe check type of Obstacle then; if
+                         * it's a Goose, check the direction. If it's headed your way, do something
+                         * about that.
+                         */
+
+<span class="nc bnc" id="L151" title="All 4 branches missed.">                        if ((obs.getClass() == Goose.class) &amp;&amp; ((Goose) obs).direction.equals(&quot;West&quot;)) {</span>
+<span class="nc" id="L152">                            this.SteerLeft();</span>
+<span class="nc" id="L153">                            this.steering = &quot;Left&quot;;</span>
+                        }
+                    } else {
+                        /*
+                         * Part or all of the obstacle is on a collision course with the boat. Move in
+                         * the appropriate direction. Depends on whether the Obstacle is to the left or
+                         * right, on whether you are close to the Lane boundary, etc. If the obstacle is
+                         * dead ahead, slow down also. If there is a goose ahead and it is moving
+                         * horizontally, steer around it and opposite it.
+                         */
+
+<span class="nc bnc" id="L164" title="All 4 branches missed.">                        if ((obs.getClass() == Goose.class) &amp;&amp; ((Goose) obs).direction.equals(&quot;East&quot;)) {</span>
+<span class="nc" id="L165">                            this.SteerLeft();</span>
+<span class="nc" id="L166">                            this.steering = &quot;Left&quot;;</span>
+                        }
+
+<span class="nc bnc" id="L169" title="All 4 branches missed.">                        else if ((obs.getClass() == Goose.class) &amp;&amp; ((Goose) obs).direction.equals(&quot;West&quot;)) {</span>
+<span class="nc" id="L170">                            this.SteerRight();</span>
+<span class="nc" id="L171">                            this.steering = &quot;Right&quot;;</span>
+                        }
+
+                        else {
+                            // For objects moving vertically, calculate whether steering left of it or right
+                            // of it is the easiest course.
+<span class="nc" id="L177">                            int leftMargin = Math.round(leftSide - obs.getX());</span>
+<span class="nc" id="L178">                            int rightMargin = Math.round(obs.getX()) + obs.width - rightSide;</span>
+
+                            // Check to slow down.
+<span class="nc bnc" id="L181" title="All 8 branches missed.">                            if ((leftMargin &lt;= 0 &amp;&amp; rightMargin &lt;= 0) || (leftMargin &gt;= 0 &amp;&amp; rightMargin &gt;= 0)) {</span>
+                                // Obstacle is dead ahead. Slow down.
+<span class="nc" id="L183">                                this.DecreaseSpeed();</span>
+                            }
+
+                            // Check to go left or right.
+<span class="nc bnc" id="L187" title="All 2 branches missed.">                            if (leftMargin &lt;= rightMargin) {</span>
+                                // If easier to dodge to the left of the obstacle, steer to the left of the
+                                // obstacle.
+<span class="nc" id="L190">                                this.SteerLeft();</span>
+<span class="nc" id="L191">                                this.steering = &quot;Left&quot;;</span>
+                            } else {
+                                // If not, steer to the right of the obstacle.
+<span class="nc" id="L194">                                this.SteerRight();</span>
+<span class="nc" id="L195">                                this.steering = &quot;Right&quot;;</span>
+                            }
+                        }
+
+<span class="nc" id="L199">                        noNewPath = false;</span>
+<span class="nc" id="L200">                        break;</span>
+                    }
+                }
+<span class="nc" id="L203">            }</span>
+        }
+
+        /*
+         * 2.5) Move to middle.
+         */
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (noNewPath) {</span>
+<span class="nc" id="L210">            int middle = lanes[this.laneNo].getRightBoundary() - (lanes[this.laneNo].getRightBoundary() - lanes[this.laneNo].getLeftBoundary()) / 2</span>
+                    - this.width / 2;
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            if (Math.abs(leftSide - middle) &lt; 0.1) {</span>
+<span class="nc" id="L213">                steering = &quot;None&quot;;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            } else if (leftSide &lt; middle) {</span>
+<span class="nc" id="L215">                this.SteerRight();</span>
+<span class="nc" id="L216">                steering = &quot;Right&quot;;</span>
+            } else {
+<span class="nc" id="L218">                this.SteerLeft();</span>
+<span class="nc" id="L219">                steering = &quot;Left&quot;;</span>
+            }
+        }
+
+        // 3) If nothing, speed up.
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (this.getTiredness() &lt; 70)</span>
+<span class="nc" id="L225">            this.IncreaseSpeed();</span>
+<span class="nc" id="L226">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Assigns a random boat template to the boat.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * This includes stats and texture.
+     * &lt;/p&gt;
+     * 
+     * @param possibleBoats List of remaining boat templates that haven't been
+     *                      assigned yet.
+     * @return Int representing the index of the boat template that was assigned.
+     */
+    public int SetRandomBoat(ArrayList&lt;Integer&gt; possibleBoats) {
+<span class="nc" id="L241">        Random rnd = new Random();</span>
+<span class="nc" id="L242">        int randIndex = rnd.nextInt(possibleBoats.size());</span>
+<span class="nc" id="L243">        this.ChooseBoat(possibleBoats.get(randIndex));</span>
+<span class="nc" id="L244">        return randIndex;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

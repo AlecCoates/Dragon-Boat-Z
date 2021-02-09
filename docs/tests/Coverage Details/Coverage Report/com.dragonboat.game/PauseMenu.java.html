@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PauseMenu.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">PauseMenu.java</span></div><h1>PauseMenu.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+
+/**
+ * PauseMenu class is the basis of pause menu for the main game.
+ */
+public class PauseMenu extends Window {
+    private DragonBoatGame parent;
+<span class="nc" id="L15">    private static Skin skin = new Skin(Gdx.files.internal(&quot;core/assets/pixthulhu/skin/pixthulhu-ui.json&quot;));</span>
+
+    /**
+     * Constructor creates the structure of pause menu containing title and save game text button
+     */
+    public PauseMenu(final DragonBoatGame game){
+<span class="nc" id="L21">        super(&quot;Pause Menu&quot;,skin);</span>
+<span class="nc" id="L22">        parent = game;</span>
+
+<span class="nc" id="L24">        final TextButton resumeButton = new TextButton(&quot;Resume&quot;,skin);</span>
+<span class="nc" id="L25">        resumeButton.addListener(new ChangeListener() {</span>
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+<span class="nc bnc" id="L28" title="All 2 branches missed.">                actor.getParent().setVisible(!actor.getParent().isVisible());</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">                ((GameScreen) game.getScreen()).ispaused = !((GameScreen) game.getScreen()).ispaused;</span>
+<span class="nc" id="L30">            }</span>
+        });
+
+<span class="nc" id="L33">        final TextButton saveButton = new TextButton(&quot;Save/Load&quot;,skin);</span>
+<span class="nc" id="L34">        saveButton.addListener(new ChangeListener() {</span>
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+<span class="nc" id="L37">                parent.setScreen(new SaveGameScreen(parent));</span>
+<span class="nc" id="L38">            }</span>
+        });
+
+<span class="nc" id="L41">        final TextButton closeGameButton = new TextButton(&quot;Exit&quot;,skin);</span>
+<span class="nc" id="L42">        closeGameButton.addListener(new ChangeListener() {</span>
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+<span class="nc" id="L45">                Gdx.app.exit();</span>
+<span class="nc" id="L46">            }</span>
+        });
+
+<span class="nc" id="L49">        super.row().pad(10,0,0,10);</span>
+<span class="nc" id="L50">        super.add(resumeButton);</span>
+<span class="nc" id="L51">        super.row().pad(10,0,0,10);</span>
+<span class="nc" id="L52">        super.add(saveButton);</span>
+<span class="nc" id="L53">        super.row().pad(10,0,0,10);</span>
+<span class="nc" id="L54">        super.add(closeGameButton);</span>
+<span class="nc" id="L55">        super.row().pad(10,0,0,10);</span>
+<span class="nc" id="L56">        super.add(&quot;Press Esc to resume game&quot;);</span>
+<span class="nc" id="L57">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

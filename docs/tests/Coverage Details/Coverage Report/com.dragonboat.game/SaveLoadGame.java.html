@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SaveLoadGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.dragonboat.game</a> &gt; <span class="el_source">SaveLoadGame.java</span></div><h1>SaveLoadGame.java</h1><pre class="source lang-java linenums">package com.dragonboat.game;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
+
+import java.util.*;
+
+<span class="nc" id="L11">class SaveLoadGame {</span>
+
+    public static void saveGame(DragonBoatGame dragonBoatGame, String fileName) {
+<span class="nc" id="L14">        saveGameFile(saveGameString(saveGameData(dragonBoatGame)), fileName);</span>
+<span class="nc" id="L15">    }</span>
+
+    public static HashMap&lt;String, Object&gt; saveGameData(DragonBoatGame dragonBoatGame){
+<span class="nc" id="L18">        HashMap&lt;String, Object&gt; saveData = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L20">        saveData.put(&quot;rnd&quot;, dragonBoatGame.rnd);</span>
+
+<span class="nc" id="L22">        ArrayList&lt;Lane.LaneSpriteDescriptor&gt; lanes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        for (int i = 0; i &lt; dragonBoatGame.lanes.length; i++) {</span>
+<span class="nc" id="L24">            lanes.add(new Lane.LaneSpriteDescriptor(dragonBoatGame.lanes[i]));</span>
+        }
+<span class="nc" id="L26">        saveData.put(&quot;lanes&quot;, lanes);</span>
+
+<span class="nc" id="L28">        saveData.put(&quot;player&quot;, new Boat.BoatSpriteDescriptor(dragonBoatGame.player));</span>
+
+<span class="nc" id="L30">        ArrayList&lt;Boat.BoatSpriteDescriptor&gt; opponents = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (int i = 0; i &lt; dragonBoatGame.opponents.length; i++) {</span>
+<span class="nc" id="L32">            opponents.add(new Boat.BoatSpriteDescriptor(dragonBoatGame.opponents[i]));</span>
+        }
+<span class="nc" id="L34">        saveData.put(&quot;opponents&quot;, opponents);</span>
+
+<span class="nc" id="L36">        saveData.put(&quot;progressBar&quot;, new ProgressBar.ProgressBarSpriteDescriptor(dragonBoatGame.progressBar));</span>
+
+<span class="nc" id="L38">        LinkedList&lt;Integer[]&gt; tempObstacleTimes = new LinkedList&lt;&gt;();</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (int i = 0; i &lt; dragonBoatGame.obstacleTimes.length; i++) {</span>
+<span class="nc" id="L40">            tempObstacleTimes.add(dragonBoatGame.obstacleTimes[i].toArray(new Integer[dragonBoatGame.obstacleTimes[i].size()]));</span>
+        }
+<span class="nc" id="L42">        saveData.put(&quot;obstacleTimes&quot;, tempObstacleTimes.toArray());</span>
+
+<span class="nc" id="L44">        saveData.put(&quot;difficulty&quot;, dragonBoatGame.difficulty);</span>
+<span class="nc" id="L45">        saveData.put(&quot;selectedDifficulty&quot;, dragonBoatGame.selectedDifficulty);</span>
+<span class="nc" id="L46">        saveData.put(&quot;ended&quot;, dragonBoatGame.ended);</span>
+
+<span class="nc" id="L48">        saveData.put(&quot;started&quot;, dragonBoatGame.gameScreen.started);</span>
+<span class="nc" id="L49">        saveData.put(&quot;backgroundOffset&quot;, dragonBoatGame.gameScreen.backgroundOffset);</span>
+<span class="nc" id="L50">        saveData.put(&quot;totalDeltaTime&quot;, dragonBoatGame.gameScreen.totalDeltaTime);</span>
+
+<span class="nc" id="L52">        return saveData;</span>
+    }
+
+    public static String saveGameString(HashMap&lt;String, Object&gt; saveData) {
+<span class="fc" id="L56">        Json json = new Json();</span>
+<span class="fc" id="L57">        json.setOutputType(JsonWriter.OutputType.json);</span>
+<span class="fc" id="L58">        return json.prettyPrint(saveData);</span>
+    }
+
+    public static void saveGameFile(String saveString, String fileName) {
+<span class="fc" id="L62">        FileHandle file = Gdx.files.local(&quot;saves/&quot; + fileName + &quot;.json&quot;);</span>
+<span class="fc" id="L63">        file.writeString(saveString, false);</span>
+<span class="fc" id="L64">    }</span>
+
+
+    public static void loadGame(DragonBoatGame dragonBoatGame, String fileName) {
+<span class="nc" id="L68">        loadGameData(loadGameString(loadGameFile(fileName)), dragonBoatGame);</span>
+<span class="nc" id="L69">    }</span>
+
+    public static String loadGameFile(String fileName) {
+<span class="fc" id="L72">        FileHandle file = Gdx.files.local(&quot;saves/&quot; + fileName + &quot;.json&quot;);</span>
+<span class="fc" id="L73">        return file.readString();</span>
+    }
+
+    public static HashMap&lt;String, Object&gt; loadGameString(String saveString) {
+<span class="fc" id="L77">        return new Json().fromJson(HashMap.class, saveString);</span>
+    }
+
+    public static void loadGameData(HashMap&lt;String, Object&gt; saveData, DragonBoatGame dragonBoatGame){
+        //game seed
+<span class="nc" id="L82">        dragonBoatGame.rnd = (Random) saveData.get(&quot;rnd&quot;);</span>
+
+        //difficulty
+<span class="nc" id="L85">        dragonBoatGame.difficulty = (int) saveData.get(&quot;difficulty&quot;);</span>
+<span class="nc" id="L86">        dragonBoatGame.selectedDifficulty = (int) saveData.get(&quot;selectedDifficulty&quot;);</span>
+<span class="nc" id="L87">        dragonBoatGame.ended = (boolean) saveData.get(&quot;ended&quot;);</span>
+
+        //lanes and obstacles
+<span class="nc" id="L90">        Array&lt;Lane.LaneSpriteDescriptor&gt; loadLanes = (Array&lt;Lane.LaneSpriteDescriptor&gt;) saveData.get(&quot;lanes&quot;);</span>
+<span class="nc" id="L91">        Lane[] lanes = new Lane[loadLanes.size];</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        for (int i = 0; i &lt; loadLanes.size; i++) {</span>
+<span class="nc" id="L93">            Lane.LaneSpriteDescriptor loadLane = loadLanes.get(i);</span>
+<span class="nc" id="L94">            Lane lane = new Lane(loadLane.LEFTBOUNDARY, loadLane.RIGHTBOUNDARY, dragonBoatGame.lanes, loadLane.laneNo);</span>
+<span class="nc" id="L95">            lane.obstacleLimit = loadLane.obstacleLimit;</span>
+<span class="nc" id="L96">            ArrayList&lt;Obstacle.ObstacleSpriteDescriptor&gt; loadObstacles = loadLane.obstacles;</span>
+<span class="nc" id="L97">            ArrayList&lt;Obstacle&gt; obstacles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            for (int j = 0; j &lt; loadObstacles.size(); j++) {</span>
+<span class="nc" id="L99">                Obstacle.ObstacleSpriteDescriptor loadObstacle = loadObstacles.get(j);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                if (loadObstacle.name.equals(&quot;Goose&quot;)) {</span>
+<span class="nc" id="L101">                    Goose.GooseSpriteDescriptor loadGoose = (Goose.GooseSpriteDescriptor) loadObstacle;</span>
+<span class="nc" id="L102">                    obstacles.add(new Goose(dragonBoatGame.spriteTextures, (int) loadGoose.xPosition, (int) loadGoose.yPosition, dragonBoatGame.lanes, loadGoose.laneNo));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                } else if (loadObstacle.name.equals(&quot;Log&quot;)) {</span>
+<span class="nc" id="L104">                    Log.LogSpriteDescriptor loadLog = (Log.LogSpriteDescriptor) loadObstacle;</span>
+<span class="nc" id="L105">                    obstacles.add(new Log(dragonBoatGame.spriteTextures, (int) loadLog.xPosition, (int) loadLog.yPosition));</span>
+                }
+            }
+<span class="nc" id="L108">            lane.obstacles = obstacles;</span>
+<span class="nc" id="L109">            lanes[i] = lane;</span>
+        }
+<span class="nc" id="L111">        dragonBoatGame.lanes = lanes;</span>
+
+        //obstacle times
+<span class="nc" id="L114">        Array loadObstacleTimes = (Array) saveData.get(&quot;obstacleTimes&quot;);</span>
+<span class="nc" id="L115">        ArrayList&lt;Integer&gt;[] obstacleTimes = new ArrayList[loadObstacleTimes.size];</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        for (int i = 0; i &lt; loadObstacleTimes.size; i++) {</span>
+<span class="nc" id="L117">            Array loadObstacleTime = (Array) loadObstacleTimes.get(i);</span>
+<span class="nc" id="L118">            ArrayList&lt;Integer&gt; obstacleTime = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            for (int j = 0; j &lt; loadObstacleTime.size; j++) {</span>
+<span class="nc" id="L120">                Float loadObstacleTimeI = (Float) loadObstacleTime.get(j);</span>
+<span class="nc" id="L121">                obstacleTime.add(Math.round(loadObstacleTimeI));</span>
+            }
+<span class="nc" id="L123">            obstacleTimes[i] = obstacleTime;</span>
+        }
+<span class="nc" id="L125">        dragonBoatGame.obstacleTimes = obstacleTimes;</span>
+
+        //player
+<span class="nc" id="L128">        Boat.BoatSpriteDescriptor loadPlayer = (Boat.BoatSpriteDescriptor) saveData.get(&quot;player&quot;);</span>
+<span class="nc" id="L129">        Player player = new Player((int) loadPlayer.yPosition, loadPlayer.width, loadPlayer.height, dragonBoatGame.lanes, loadPlayer.laneNo, loadPlayer.name);</span>
+<span class="nc" id="L130">        player.xPosition = loadPlayer.xPosition;</span>
+<span class="nc" id="L131">        player.penalties = loadPlayer.penalties;</span>
+<span class="nc" id="L132">        player.durability = loadPlayer.durability;</span>
+<span class="nc" id="L133">        player.currentSpeed = loadPlayer.currentSpeed;</span>
+<span class="nc" id="L134">        player.fastestLegTime = loadPlayer.fastestLegTime;</span>
+<span class="nc" id="L135">        player.tiredness = loadPlayer.tiredness;</span>
+<span class="nc" id="L136">        player.frameCounter = loadPlayer.frameCounter;</span>
+<span class="nc" id="L137">        player.lastFrameY = loadPlayer.lastFrameY;</span>
+<span class="nc" id="L138">        player.finished = loadPlayer.finished;</span>
+<span class="nc" id="L139">        player.label = loadPlayer.label;</span>
+<span class="nc" id="L140">        player.ChooseBoat(player.label);</span>
+<span class="nc" id="L141">        dragonBoatGame.player = player;</span>
+
+        //opponents
+<span class="nc" id="L144">        Array loadOpponents = (Array) saveData.get(&quot;opponents&quot;);</span>
+<span class="nc" id="L145">        Opponent[] opponents = new Opponent[loadOpponents.size];</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        for (int i = 0; i &lt; loadOpponents.size; i++) {</span>
+<span class="nc" id="L147">            Boat.BoatSpriteDescriptor loadOpponent = (Boat.BoatSpriteDescriptor) loadOpponents.get(i);</span>
+<span class="nc" id="L148">            Opponent opponent = new Opponent((int) loadOpponent.yPosition, loadOpponent.width, loadOpponent.height, dragonBoatGame.lanes, loadOpponent.laneNo, loadOpponent.name);</span>
+<span class="nc" id="L149">            opponent.xPosition = loadOpponent.xPosition;</span>
+<span class="nc" id="L150">            opponent.penalties = loadOpponent.penalties;</span>
+<span class="nc" id="L151">            opponent.durability = loadOpponent.durability;</span>
+<span class="nc" id="L152">            opponent.currentSpeed = loadOpponent.currentSpeed;</span>
+<span class="nc" id="L153">            opponent.fastestLegTime = loadOpponent.fastestLegTime;</span>
+<span class="nc" id="L154">            opponent.tiredness = loadOpponent.tiredness;</span>
+<span class="nc" id="L155">            opponent.frameCounter = loadOpponent.frameCounter;</span>
+<span class="nc" id="L156">            opponent.lastFrameY = loadOpponent.lastFrameY;</span>
+<span class="nc" id="L157">            opponent.finished = loadOpponent.finished;</span>
+<span class="nc" id="L158">            opponent.label = loadOpponent.label;</span>
+<span class="nc" id="L159">            opponent.ChooseBoat(opponent.label);</span>
+<span class="nc" id="L160">            opponents[i] = opponent;</span>
+        }
+<span class="nc" id="L162">        dragonBoatGame.opponents = opponents;</span>
+
+        //progress bar
+<span class="nc" id="L165">        ProgressBar.ProgressBarSpriteDescriptor loadProgressBar = (ProgressBar.ProgressBarSpriteDescriptor) saveData.get(&quot;progressBar&quot;);</span>
+<span class="nc" id="L166">        ProgressBar progressBar = new ProgressBar(player, opponents);</span>
+<span class="nc" id="L167">        progressBar.timeSeconds = loadProgressBar.timeSeconds;</span>
+<span class="nc" id="L168">        progressBar.playerTime = loadProgressBar.playerTime;</span>
+<span class="nc" id="L169">        dragonBoatGame.progressBar = progressBar;</span>
+
+<span class="nc" id="L171">        dragonBoatGame.leaderboard = new Leaderboard(player, opponents);</span>
+<span class="nc" id="L172">        dragonBoatGame.gameScreen = new GameScreen(dragonBoatGame, true);</span>
+<span class="nc" id="L173">        dragonBoatGame.gameScreen.started = (boolean) saveData.get(&quot;started&quot;);</span>
+<span class="nc" id="L174">        dragonBoatGame.gameScreen.backgroundOffset = (int) saveData.get(&quot;backgroundOffset&quot;);</span>
+<span class="nc" id="L175">        dragonBoatGame.gameScreen.totalDeltaTime = (float) saveData.get(&quot;totalDeltaTime&quot;);</span>
+<span class="nc" id="L176">        dragonBoatGame.setScreen(dragonBoatGame.gameScreen);</span>
+<span class="nc" id="L177">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

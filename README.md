@@ -74,7 +74,7 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 
 
 # Assessment 1 Content
-<details open><summary></summary>
+<details><summary></summary>
 
 ### Deliverables
 
@@ -253,7 +253,20 @@ focused on. This was to ensure a successful completion of the entire project.
   * <a href="docs/tests/Test Results/01 - Fixed Inherited Code/System Test Results.pdf">System Test Results</a>
 
   </details>
+  <details><summary>Expanded Code</summary>
+
+  * <a href="docs/tests/Test Results/02 - Expanded Code/Unit Test Results.html">Unit Test Results</a>
+  * <a href="docs/tests/Test Results/02 - Expanded Code/Integration Test Results.html">Integration Test Results</a>
+  * <a href="docs/tests/Test Results/02 - Expanded Code/System Test Results.pdf">System Test Results</a>
+
+  </details>
   </div>
+</details>
+<details><summary>Coverage Details</summary>
+
+* <a href="docs/tests/Coverage Details/Coverage Report/index.html">Coverage Report</a>
+* <a href="docs/tests/Coverage Details/Coverage Explanation.pdf">Coverage Explanation</a>
+
 </details>
 
 </details>
