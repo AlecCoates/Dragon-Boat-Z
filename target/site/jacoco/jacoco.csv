@@ -6,9 +6,9 @@ core,com.dragonboat.game,MenuScreen,66,0,0,0,22,0,8,0,8,0
 core,com.dragonboat.game,Log.LogSpriteDescriptor,4,3,0,0,2,1,1,1,1,1
 core,com.dragonboat.game,PauseMenu.new ChangeListener() {...},34,0,4,0,4,0,4,0,2,0
 core,com.dragonboat.game,Boat.BoatSpriteDescriptor,69,3,0,0,18,1,1,1,1,1
-core,com.dragonboat.game,ProgressBar,81,103,1,9,17,24,11,9,10,5
-core,com.dragonboat.game,Obstacle,16,71,0,4,5,22,4,9,4,7
-core,com.dragonboat.game,DragonBoatGame,888,0,46,0,150,0,34,0,10,0
+core,com.dragonboat.game,ProgressBar,71,103,1,9,12,24,8,9,7,5
+core,com.dragonboat.game,Obstacle,9,71,0,4,3,22,3,9,3,7
+core,com.dragonboat.game,DragonBoatGame,859,0,46,0,140,0,33,0,9,0
 core,com.dragonboat.game,PauseMenu.new ChangeListener() {...},9,0,0,0,3,0,2,0,2,0
 core,com.dragonboat.game,PauseMenu.new ChangeListener() {...},17,0,0,0,3,0,2,0,2,0
 core,com.dragonboat.game,DifficultyScreen.new ChangeListener() {...},22,0,0,0,4,0,2,0,2,0
