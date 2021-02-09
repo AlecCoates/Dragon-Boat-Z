@@ -54,9 +54,9 @@ public class SaveGameScreen implements Screen {
          */
         Skin skin = new Skin(Gdx.files.internal("core/assets/pixthulhu/skin/pixthulhu-ui.json"));
 
-        final FileHandle file1 = Gdx.files.local(fileName1 + ".json");
-        final FileHandle file2 = Gdx.files.local(fileName2 + ".json");
-        final FileHandle file3 = Gdx.files.local(fileName3 + ".json");
+        final FileHandle file1 = Gdx.files.local("saves/" + fileName1 + ".json");
+        final FileHandle file2 = Gdx.files.local("saves/" + fileName2 + ".json");
+        final FileHandle file3 = Gdx.files.local("saves/" + fileName3 + ".json");
 
         Table table = new Table(skin);
         table.setFillParent(true);
