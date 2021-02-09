@@ -234,6 +234,7 @@ focused on. This was to ensure a successful completion of the entire project.
 * <a href="docs/deliverables/Risk2.pdf">Risk Assessment and Mitigation</a>
 * <a href="docs/deliverables/Impl2.pdf">Implementation</a>
 * <a href="docs/deliverables/Change2.pdf">Change Report</a>
+* <a href="docs/deliverables/SelfAss2.pdf">Self assessment</a>
 
 ## Executables
 
