@@ -41,7 +41,7 @@ jobs:
 
     - name: Generate Jacoco Badge
       id: jacoco
-      uses: AlecCoates/jacoco-badge-generator@v1.2.6
+      uses: AlecCoates/jacoco-badge-generator@v1.3.0
 
     - name: Log coverage percentage
       run: |
