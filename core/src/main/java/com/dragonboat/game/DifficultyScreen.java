@@ -68,7 +68,7 @@ public class DifficultyScreen implements Screen {
         mediumButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.selectedDifficulty = 2;
+                parent.selectedDifficulty = 4;
                 parent.setScreen(new MenuScreen(parent));
             }
         });
@@ -76,7 +76,7 @@ public class DifficultyScreen implements Screen {
         hardButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.selectedDifficulty = 3;
+                parent.selectedDifficulty = 8;
                 parent.setScreen(new MenuScreen(parent));
             }
         });
