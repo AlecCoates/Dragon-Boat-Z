@@ -72,7 +72,7 @@ public class DragonBoatGame extends Game {
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("core/assets/cantgobackwards.mp3"));
 		music.setLooping(true);
-		music.setVolume(0.0f);
+		music.setVolume(0.05f);
 		music.play();
 
 		courseTexture = new Texture(Gdx.files.internal("core/assets/background sprite.png"));
