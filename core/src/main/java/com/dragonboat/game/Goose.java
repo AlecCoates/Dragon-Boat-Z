@@ -49,7 +49,8 @@ public class Goose extends Obstacle {
 	 * Geese can face North, East, South or West. Width and height switch when
 	 * changing between North or South and East or West.
 	 * </p>
-	 * 
+	 *
+	 * @param textures  Reference to loaded textures
 	 * @param xPosition X-position.
 	 * @param yPosition Y-position.
 	 * @param lanes     Lanes in the map.

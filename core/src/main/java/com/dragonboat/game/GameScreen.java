@@ -1,7 +1,6 @@
 package com.dragonboat.game;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -40,8 +39,6 @@ public class GameScreen implements Screen {
     protected boolean started = false;
     protected final float penalty = 0.016f;
     protected boolean ispaused = false;
-
-
     protected PauseMenu pauseMenu;
     protected Stage stage;
 
@@ -536,24 +533,28 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
     }
 
+    /**
+     * Toggles the current pause state
+     */
     public void togglePause() {
         pauseMenu.setVisible(!pauseMenu.isVisible());
         ispaused = !ispaused;
     }
 
+    /**
+     * Pauses the game
+     */
     @Override
     public void pause() {
         if (!ispaused) togglePause();
     }
 
+    /**
+     * Resumes the game
+     */
     @Override
     public void resume() {
         if (ispaused) togglePause();
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     /**
@@ -581,9 +582,19 @@ public class GameScreen implements Screen {
         font28.dispose();
         font44.dispose();
         leaderboard.getTexture().dispose();
+    }
+
+    /**
+     * Overrides default hide() method to blank
+     */
+    @Override
+    public void hide() {
 
     }
 
+    /**
+     * Overrides default show() method to blank
+     */
     @Override
     public void show() {
 

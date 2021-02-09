@@ -67,18 +67,6 @@ public class ProgressBar {
 		}
 	}
 
-	public ProgressBar saveState(){
-		return this;
-	}
-
-	public void setOpponentBoats(Opponent[] opponentBoats){
-		this.opponentBoats = opponentBoats;
-	}
-
-	public void setPlayerBoat(Player player){
-		this.playerBoat = player;
-	}
-
 	/**
 	 * Resets the timer to zero.
 	 */

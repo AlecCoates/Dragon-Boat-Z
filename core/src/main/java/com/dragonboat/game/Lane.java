@@ -62,9 +62,11 @@ public class Lane {
 
     /**
      * Creates a lane instance.
-     * 
+     *
      * @param leftBoundary  X-position for the left boundary of the lane.
      * @param rightBoundary X-position for the right boundary of the lane.
+     * @param lanes reference to game lanes
+     * @param laneNo this lane's number
      */
     public Lane(int leftBoundary, int rightBoundary, Lane[] lanes, int laneNo) {
         this.LEFTBOUNDARY = leftBoundary;
@@ -101,7 +103,8 @@ public class Lane {
      * instantiates it as the corresponding obstacle, with the correct texture. Then
      * adds it to the Lane's obstacle list.
      * </p>
-     * 
+     *
+     * @param textures  Reference to loaded textures
      * @param x            X-position for the obstacle spawn location.
      * @param y            Y-position for the obstacle spawn location.
      * @param obstacleType Obstacle type.

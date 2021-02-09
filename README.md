@@ -90,7 +90,7 @@ Upon completing the final race, the player will be awarded a medal, bronze, silv
 
 ## Javadocs
 
-* <a href="docs/javadoc/index.html">Javadocs HTML Export</a>
+* <a href="docs/javadocs/javadoc-1.0/index.html">Javadocs HTML Export</a>
 
 ## Weekly Snapshots
 
@@ -243,7 +243,7 @@ focused on. This was to ensure a successful completion of the entire project.
 
 ## Javadocs
 
-* <a href="docs/javadoc/index.html">Javadocs HTML Export</a>
+* <a href="docs/javadocs/javadoc-1.1.0/index.html">Javadocs HTML Export</a>
 
 ## Weekly Snapshots
 

@@ -29,7 +29,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  * @see DifficultyScreen
  */
 public class DragonBoatGame extends Game {
-
 	// debug booleans
 	protected boolean debug_speed = false;
 	protected boolean debug_positions = false;
@@ -123,6 +122,7 @@ public class DragonBoatGame extends Game {
 		// Instantiate the progress bar and leaderboard.
 		progressBar = new ProgressBar(player, opponents);
 		leaderboard = new Leaderboard(player, opponents);
+
 		// Set up font.
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/8bitOperatorPlus-Regular.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -131,16 +131,8 @@ public class DragonBoatGame extends Game {
 
 		batch = new SpriteBatch();
 
-		// Display the menu screen.
-		//menuScreen = new MenuScreen(this);
-		//setScreen(menuScreen);
-
 		difficultyScreen = new DifficultyScreen(this);
 		setScreen(difficultyScreen);
-	}
-
-	public SpriteBatch getBatch(){
-		return batch;
 	}
 
 	/**
@@ -206,6 +198,9 @@ public class DragonBoatGame extends Game {
 		this.setScreen(this.gameScreen);
 	}
 
+	/**
+	 *	Renders the game
+	 */
 	@Override
 	public void render() {
 		final DragonBoatGame game = this;
@@ -268,10 +263,16 @@ public class DragonBoatGame extends Game {
 		}
 	}
 
+	/**
+	 * Ends the game
+	 */
 	public void endGame() {
 		this.ended = true;
 	}
 
+	/**
+	 * Starts the game.
+	 */
 	public void startGame() {
 		this.setScreen(new MenuScreen(this));
 		this.ended = false;
@@ -299,18 +300,10 @@ public class DragonBoatGame extends Game {
 
 	}
 
-	public void loadSave(Random newRnd, Lane[] newLanes,
-						 Player newPlayer, Opponent[] newOpponents, ProgressBar newProgressBar,
-						 ArrayList<Integer>[] obstacleTimes,
-						 int difficulty, int selectedDifficulty, boolean ended) {
-		this.rnd = rnd;
-		this.lanes = newLanes;
-		this.player = newPlayer;
-		this.opponents = newOpponents;
-		this.progressBar = newProgressBar;
-		this.obstacleTimes = obstacleTimes;
-		this.difficulty = difficulty;
-		this.selectedDifficulty = selectedDifficulty;
-		this.ended = ended;
+	/**
+	 * @return SpriteBatch representing this game's sprite batch
+	 */
+	public SpriteBatch getBatch(){
+		return batch;
 	}
 }

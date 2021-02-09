@@ -130,31 +130,6 @@ public class MenuScreen implements Screen {
         batch.end();
     }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void show() {
-
-    }
-
     /**
      * Disposes of the screen when it is no longer needed.
      */
@@ -163,5 +138,48 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(null);
         startScreen.dispose();
         batch.dispose();
+    }
+
+    /**
+     * Overwrites default resize() method to blank
+     *
+     * @param width does nothing
+     * @param height does nothing
+     */
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    /**
+     * Overwrites default pause() method to blank
+     */
+    @Override
+    public void pause() {
+
+    }
+
+    /**
+     * Overwrites default resume() method to blank
+     */
+    @Override
+    public void resume() {
+
+    }
+
+    /**
+     * Overwrites default hide() method to blank
+     */
+    @Override
+    public void hide() {
+
+    }
+
+    /**
+     * Overwrites default show() method to blank
+     */
+    @Override
+    public void show() {
+
     }
 }

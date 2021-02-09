@@ -31,7 +31,8 @@ public class Log extends Obstacle {
 
 	/**
 	 * Creates a log instance.
-	 * 
+	 *
+	 * @param textures  Reference to loaded textures
 	 * @param xPosition X-position.
 	 * @param yPosition Y-position.
 	 */

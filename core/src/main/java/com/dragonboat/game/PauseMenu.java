@@ -16,6 +16,8 @@ public class PauseMenu extends Window {
 
     /**
      * Constructor creates the structure of pause menu containing title and save game text button
+     *
+     * @param game Reference to the current game screen
      */
     public PauseMenu(final DragonBoatGame game){
         super("Pause Menu",skin);

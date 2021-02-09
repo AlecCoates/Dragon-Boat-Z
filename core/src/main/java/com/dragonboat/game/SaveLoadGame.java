@@ -8,12 +8,27 @@ import com.badlogic.gdx.utils.JsonWriter;
 
 import java.util.*;
 
+/**
+ * Contains methods for saving and loading the game
+ */
 class SaveLoadGame {
 
+    /**
+     * Saves the current game state to a file
+     *
+     * @param dragonBoatGame the current game
+     * @param fileName the name of the file to save
+     */
     public static void saveGame(DragonBoatGame dragonBoatGame, String fileName) {
         saveGameFile(saveGameString(saveGameData(dragonBoatGame)), fileName);
     }
 
+    /**
+     * Returns the a game state as a HashMap
+     *
+     * @param dragonBoatGame the current game
+     * @return HashMap representing the current game state
+     */
     public static HashMap<String, Object> saveGameData(DragonBoatGame dragonBoatGame){
         HashMap<String, Object> saveData = new HashMap<>();
 
@@ -52,31 +67,66 @@ class SaveLoadGame {
         return saveData;
     }
 
+    /**
+     * Returns a serialised version of a game state HashMap
+     *
+     * @param saveData HashMap of the game state
+     * @return String representing the game state
+     */
     public static String saveGameString(HashMap<String, Object> saveData) {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
         return json.prettyPrint(saveData);
     }
 
+    /**
+     * Saves the current game state to a file
+     *
+     * @param saveString String representing the game state
+     * @param fileName the name of the file to save
+     */
     public static void saveGameFile(String saveString, String fileName) {
         FileHandle file = Gdx.files.local("saves/" + fileName + ".json");
         file.writeString(saveString, false);
     }
 
-
+    /**
+     * Loads the current game state from a file
+     *
+     * @param dragonBoatGame game to load data into
+     * @param fileName the name of the file to load
+     */
     public static void loadGame(DragonBoatGame dragonBoatGame, String fileName) {
         loadGameData(loadGameString(loadGameFile(fileName)), dragonBoatGame);
     }
 
+    /**
+     * Loads a String game state from a file
+     *
+     * @param fileName the name of the file to load
+     * @return String representing a game state
+     */
     public static String loadGameFile(String fileName) {
         FileHandle file = Gdx.files.local("saves/" + fileName + ".json");
         return file.readString();
     }
 
+    /**
+     * Returns a String game state as a HashMap
+     *
+     * @param saveString String representing a game state
+     * @return HashMap representing a game state
+     */
     public static HashMap<String, Object> loadGameString(String saveString) {
         return new Json().fromJson(HashMap.class, saveString);
     }
 
+    /**
+     * Loads save state from a HashMap into a game
+     *
+     * @param saveData the save state to load
+     * @param dragonBoatGame the game to load the save into
+     */
     public static void loadGameData(HashMap<String, Object> saveData, DragonBoatGame dragonBoatGame){
         //game seed
         dragonBoatGame.rnd = (Random) saveData.get("rnd");

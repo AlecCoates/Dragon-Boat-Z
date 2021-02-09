@@ -84,11 +84,9 @@ public class DifficultyScreen implements Screen {
 
         titleLabel = new Label("Difficulty Selection",skin);
 
-
-
         /*
         * Adds all appropriate labels and buttons to table
-         */
+        */
         table.add(titleLabel).colspan(2);
         table.row().pad(10,0,0,10);
         table.add(easyButton);
@@ -115,27 +113,45 @@ public class DifficultyScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Resize viewport to a new width and height
+     *
+     * @param width new width
+     * @param height new height
+     */
     @Override
     public void resize(int width, int height) {
         //informs stage screen size has changed, viewport should be recalculated
         stage.getViewport().update(width,height,true);
     }
 
+    /**
+     * Overwrites default pause() method as blank
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Overwrites default resume() method as blank
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * Overwrites default hide() method as blank
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes this screen
+     */
     @Override
     public void dispose() {
         stage.dispose();

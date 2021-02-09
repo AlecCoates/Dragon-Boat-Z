@@ -51,7 +51,8 @@ public class Obstacle {
 
 	/**
 	 * Creates an obstacle instance.
-	 * 
+	 *
+	 * @param textures  Reference to loaded textures
 	 * @param damage    Damage the obstacle can inflict on a boat.
 	 * @param xPosition X-position.
 	 * @param yPosition Y-position.
@@ -77,16 +78,6 @@ public class Obstacle {
 		}
 	}
 
-	public ObstacleSpriteDescriptor saveState() {
-		ObstacleSpriteDescriptor disc = new ObstacleSpriteDescriptor(this);
-		//return new Json().toJson(disc);
-		return disc;
-	}
-
-	public String getName(){
-		return this.name;
-	}
-
 	/**
 	 * Moves the obstacle.
 	 * 
@@ -98,6 +89,13 @@ public class Obstacle {
 	}
 
 	// getters and setters
+
+	/**
+	 * @return String representing the obstacle's name
+	 */
+	public String getName(){
+		return this.name;
+	}
 
 	/**
 	 * 

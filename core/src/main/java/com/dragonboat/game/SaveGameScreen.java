@@ -23,7 +23,6 @@ public class SaveGameScreen implements Screen {
     private String fileName2 = "SaveState2";
     private String fileName3 = "SaveState3";
 
-
     /**
      * Creates a Save game screen using textbuttons that once pressed proceed
      * to either save or load a game
@@ -218,41 +217,65 @@ public class SaveGameScreen implements Screen {
         }
     }
 
+    /**
+     * Returns to the main game screen and disposes this screen
+     */
     private void returnToGame() {
         game.setScreen(game.gameScreen);
         Gdx.input.setInputProcessor(oldInputProcessor);
         this.dispose();
     }
 
+    /**
+     * Resizes viewport to new width and height
+     *
+     * @param width new width
+     * @param height new height
+     */
     @Override
     public void resize(int width, int height) {
         //informs stage screen size has changed, viewport should be recalculated
         stage.getViewport().update(width,height,true);
     }
 
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
+    /**
+     * Disposes this screen
+     */
     @Override
     public void dispose() {
         stage.dispose();
     }
 
+    /**
+     * Loads a new instance of this screen and disposes of the current instance
+     */
     public void reload() {
         Gdx.input.setInputProcessor(oldInputProcessor);
         game.setScreen(new SaveGameScreen(game));
         this.dispose();
+    }
+
+    /**
+     * Overrides the default pause() method to be blank
+     */
+    @Override
+    public void pause() {
+
+    }
+
+    /**
+     * Overrides the default resume() method to be blank
+     */
+    @Override
+    public void resume() {
+
+    }
+
+    /**
+     * Overrides the default hide() method to be blank
+     */
+    @Override
+    public void hide() {
+
     }
 }

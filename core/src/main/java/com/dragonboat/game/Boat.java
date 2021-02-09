@@ -277,6 +277,37 @@ public class Boat {
     }
 
     /**
+     * <p>
+     * Assigns the selected boat template to the boat.
+     * </p>
+     * <p>
+     * This includes stats and texture.
+     * </p>
+     *
+     * @param boatNo Number of the boat template selected.
+     */
+    public void ChooseBoat(int boatNo) {
+        ChooseBoat((char) (65 + boatNo));
+    }
+
+    /**
+     * <p>
+     * Assigns the selected boat template to the boat.
+     * </p>
+     * <p>
+     * This includes stats and texture.
+     * </p>
+     *
+     * @param boatChar Character of the boat template selected.
+     */
+    public void ChooseBoat(char boatChar) {
+        this.label = boatChar;
+        this.setTexture(new Texture(Gdx.files.internal("core/assets/boat" + label + " sprite1.png")));
+        this.GenerateTextureFrames(label);
+        this.setStats(label);
+    }
+
+    /**
      * Resets necessary stats for the next race.
      */
     public void Reset() {
@@ -488,41 +519,11 @@ public class Boat {
     /**
      * 
      * @param lanes Lanes object for the boat.
+     * @param laneNo This boat's lane number.
      */
     public void setLane(Lane[] lanes, int laneNo) {
         this.lanes = lanes;
         this.laneNo = laneNo;
         this.xPosition = this.lanes[this.laneNo].getRightBoundary() - (this.lanes[this.laneNo].getRightBoundary() - this.lanes[this.laneNo].getLeftBoundary()) / 2.0f - width / 2.0f;
-    }
-
-    /**
-     * <p>
-     * Assigns the selected boat template to the boat.
-     * </p>
-     * <p>
-     * This includes stats and texture.
-     * </p>
-     *
-     * @param boatNo Number of the boat template selected.
-     */
-    public void ChooseBoat(int boatNo) {
-        ChooseBoat((char) (65 + boatNo));
-    }
-
-    /**
-     * <p>
-     * Assigns the selected boat template to the boat.
-     * </p>
-     * <p>
-     * This includes stats and texture.
-     * </p>
-     *
-     * @param boatChar Character of the boat template selected.
-     */
-    public void ChooseBoat(char boatChar) {
-        this.label = boatChar;
-        this.setTexture(new Texture(Gdx.files.internal("core/assets/boat" + label + " sprite1.png")));
-        this.GenerateTextureFrames(label);
-        this.setStats(label);
     }
 }
