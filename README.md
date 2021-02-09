@@ -230,6 +230,10 @@ focused on. This was to ensure a successful completion of the entire project.
   
 ## Deliverables
 * <a href="docs/deliverables/Req2.pdf">Requirements</a>
+* <a href="docs/deliverables/Arch2.pdf">Architecture</a>
+* <a href="docs/deliverables/Plan2.pdf">Method Selection and Planning</a>
+* <a href="docs/deliverables/Risk2.pdf">Risk Assessment and Mitigation</a>
+* <a href="docs/deliverables/Impl2.pdf">Implementation</a>
 
 ## Testing
 <details><summary>Test Designs</summary>
