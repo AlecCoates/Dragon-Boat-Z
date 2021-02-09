@@ -2,10 +2,9 @@ Status: ![Gradle Build](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/Gr
 
 Analysis: ![CodeQL](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/CodeQL/badge.svg)
 
-Instuctions: ![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)
-
 Branches: ![Branch Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoBranchesTested.svg)
 
+Instuctions: ![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)
 
 # Contents
 <details open><summary></summary>
