@@ -239,7 +239,7 @@ focused on. This was to ensure a successful completion of the entire project.
 
 ## Executables
 
-* <a href="releases/download/v1.0/DragonBoat.jar">Dragon Boat Z Game</a>
+* <a href="releases/download/v1.1.0/Dragon-Boat-Z.zip">Dragon Boat Z Game</a>
 
 ## Javadocs
 
