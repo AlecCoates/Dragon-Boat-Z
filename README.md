@@ -249,6 +249,16 @@ focused on. This was to ensure a successful completion of the entire project.
 <img src="docs/sprints/w1m1.PNG">
 <img src="docs/sprints/w1m2.PNG">
 
+<summary><strong> Week 2 </strong></summary>
+
+<img src="docs/sprints/w2m1.PNG">
+<img src="docs/sprints/w2m2.PNG">
+
+<summary><strong> Week 3 </strong></summary>
+
+<img src="docs/sprints/w3m1.PNG">
+
+
 ### Project Gantt Chart
 
 <img src="docs/gantt chart/ganttchart2.PNG">
