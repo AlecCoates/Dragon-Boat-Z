@@ -2,7 +2,7 @@
 [![CodeQL](https://github.com/AlecCoates/Dragon-Boat-Z/workflows/CodeQL/badge.svg)](https://github.com/AlecCoates/Dragon-Boat-Z/actions?query=workflow%3ACodeQL) 
 [![Branch Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoBranchesTested.svg)](https://aleccoates.github.io/Dragon-Boat-Z/docs/tests/Coverage%20Details/Coverage%20Report/index.html) 
 [![Coverage (Tested classes)](https://raw.githubusercontent.com/AlecCoates/Dragon-Boat-Z/main/.github/badges/jacocoTested.svg)](https://aleccoates.github.io/Dragon-Boat-Z/docs/tests/Coverage%20Details/Coverage%20Report/index.html) 
-[![Pull Requests](https://img.shields.io/github/issues/AlecCoates/Dragon-Boat-Z)](https://github.com/AlecCoates/Dragon-Boat-Z/pulls) 
+[![Pull Requests](https://img.shields.io/github/issues-pr/AlecCoates/Dragon-Boat-Z)](https://github.com/AlecCoates/Dragon-Boat-Z/pulls) 
 [![Website aleccoates.github.io/Dragon-Boat-Z](https://img.shields.io/website-up-down-green-red/https/aleccoates.github.io/Dragon-Boat-Z.svg)](https://aleccoates.github.io/Dragon-Boat-Z/)
 
 # Contents
