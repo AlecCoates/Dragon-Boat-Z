@@ -247,6 +247,7 @@ focused on. This was to ensure a successful completion of the entire project.
 <summary><strong> Week 1 </strong></summary>
 
 <img src="docs/sprints/w1m1.PNG">
+<img src="docs/sprints/w1m2.PNG">
 
 ### Project Gantt Chart
 
